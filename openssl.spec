@@ -8,12 +8,14 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.6j
+Version:	0.9.6k
 Release:	1
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
+URL: http://www.openssl.org/
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+# Source0-md5:	dee92f648a02e4a7db0507ab3d0769c6
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Patch0:		%{name}-alpha-ccc.patch
