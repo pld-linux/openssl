@@ -9,7 +9,7 @@ Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.6j
-Release:	0.1
+Release:	1
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
