@@ -8,8 +8,8 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.6i
-Release:	3
+Version:	0.9.6j
+Release:	0.1
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
@@ -23,8 +23,6 @@ Patch1:		%{name}-soname.patch
 Patch2:		%{name}-optflags.patch
 Patch3:		%{name}-nocrypt.patch
 Patch4:		%{name}-globalCA.diff
-Patch5:		%{name}-sec3.patch
-Patch6:		%{name}-security2.patch
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -184,8 +182,6 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p0
-%patch6 -p0
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
