@@ -84,7 +84,6 @@ The OpenSSL Toolkit cmdline tool openssl and utility scripts.
 Summary:	OpenSSL utilities written in Perl
 Group:		Applications/Communications
 Group(de):	Applikationen/Kommunikation
-Group(fr):	Utilitaires
 Group(pl):	Aplikacje/Komunikacja
 Requires:	%{name} = %{version}
 
