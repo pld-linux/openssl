@@ -1,5 +1,3 @@
-# conditional build:
-# _without_embed - don't build uClibc version
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -10,14 +8,8 @@ Release:	1
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
-Group(de):	Libraries
-Group(es):	Bibliotecas
-Group(fr):	Librairies
-Group(pl):	Biblioteki
-Group(pt_BR):	Bibliotecas
-Group(ru):	‚…¬Ã…œ‘≈À…
-Group(uk):	‚¶¬Ã¶œ‘≈À…
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+Source1:	%{name}-ca-bundle.crt
 Patch0:		%{name}-alpha-ccc.patch
 # patch1 is only for 0.9.6a version. This version isn't binary
 # compatibile with 0.9.6 but have this same soname.
@@ -26,10 +18,6 @@ Patch2:		%{name}-optflags.patch
 Patch3:		%{name}-nocrypt.patch
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
-%if %{!?_without_embed:1}%{?_without_embed:0}
-BuildRequires:	uClibc-devel
-BuildRequires:	uClibc-static
-%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
@@ -72,23 +60,27 @@ codage/decodage, incluant DES, RC4, RSA et SSL.
 
 %package tools
 Summary:	OpenSSL command line tool and utilities
+Summary(pl):	Zestaw narzÍdzi i skryptÛw
 Group:		Applications/Communications
-Group(de):	Applikationen/Kommunikation
-Group(pl):	Aplikacje/Komunikacja
 Requires:	%{name} = %{version}
 
 %description tools
 The OpenSSL Toolkit cmdline tool openssl and utility scripts.
 
+%description tools -l pl
+Zestaw narzÍdzi i skryptÛw wywo≥ywanych z linii poleceÒ.
+
 %package tools-perl
 Summary:	OpenSSL utilities written in Perl
+Summary(pl):	NarzÍdzia OpenSSL napisane w perlu
 Group:		Applications/Communications
-Group(de):	Applikationen/Kommunikation
-Group(pl):	Aplikacje/Komunikacja
 Requires:	%{name} = %{version}
 
 %description tools-perl
 OpenSSL Toolkit tools written in Perl.
+
+%description tools-perl -l pl
+NarzÍdzia OpenSSL napisane w perlu.
 
 %package devel
 Summary:	Development part of OpenSSL Toolkit libraries
@@ -96,13 +88,6 @@ Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+hea
 Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL
 Summary(pl):	CzÍ∂Ê bibiloteki OpenSSL przeznaczona dla programistÛw
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Ú¡⁄“¡¬œ‘À¡/‚…¬Ã…œ‘≈À…
-Group(uk):	Úœ⁄“œ¬À¡/‚¶¬Ã¶œ‘≈À…
 Requires:	%{name} = %{version}
 Obsoletes:	libopenssl0-devel
 
@@ -112,37 +97,10 @@ Development part of OpenSSL library.
 %description devel -l pl
 CzÍ∂Ê bibiloteki OpenSSL przeznaczona dla programistÛw.
 
-%package devel-embed
-Summary:	Development part of OpenSSL Toolkit embedded libraries
-Summary(pl):	CzÍ∂Ê bibiloteki OpenSSL przeznaczona dla aplikacji wbudowanych
-Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Ú¡⁄“¡¬œ‘À¡/‚…¬Ã…œ‘≈À…
-Group(uk):	Úœ⁄“œ¬À¡/‚¶¬Ã¶œ‘≈À…
-Requires:	%{name} = %{version}
-
-%description devel-embed
-Development part of OpenSSL library for embedded applications.
-
-%description -l pl devel-embed
-CzÍ∂Ê bibiloteki OpenSSL przeznaczona dla programistÛw aplikacji
-wbudowanych.
-
 %package static
 Summary:	Static OpenSSL libraries
 Summary(pl):	Statyczne wersje bibliotek z OpenSSL
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Ú¡⁄“¡¬œ‘À¡/‚…¬Ã…œ‘≈À…
-Group(uk):	Úœ⁄“œ¬À¡/‚¶¬Ã¶œ‘≈À…
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -185,17 +143,8 @@ export OPTFLAGS
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
 %endif
 
-%if %{!?_without_embed:1}%{?_without_embed:0}
-%{__make} CC=%{embed_cc}
-%{__make} rehash CC=%{embed_cc}
-for f in RSAglue crypto ssl ; do
-	mv -f lib$f.a lib$f.a-embed
-done
-%{__make} clean
-%endif
-
-%{__make}
-%{__make} rehash
+%{__make} CC="%{__cc}"
+%{__make} rehash CC="%{__cc}"
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage 
 # to avoid potential conflicts with others packages.
@@ -252,19 +201,20 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
-	   $RPM_BUILD_ROOT%{_mandir}/man{1,3,5,7}
+	   $RPM_BUILD_ROOT{%{_mandir}/man{1,3,5,7},%{_datadir}/ssl}
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT
 
+install %{SOURCE1}  $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
 install libRSAglue.a libcrypto.a libssl.a 	$RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* 	$RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf libssl.so.*.* $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
 mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
-ln -s %{_sysconfdir}/%{name}/openssl.cnf \
+ln -sf %{_sysconfdir}/%{name}/openssl.cnf \
 	$RPM_BUILD_ROOT%{_var}/lib/%{name}/%{name}.cnf
 
 mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/*  $RPM_BUILD_ROOT%{_libdir}/%{name}
@@ -278,22 +228,13 @@ install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 
-%if %{!?_without_embed:1}%{?_without_embed:0}
-install -d $RPM_BUILD_ROOT%{uclibc_prefix}/{include,lib}
-for f in RSAglue crypto ssl ; do
-	install lib$f.a-embed $RPM_BUILD_ROOT%{uclibc_prefix}/lib/lib$f.a
-done
-cp -a $RPM_BUILD_ROOT%{_includedir}/%{name} \
-	$RPM_BUILD_ROOT%{uclibc_prefix}/include
-%endif
-
 gzip -9nf CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
-
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -362,13 +303,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/%{name}
 %{_mandir}/man3/*.3*
-
-%if %{!?_without_embed:1}%{?_without_embed:0}
-%files devel-embed
-%defattr(644,root,root,755)
-%{uclibc_prefix}/lib/*
-%{uclibc_prefix}/include/%{name}
-%endif
 
 %files static
 %defattr(644,root,root,755)
