@@ -1,0 +1,16 @@
+--- openssl-0.9.6l/doc/ssl/SSL_COMP_add_compression_method.pod.orig	Thu Aug 23 11:42:56 2001
++++ openssl-0.9.6l/doc/ssl/SSL_COMP_add_compression_method.pod	Thu Nov  6 13:31:16 2003
+@@ -53,11 +53,11 @@
+ 
+ =over 4
+ 
+-=item 1
++=item 0
+ 
+ The operation succeeded.
+ 
+-=item 0
++=item 1
+ 
+ The operation failed. Check the error queue to find out the reason.
+ 
