@@ -191,7 +191,7 @@ done
 
 touch Makefile.*
 
-%{__perl} util/perlpath.pl %{_bindir}/perl
+%{__perl} util/perlpath.pl %{__perl}
 
 OPTFLAGS="%{rpmcflags}"
 export OPTFLAGS
@@ -251,7 +251,7 @@ for dir in ssl crypto; do
 		rel="OpenSSL cryptographic library"
 	fi
 
-	%{__perl} -p -i -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+	%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
 	for pod in *.pod; do
 		sec=`[ "$pod" = "des_modes.pod" ] && echo 7 || echo 3`;
