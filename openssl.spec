@@ -294,18 +294,17 @@ install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 
-gzip -9nf CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%doc *.gz doc/*.txt.gz doc/openssl_button.gif doc/openssl_button.html
+%doc CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
+%doc doc/openssl_button.gif doc/openssl_button.html
 
 %files tools
 %defattr(644,root,root,755)
