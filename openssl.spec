@@ -11,9 +11,7 @@ Name:		openssl
 Version:	0.9.6k
 Release:	1
 License:	Apache-style License
-Vendor:		The OpenSSL Project
 Group:		Libraries
-URL: http://www.openssl.org/
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	dee92f648a02e4a7db0507ab3d0769c6
 Source1:	%{name}-ca-bundle.crt
@@ -25,6 +23,7 @@ Patch1:		%{name}-soname.patch
 Patch2:		%{name}-optflags.patch
 Patch3:		%{name}-nocrypt.patch
 Patch4:		%{name}-globalCA.diff
+URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -187,12 +186,12 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
-perl -pi -e 's#%{_prefix}/local/bin/perl#%{_bindir}/perl#g' $f
+%{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' $f
 done
 
 touch Makefile.*
 
-perl util/perlpath.pl %{_bindir}/perl
+%{__perl} util/perlpath.pl %{_bindir}/perl
 
 OPTFLAGS="%{rpmcflags}"
 export OPTFLAGS
@@ -212,8 +211,10 @@ export OPTFLAGS
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
 %endif
 
-%{__make} CC="%{__cc}"
-%{__make} rehash CC="%{__cc}"
+%{__make} \
+	CC="%{__cc}"
+%{__make} rehash \
+	CC="%{__cc}"
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage
 # to avoid potential conflicts with others packages.
@@ -221,7 +222,7 @@ center="OpenSSL 0.9.6"
 rel="OpenSSL 0.9.6"
 
 cd doc/apps || exit 1
-perl -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
 for pod in *.pod; do
 	if [ $pod != "openssl.pod" ]; then
@@ -250,7 +251,7 @@ for dir in ssl crypto; do
 		rel="OpenSSL cryptographic library"
 	fi
 
-	perl -p -i -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+	%{__perl} -p -i -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
 	for pod in *.pod; do
 		sec=`[ "$pod" = "des_modes.pod" ] && echo 7 || echo 3`;
@@ -264,7 +265,7 @@ for dir in ssl crypto; do
 done
 
 #cd perl
-#perl Makefile.PL
+#%{__perl} Makefile.PL
 #make
 
 %install
@@ -274,9 +275,10 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
-	INSTALL_PREFIX=$RPM_BUILD_ROOT
+	INSTALL_PREFIX=$RPM_BUILD_ROOT \
+	MANDIR=%{_mandir}
 
-install %{SOURCE1}  $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
+install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
 install libRSAglue.a libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
