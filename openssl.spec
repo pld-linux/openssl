@@ -9,13 +9,14 @@ Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.6l
-Release:	1
+Release:	2
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	843a65ddc56634f0e30a4f9474bb5b27
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
+Source3:	%{name}-ssl-certificate.sh
 Patch0:		%{name}-alpha-ccc.patch
 # patch1 is only for 0.9.6a version. This version isn't binary
 # compatibile with 0.9.6 but have this same soname.
@@ -203,6 +204,9 @@ export OPTFLAGS
 %ifarch i586 i686 athlon
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
 %endif
+%ifarch x86_64 amd64
+./Configure --openssldir=%{_var}/lib/%{name} linux-x86_64 shared
+%endif
 %ifarch ppc
 ./Configure --openssldir=%{_var}/lib/%{name} linux-ppc shared
 %endif
@@ -301,6 +305,7 @@ install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
+install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -327,6 +332,7 @@ rm -rf $RPM_BUILD_ROOT
 %verify(not md5 size mtime) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(754,root,root) %{_bindir}/ssl-certificate
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/CA.sh
 %attr(755,root,root) %{_libdir}/%{name}/c_hash
