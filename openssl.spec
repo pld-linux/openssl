@@ -348,6 +348,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_rand.1*
 %{_mandir}/man1/openssl_req.1*
 %{_mandir}/man1/openssl_rsa.1*
+%{_mandir}/man1/openssl_rsautl.1*
 %{_mandir}/man1/openssl_s_client.1*
 %{_mandir}/man1/openssl_s_server.1*
 %{_mandir}/man1/openssl_sess_id.1*
@@ -371,6 +372,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/%{name}
 %{_mandir}/man3/*.3*
+%{_mandir}/man7/*.7*
 
 %files static
 %defattr(644,root,root,755)
