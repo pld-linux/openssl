@@ -1,20 +1,22 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
-Summary(es):	Biblioteca C que suministra algoritmos y protocolos criptogrАficos.
+Summary(es):	Biblioteca C que suministra algoritmos y protocolos criptogrАficos
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Summary(pl):	Biblioteki OpenSSL (SSL v2/v3)
-Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos criptogrАficos.
+Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos criptogrАficos
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.6g
-Release:	1
+Version:	0.9.6l
+Release:	2
 License:	Apache-style License
-Vendor:		The OpenSSL Project
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+# Source0-md5:	843a65ddc56634f0e30a4f9474bb5b27
 Source1:	%{name}-ca-bundle.crt
+Source2:	%{name}.1.pl
+Source3:	%{name}-ssl-certificate.sh
 Patch0:		%{name}-alpha-ccc.patch
 # patch1 is only for 0.9.6a version. This version isn't binary
 # compatibile with 0.9.6 but have this same soname.
@@ -22,6 +24,8 @@ Patch1:		%{name}-soname.patch
 Patch2:		%{name}-optflags.patch
 Patch3:		%{name}-nocrypt.patch
 Patch4:		%{name}-globalCA.diff
+Patch5:		%{name}-docs-update.patch
+URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -181,15 +185,16 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
-perl -pi -e 's#%{_prefix}/local/bin/perl#%{_bindir}/perl#g' $f
+%{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' $f
 done
 
 touch Makefile.*
 
-perl util/perlpath.pl %{_bindir}/perl
+%{__perl} util/perlpath.pl %{__perl}
 
 OPTFLAGS="%{rpmcflags}"
 export OPTFLAGS
@@ -198,6 +203,9 @@ export OPTFLAGS
 %endif
 %ifarch i586 i686 athlon
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
+%endif
+%ifarch x86_64 amd64
+./Configure --openssldir=%{_var}/lib/%{name} linux-x86_64 shared
 %endif
 %ifarch ppc
 ./Configure --openssldir=%{_var}/lib/%{name} linux-ppc shared
@@ -209,8 +217,10 @@ export OPTFLAGS
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
 %endif
 
-%{__make} CC="%{__cc}"
-%{__make} rehash CC="%{__cc}"
+%{__make} \
+	CC="%{__cc}"
+%{__make} rehash \
+	CC="%{__cc}"
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage
 # to avoid potential conflicts with others packages.
@@ -218,7 +228,7 @@ center="OpenSSL 0.9.6"
 rel="OpenSSL 0.9.6"
 
 cd doc/apps || exit 1
-perl -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
 for pod in *.pod; do
 	if [ $pod != "openssl.pod" ]; then
@@ -247,7 +257,7 @@ for dir in ssl crypto; do
 		rel="OpenSSL cryptographic library"
 	fi
 
-	perl -p -i -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+	%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
 	for pod in *.pod; do
 		sec=`[ "$pod" = "des_modes.pod" ] && echo 7 || echo 3`;
@@ -261,19 +271,20 @@ for dir in ssl crypto; do
 done
 
 #cd perl
-#perl Makefile.PL
-#make
+#%{__perl} Makefile.PL
+#%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
-	$RPM_BUILD_ROOT{%{_mandir}/man{1,3,5,7},%{_datadir}/ssl}
+	$RPM_BUILD_ROOT{%{_mandir}/{pl/man1,man{1,3,5,7}},%{_datadir}/ssl}
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
-	INSTALL_PREFIX=$RPM_BUILD_ROOT
+	INSTALL_PREFIX=$RPM_BUILD_ROOT \
+	MANDIR=%{_mandir}
 
-install %{SOURCE1}  $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
+install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
 install libRSAglue.a libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
@@ -293,6 +304,8 @@ install doc/apps/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
+install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
+install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -316,9 +329,10 @@ rm -rf $RPM_BUILD_ROOT
 %verify(not md5 size mtime) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
 %verify(not md5 size mtime) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
 %dir %{_datadir}/ssl
-%verify(not md5 size mtime) %config(noreplace)%{_datadir}/ssl/ca-bundle.crt
+%verify(not md5 size mtime) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(754,root,root) %{_bindir}/ssl-certificate
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/CA.sh
 %attr(755,root,root) %{_libdir}/%{name}/c_hash
@@ -358,6 +372,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_version.1*
 %{_mandir}/man1/openssl_x509.1*
 %{_mandir}/man5/*.5*
+%lang(pl) %{_mandir}/pl/man1/openssl.1*
 
 %files tools-perl
 %defattr(644,root,root,755)
