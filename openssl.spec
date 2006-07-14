@@ -1,3 +1,8 @@
+#
+# Conditional build:
+%bcond_with purify	# Compile openssl with \-DPURIFY, usefull when one wants to
+			# use valgrind debugger against openssl-linked programs
+#
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -8,12 +13,12 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.7h
-Release:	1
+Version:	0.9.7i
+Release:	2
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	8dc90a113eb8925795071fbe52b2932c
+# Source0-md5:	f69d82b206ff8bff9d0e721f97380b9e
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
@@ -199,7 +204,7 @@ touch Makefile.*
 
 %{__perl} util/perlpath.pl %{__perl}
 
-OPTFLAGS="%{rpmcflags}"
+OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}"
 export OPTFLAGS
 %ifarch %{ix86}
 %ifarch i386
@@ -348,15 +353,15 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_var}/lib/%{name}
 %dir %{_var}/lib/%{name}/certs
 %dir %{_var}/lib/%{name}/private
+%dir %{_datadir}/ssl
+%verify(not md5 mtime size) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %files tools
 %defattr(644,root,root,755)
 %dir %{_sysconfdir}/%{name}
 
-%verify(not md5 size mtime) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
-%verify(not md5 size mtime) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
-%dir %{_datadir}/ssl
-%verify(not md5 size mtime) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
+%verify(not md5 mtime size) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
+%verify(not md5 mtime size) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
 
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/openssl_fips_fingerprint
