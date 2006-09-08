@@ -13,12 +13,12 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.7i
-Release:	2
+Version:	0.9.7k
+Release:	1
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	f69d82b206ff8bff9d0e721f97380b9e
+# Source0-md5:	be6bba1d67b26eabb48cf1774925416f
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
@@ -194,7 +194,7 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 
 # conflicts with i386-only DES implementation
 # (missing #ifdef OPENSSL_FIPS  ...  #endif)
-:> fips/des/asm/fips-dx86-elf.s
+:> fips-1.0/des/asm/fips-dx86-elf.s
 
 %build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
@@ -337,7 +337,7 @@ install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
-install fips/openssl_fips_fingerprint $RPM_BUILD_ROOT%{_bindir}
+install fips-1.0/openssl_fips_fingerprint $RPM_BUILD_ROOT%{_bindir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
