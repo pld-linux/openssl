@@ -338,6 +338,7 @@ install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 install fips-1.0/openssl_fips_fingerprint $RPM_BUILD_ROOT%{_bindir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -346,22 +347,24 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libcrypto.so.*.*.*
-%attr(755,root,root) %{_libdir}/libssl.so.*.*.*
 %doc CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
 %doc doc/openssl_button.gif doc/openssl_button.html
+%attr(755,root,root) %{_libdir}/libcrypto.so.*.*.*
+%attr(755,root,root) %{_libdir}/libssl.so.*.*.*
+%dir %{_libdir}/engines
+%attr(755,root,root) %{_libdir}/engines/*.so
 %dir %{_var}/lib/%{name}
 %dir %{_var}/lib/%{name}/certs
 %dir %{_var}/lib/%{name}/private
 %dir %{_datadir}/ssl
-%verify(not md5 mtime size) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
+%config(noreplace) %verify(not md5 mtime size) %{_datadir}/ssl/ca-bundle.crt
 
 %files tools
 %defattr(644,root,root,755)
 %dir %{_sysconfdir}/%{name}
 
-%verify(not md5 mtime size) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
-%verify(not md5 mtime size) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
+%config(noreplace) %verify(not md5 mtime size) %{_var}/lib/%{name}/openssl.cnf
 
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/openssl_fips_fingerprint
