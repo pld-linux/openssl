@@ -351,8 +351,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/openssl_button.gif doc/openssl_button.html
 %attr(755,root,root) %{_libdir}/libcrypto.so.*.*.*
 %attr(755,root,root) %{_libdir}/libssl.so.*.*.*
-%dir %{_libdir}/engines
-%attr(755,root,root) %{_libdir}/engines/*.so
 %dir %{_var}/lib/%{name}
 %dir %{_var}/lib/%{name}/certs
 %dir %{_var}/lib/%{name}/private
