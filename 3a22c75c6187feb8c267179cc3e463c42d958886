@@ -1,0 +1,2 @@
+- replace all "-mcpu=ultrasparc" by %{optflags} for generate correct
+  binaries on sparc32/sparc64.
