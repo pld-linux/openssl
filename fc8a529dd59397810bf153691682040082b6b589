@@ -1,0 +1,2 @@
+- release 3,
+- added %dir %{_sysconfdir} to %files.
