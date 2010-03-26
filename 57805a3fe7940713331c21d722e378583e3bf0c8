@@ -1,0 +1,3 @@
+- release 8,
+- added to bundle CA Root Certificates Unizeto certificates,
+- use CC=%{__cc} on compile.
