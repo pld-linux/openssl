@@ -1,0 +1,1 @@
+- exclude invalid libfips.so symlink from %files.
