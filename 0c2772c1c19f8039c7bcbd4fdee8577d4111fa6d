@@ -1,0 +1,1 @@
+- one more fix in nocrypt.patch (openssl/des.h must not define prototype of crypt()), release 9
