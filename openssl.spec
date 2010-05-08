@@ -14,14 +14,15 @@ Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.7m
-Release:	1
-License:	Apache-style License
+Release:	2
+License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	74a4d1b87e1e6e1ec95dbe58cb4c5b9a
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
+Source4:	%{name}-c_rehash.sh
 Patch0:		%{name}-alpha-ccc.patch
 Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
@@ -29,6 +30,7 @@ Patch3:		%{name}-include.patch
 Patch4:		%{name}-md5-sparcv9.patch
 Patch5:		%{name}-ssl-algs.patch
 Patch6:		%{name}-CVE-2007-3108.patch
+Patch7:		%{name}-c_rehash.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -193,6 +195,8 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+cp -a %{SOURCE4} c_rehash.sh
+%patch7 -p1
 
 # conflicts with i386-only DES implementation
 # (missing #ifdef OPENSSL_FIPS  ...  #endif)
@@ -337,6 +341,7 @@ install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
+install -p c_rehash.sh $RPM_BUILD_ROOT%{_bindir}/c_rehash.sh
 install fips-1.0/openssl_fips_fingerprint $RPM_BUILD_ROOT%{_bindir}
 
 %clean
@@ -365,6 +370,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_var}/lib/%{name}/openssl.cnf
 
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(755,root,root) %{_bindir}/openssl_fips_fingerprint
 %attr(754,root,root) %{_bindir}/ssl-certificate
 
