@@ -1,0 +1,11 @@
+--- openssl/c_rehash.sh~	2010-05-05 16:45:09.000000000 +0300
++++ openssl/c_rehash.sh	2010-05-06 22:43:44.496776926 +0300
+@@ -12,7 +12,7 @@
+ #
+ 
+ # default certificate location
+-DIR=/etc/openssl
++DIR=/var/lib/openssl
+ 
+ # for filetype bitfield
+ IS_CERT=$(( 1 << 0 ))
