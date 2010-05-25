@@ -2,16 +2,16 @@
 # Conditional build:
 %bcond_with purify	# Compile openssl with \-DPURIFY, usefull when one wants to
 			# use valgrind debugger against openssl-linked programs
-#
+
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
-Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
-Summary(es):	Biblioteca C que suministra algoritmos y protocolos criptogrАficos
-Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
-Summary(pl):	Biblioteki OpenSSL (SSL v2/v3)
-Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos criptogrАficos
-Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
-Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
+Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
+Summary(es.UTF-8):	Biblioteca C que suministra algoritmos y protocolos criptogrц║ficos
+Summary(fr.UTF-8):	Utilitaires de communication SSL (Secure Sockets Layer)
+Summary(pl.UTF-8):	Biblioteki OpenSSL (SSL v2/v3)
+Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vц║rios algoritmos e protocolos criptogrц║ficos
+Summary(ru.UTF-8):	п▒п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╦ я┐я┌п╦п╩п╦я┌я▀ п╢п╩я▐ я│п╬п╣п╢п╦п╫п╣п╫п╦п╧ я┤п╣я─п╣п╥ Secure Sockets Layer
+Summary(uk.UTF-8):	п▒я√п╠п╩я√п╬я┌п╣п╨п╦ я┌п╟ я┐я┌п╦п╩я√я┌п╦ п╢п╩я▐ п╥'я■п╢п╫п╟п╫я▄ я┤п╣я─п╣п╥ Secure Sockets Layer
 Name:		openssl
 Version:	0.9.7m
 Release:	2
@@ -60,72 +60,72 @@ simple license conditions.
 This package contains shared libraries only, install openssl-tools if
 you want to use openssl cmdline tool.
 
-%description -l de
-Openssl enthДlt das OpenSSL Zertifikatsmanagementtool und shared
-libraries, die verschiedene VerschlЭsselungs- und
-EntschlЭsselungsalgorithmen und -protokolle, wie DES, RC4, RSA und SSL
-zur VerfЭgung stellen.
+%description -l de.UTF-8
+Openssl enthц╓lt das OpenSSL Zertifikatsmanagementtool und shared
+libraries, die verschiedene Verschlц╪sselungs- und
+Entschlц╪sselungsalgorithmen und -protokolle, wie DES, RC4, RSA und SSL
+zur Verfц╪gung stellen.
 
-%description -l es
-Biblioteca C que suministra algoritmos y protocolos criptogrАficos.
+%description -l es.UTF-8
+Biblioteca C que suministra algoritmos y protocolos criptogrц║ficos.
 
-%description -l fr
+%description -l fr.UTF-8
 OpenSSL est un outiil de gestion des certificats et les librairies
 partagees qui fournit plusieurs protocoles et algorithmes de
 codage/decodage, incluant DES, RC4, RSA et SSL.
 
-%description -l pl
-Implementacja protokoЁСw kryptograficznych Secure Socket Layer (SSL)
+%description -l pl.UTF-8
+Implementacja protokoе┌цЁw kryptograficznych Secure Socket Layer (SSL)
 v2/v3 oraz Transport Layer Security (TLS v1).
 
-%description -l pt_BR
-Uma biblioteca C que fornece vАrios algoritmos e protocolos
-criptogrАficos, incluindo DES, RC4, RSA e SSL. Inclui bibliotecas
-compartilhadas e utilitАrios.
+%description -l pt_BR.UTF-8
+Uma biblioteca C que fornece vц║rios algoritmos e protocolos
+criptogrц║ficos, incluindo DES, RC4, RSA e SSL. Inclui bibliotecas
+compartilhadas e utilitц║rios.
 
-%description -l ru
-Программа openssl для работы с сертификатами и разделяемые библиотеки,
-которые реализуют множетсво криптографических алгоритмов, включая DES,
-RC4, RSA и SSL.
+%description -l ru.UTF-8
+п÷я─п╬пЁя─п╟п╪п╪п╟ openssl п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ я│п╣я─я┌п╦я└п╦п╨п╟я┌п╟п╪п╦ п╦ я─п╟п╥п╢п╣п╩я▐п╣п╪я▀п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦,
+п╨п╬я┌п╬я─я▀п╣ я─п╣п╟п╩п╦п╥я┐я▌я┌ п╪п╫п╬п╤п╣я┌я│п╡п╬ п╨я─п╦п©я┌п╬пЁя─п╟я└п╦я┤п╣я│п╨п╦я┘ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡, п╡п╨п╩я▌я┤п╟я▐ DES,
+RC4, RSA п╦ SSL.
 
-%description -l uk
-Програма openssl для роботи з сертиф╕катами та б╕бл╕отеки сп╕льного
-користування, що реал╕зують велику к╕льк╕сть криптограф╕чних
-алгоритм╕в, включаючи DES, RC4, RSA та SSL.
+%description -l uk.UTF-8
+п÷я─п╬пЁя─п╟п╪п╟ openssl п╢п╩я▐ я─п╬п╠п╬я┌п╦ п╥ я│п╣я─я┌п╦я└я√п╨п╟я┌п╟п╪п╦ я┌п╟ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ я│п©я√п╩я▄п╫п╬пЁп╬
+п╨п╬я─п╦я│я┌я┐п╡п╟п╫п╫я▐, я┴п╬ я─п╣п╟п╩я√п╥я┐я▌я┌я▄ п╡п╣п╩п╦п╨я┐ п╨я√п╩я▄п╨я√я│я┌я▄ п╨я─п╦п©я┌п╬пЁя─п╟я└я√я┤п╫п╦я┘
+п╟п╩пЁп╬я─п╦я┌п╪я√п╡, п╡п╨п╩я▌я┤п╟я▌я┤п╦ DES, RC4, RSA я┌п╟ SSL.
 
 %package tools
 Summary:	OpenSSL command line tool and utilities
-Summary(pl):	Zestaw narzЙdzi i skryptСw
+Summary(pl.UTF-8):	Zestaw narzд≥dzi i skryptцЁw
 Group:		Applications/Communications
 Requires:	%{name} = %{version}-%{release}
 
 %description tools
 The OpenSSL Toolkit cmdline tool openssl and utility scripts.
 
-%description tools -l pl
-Zestaw narzЙdzi i skryptСw wywoЁywanych z linii poleceЯ.
+%description tools -l pl.UTF-8
+Zestaw narzд≥dzi i skryptцЁw wywoе┌ywanych z linii poleceе└.
 
 %package tools-perl
 Summary:	OpenSSL utilities written in Perl
-Summary(pl):	NarzЙdzia OpenSSL napisane w perlu
+Summary(pl.UTF-8):	Narzд≥dzia OpenSSL napisane w perlu
 Group:		Applications/Communications
 Requires:	%{name} = %{version}-%{release}
 
 %description tools-perl
 OpenSSL Toolkit tools written in Perl.
 
-%description tools-perl -l pl
-NarzЙdzia OpenSSL napisane w perlu.
+%description tools-perl -l pl.UTF-8
+Narzд≥dzia OpenSSL napisane w perlu.
 
 %package devel
 Summary:	Development part of OpenSSL Toolkit libraries
-Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header
-Summary(es):	Bibliotecas y archivos de inclusiСn para desarrollo OpenSSL
-Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL
-Summary(pl):	CzЙ╤Ф bibiloteki OpenSSL przeznaczona dla programistСw
-Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para desenvolvimento OpenSSL
-Summary(ru):	Библиотеки, хедеры и утилиты для Secure Sockets Layer
-Summary(uk):	Б╕бл╕отеки, хедери та утил╕ти для Secure Sockets Layer
+Summary(de.UTF-8):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header
+Summary(es.UTF-8):	Bibliotecas y archivos de inclusiцЁn para desarrollo OpenSSL
+Summary(fr.UTF-8):	Librairies statiques, headers et utilitaires pour communication SSL
+Summary(pl.UTF-8):	Czд≥е⌡д┤ bibiloteki OpenSSL przeznaczona dla programistцЁw
+Summary(pt_BR.UTF-8):	Bibliotecas e arquivos de inclusцёo para desenvolvimento OpenSSL
+Summary(ru.UTF-8):	п▒п╦п╠п╩п╦п╬я┌п╣п╨п╦, я┘п╣п╢п╣я─я▀ п╦ я┐я┌п╦п╩п╦я┌я▀ п╢п╩я▐ Secure Sockets Layer
+Summary(uk.UTF-8):	п▒я√п╠п╩я√п╬я┌п╣п╨п╦, я┘п╣п╢п╣я─п╦ я┌п╟ я┐я┌п╦п╩я√я┌п╦ п╢п╩я▐ Secure Sockets Layer
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	libopenssl0-devel
@@ -133,58 +133,58 @@ Obsoletes:	libopenssl0-devel
 %description devel
 Development part of OpenSSL library.
 
-%description devel -l es
-Bibliotecas y archivos de inclusiСn para desarrollo OpenSSL
+%description devel -l es.UTF-8
+Bibliotecas y archivos de inclusiцЁn para desarrollo OpenSSL
 
-%description devel -l pl
-CzЙ╤Ф biblioteki OpenSSL przeznaczona dla programistСw.
+%description devel -l pl.UTF-8
+Czд≥е⌡д┤ biblioteki OpenSSL przeznaczona dla programistцЁw.
 
-%description devel -l pt_BR
-Uma biblioteca C que fornece vАrios algoritmos e protocolos
-criptogrАficos, incluindo DES, RC4, RSA e SSL. Inclui bibliotecas e
-arquivos de inclusЦo para desenvolvimento.
+%description devel -l pt_BR.UTF-8
+Uma biblioteca C que fornece vц║rios algoritmos e protocolos
+criptogrц║ficos, incluindo DES, RC4, RSA e SSL. Inclui bibliotecas e
+arquivos de inclusцёo para desenvolvimento.
 
-%description devel -l ru
-Программа openssl для работы с сертификатами и разделяемые библиотеки,
-которые реализуют множетсво криптографических алгоритмов, включая DES,
-RC4, RSA и SSL. Включает библиотеки и хедеры для разработки приложений
-с использованием SSL.
+%description devel -l ru.UTF-8
+п÷я─п╬пЁя─п╟п╪п╪п╟ openssl п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ я│п╣я─я┌п╦я└п╦п╨п╟я┌п╟п╪п╦ п╦ я─п╟п╥п╢п╣п╩я▐п╣п╪я▀п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦,
+п╨п╬я┌п╬я─я▀п╣ я─п╣п╟п╩п╦п╥я┐я▌я┌ п╪п╫п╬п╤п╣я┌я│п╡п╬ п╨я─п╦п©я┌п╬пЁя─п╟я└п╦я┤п╣я│п╨п╦я┘ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡, п╡п╨п╩я▌я┤п╟я▐ DES,
+RC4, RSA п╦ SSL. п▓п╨п╩я▌я┤п╟п╣я┌ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╦ я┘п╣п╢п╣я─я▀ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
+я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ SSL.
 
-%description devel -l uk
-Програма openssl для роботи з сертиф╕катами та б╕бл╕отеки сп╕льного
-користування, що реал╕зують велику к╕льк╕сть криптограф╕чних
-алгоритм╕в, включаючи DES, RC4, RSA та SSL. М╕стить б╕бл╕отеки та
-хедери для розробки програм з використанням SSL.
+%description devel -l uk.UTF-8
+п÷я─п╬пЁя─п╟п╪п╟ openssl п╢п╩я▐ я─п╬п╠п╬я┌п╦ п╥ я│п╣я─я┌п╦я└я√п╨п╟я┌п╟п╪п╦ я┌п╟ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ я│п©я√п╩я▄п╫п╬пЁп╬
+п╨п╬я─п╦я│я┌я┐п╡п╟п╫п╫я▐, я┴п╬ я─п╣п╟п╩я√п╥я┐я▌я┌я▄ п╡п╣п╩п╦п╨я┐ п╨я√п╩я▄п╨я√я│я┌я▄ п╨я─п╦п©я┌п╬пЁя─п╟я└я√я┤п╫п╦я┘
+п╟п╩пЁп╬я─п╦я┌п╪я√п╡, п╡п╨п╩я▌я┤п╟я▌я┤п╦ DES, RC4, RSA я┌п╟ SSL. п°я√я│я┌п╦я┌я▄ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ я┌п╟
+я┘п╣п╢п╣я─п╦ п╢п╩я▐ я─п╬п╥я─п╬п╠п╨п╦ п©я─п╬пЁя─п╟п╪ п╥ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐п╪ SSL.
 
 %package static
 Summary:	Static OpenSSL libraries
-Summary(pl):	Statyczne wersje bibliotek z OpenSSL
-Summary(pt_BR):	Bibliotecas estАticas para desenvolvimento com openssl
-Summary(ru):	Статические библиотеки разработчика для OpenSSL
-Summary(uk):	Статичн╕ б╕бл╕отеки програм╕ста для OpenSSL
+Summary(pl.UTF-8):	Statyczne wersje bibliotek z OpenSSL
+Summary(pt_BR.UTF-8):	Bibliotecas estц║ticas para desenvolvimento com openssl
+Summary(ru.UTF-8):	п║я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ я─п╟п╥я─п╟п╠п╬я┌я┤п╦п╨п╟ п╢п╩я▐ OpenSSL
+Summary(uk.UTF-8):	п║я┌п╟я┌п╦я┤п╫я√ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ п©я─п╬пЁя─п╟п╪я√я│я┌п╟ п╢п╩я▐ OpenSSL
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static OpenSSL Toolkit libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczne wersje bibliotek z OpenSSL.
 
-%description static -l pt_BR
-Bibliotecas estАticas para desenvolvimento com openssl.
+%description static -l pt_BR.UTF-8
+Bibliotecas estц║ticas para desenvolvimento com openssl.
 
-%description static -l ru
-Программа openssl для работы с сертификатами и разделяемые библиотеки,
-которые реализуют множетсво криптографических алгоритмов, включая DES,
-RC4, RSA и SSL. Включает статические библиотеки для разработки
-приложений с использованием OpenSSL.
+%description static -l ru.UTF-8
+п÷я─п╬пЁя─п╟п╪п╪п╟ openssl п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ я│п╣я─я┌п╦я└п╦п╨п╟я┌п╟п╪п╦ п╦ я─п╟п╥п╢п╣п╩я▐п╣п╪я▀п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦,
+п╨п╬я┌п╬я─я▀п╣ я─п╣п╟п╩п╦п╥я┐я▌я┌ п╪п╫п╬п╤п╣я┌я│п╡п╬ п╨я─п╦п©я┌п╬пЁя─п╟я└п╦я┤п╣я│п╨п╦я┘ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡, п╡п╨п╩я▌я┤п╟я▐ DES,
+RC4, RSA п╦ SSL. п▓п╨п╩я▌я┤п╟п╣я┌ я│я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦
+п©я─п╦п╩п╬п╤п╣п╫п╦п╧ я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ OpenSSL.
 
-%description static -l uk
-Програма openssl для роботи з сертиф╕катами та б╕бл╕отеки сп╕льного
-користування, що реал╕зують велику к╕льк╕сть криптограф╕чних
-алгоритм╕в, включаючи DES, RC4, RSA та SSL. М╕стить статичн╕
-б╕бл╕отеки для розробки програм з використанням SSL.
+%description static -l uk.UTF-8
+п÷я─п╬пЁя─п╟п╪п╟ openssl п╢п╩я▐ я─п╬п╠п╬я┌п╦ п╥ я│п╣я─я┌п╦я└я√п╨п╟я┌п╟п╪п╦ я┌п╟ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ я│п©я√п╩я▄п╫п╬пЁп╬
+п╨п╬я─п╦я│я┌я┐п╡п╟п╫п╫я▐, я┴п╬ я─п╣п╟п╩я√п╥я┐я▌я┌я▄ п╡п╣п╩п╦п╨я┐ п╨я√п╩я▄п╨я√я│я┌я▄ п╨я─п╦п©я┌п╬пЁя─п╟я└я√я┤п╫п╦я┘
+п╟п╩пЁп╬я─п╦я┌п╪я√п╡, п╡п╨п╩я▌я┤п╟я▌я┤п╦ DES, RC4, RSA я┌п╟ SSL. п°я√я│я┌п╦я┌я▄ я│я┌п╟я┌п╦я┤п╫я√
+п╠я√п╠п╩я√п╬я┌п╣п╨п╦ п╢п╩я▐ я─п╬п╥я─п╬п╠п╨п╦ п©я─п╬пЁя─п╟п╪ п╥ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐п╪ SSL.
 
 %prep
 %setup -q
