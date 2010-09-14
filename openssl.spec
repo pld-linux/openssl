@@ -14,7 +14,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.7m
-Release:	3
+Release:	4
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -34,7 +34,7 @@ Patch7:		%{name}-c_rehash.patch
 Patch15:	%{name}-0.9.8b-cve-2007-5135.patch
 Patch16:	%{name}-0.9.7a-cve-2008-5077.patch
 Patch18:	%{name}-0.9.7a-cve-2009-2409.patch
-Patch19:	%{name}-0.9.7a-cve-2009-3555.patch
+#Patch19:	%{name}-0.9.7a-cve-2009-3555.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -204,7 +204,7 @@ cp -a %{SOURCE4} c_rehash.sh
 %patch15 -p1
 %patch16 -p1
 %patch18 -p1
-%patch19 -p1
+#%patch19 -p1
 
 # conflicts with i386-only DES implementation
 # (missing #ifdef OPENSSL_FIPS  ...  #endif)
