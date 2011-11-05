@@ -14,7 +14,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.7m
-Release:	5
+Release:	6
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -367,7 +367,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_var}/lib/%{name}/certs
 %dir %{_var}/lib/%{name}/private
 %dir %{_datadir}/ssl
-%config(noreplace) %verify(not md5 mtime size) %{_datadir}/ssl/ca-bundle.crt
 
 %files tools
 %defattr(644,root,root,755)
