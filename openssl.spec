@@ -371,8 +371,8 @@ if [ -d /var/lib/openssl ]; then
 	for f in /var/lib/openssl/*; do
 		[ -f "$f" ] && mv "$f" %{_sysconfdir}/%{name} 2>/dev/null || :
 	done
-	rmdir in /var/lib/openssl/* 2>/dev/null || :
-	rmdir in /var/lib/openssl 2>/dev/null || :
+	rmdir /var/lib/openssl/* 2>/dev/null || :
+	rmdir /var/lib/openssl 2>/dev/null || :
 fi
 
 %files
