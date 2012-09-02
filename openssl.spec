@@ -39,7 +39,7 @@ BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
-Requires:	ca-certificates >= 20110502+nmu1-1
+Requires:	ca-certificates >= 20120623-1.1
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
@@ -356,17 +356,23 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%triggerpostun -- %{name} < 0.9.7m-6.1
-if [ -d /var/lib/openssl/certs ] ; then
+%triggerpostun -- %{name} < 0.9.7m-6.3
+# don't do anything on --downgrade
+if [ $1 -le 1 ]; then
+	exit 0
+fi
+if [ -d /var/lib/openssl/certs ]; then
 	mv /var/lib/openssl/certs/* %{_sysconfdir}/%{name}/certs 2>/dev/null || :
 fi
-if [ -d /var/lib/openssl/private ] ; then
+if [ -d /var/lib/openssl/private ]; then
 	mv /var/lib/openssl/private/* %{_sysconfdir}/%{name}/private 2>/dev/null || :
 fi
-if [ -d /var/lib/openssl ] ; then
-	for f in /var/lib/openssl/* ; do
+if [ -d /var/lib/openssl ]; then
+	for f in /var/lib/openssl/*; do
 		[ -f "$f" ] && mv "$f" %{_sysconfdir}/%{name} 2>/dev/null || :
 	done
+	rmdir in /var/lib/openssl/* 2>/dev/null || :
+	rmdir in /var/lib/openssl 2>/dev/null || :
 fi
 
 %files
