@@ -33,6 +33,7 @@ Patch6:		%{name}-ca-certificates.patch
 Patch7:		%{name}-fips_install.patch
 Patch8:		%{name}-ldflags.patch
 Patch9:		find.pl-deprecated.patch
+Patch10:	pod-fixes.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -204,6 +205,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
