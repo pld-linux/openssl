@@ -213,7 +213,7 @@ sed -i -e 's|$prefix/lib/engines|/%{_lib}/engines|g' Configure
 %build
 touch Makefile.*
 
-%{__perl} util/perlpath.pl %{__perl}
+%{__perl} -Iutil util/perlpath.pl %{__perl}
 
 OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}" \
 ./Configure \
