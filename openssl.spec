@@ -14,12 +14,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.8y
+Version:	0.9.8zb
 Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	47c7fb37f78c970f1d30aa2f9e9e26d8
+# Source0-md5:	65c5f42734f8ecd58990b12a9afa6453
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -33,7 +33,6 @@ Patch6:		%{name}-ca-certificates.patch
 Patch7:		%{name}-fips_install.patch
 Patch8:		%{name}-ldflags.patch
 Patch9:		find.pl-deprecated.patch
-Patch10:	pod-fixes.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -205,7 +204,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
