@@ -3,8 +3,8 @@ built on a i686/ev6/sparcv9 to not run on a i386/ev5/sparcv7 and so on.
 
 ...add $ENV{OPTFLAGS} instead
 
---- openssl-1.0.1c/Configure.orig	2013-01-14 19:37:10.656534171 +0100
-+++ openssl-1.0.1c/Configure	2013-01-14 20:07:02.553163489 +0100
+--- openssl-1.0.1n/Configure~	2015-06-11 18:13:10.000000000 +0300
++++ openssl-1.0.1n/Configure	2015-06-11 18:15:47.414930200 +0300
 @@ -165,8 +165,8 @@
  #"b2-is-ri-dp",	"${tcc}:${tflags}::${tlib}:${bits2}IDEA_SHORT RC4_INDEX DES_PTR:${tbn_mul}::",
  
@@ -76,7 +76,7 @@ built on a i686/ev6/sparcv9 to not run on a i386/ev5/sparcv7 and so on.
  #### So called "highgprs" target for z/Architecture CPUs
  # "Highgprs" is kernel feature first implemented in Linux 2.6.32, see
  # /proc/cpuinfo. The idea is to preserve most significant bits of
-@@ -373,16 +373,16 @@
+@@ -375,16 +375,16 @@
  # ldconfig and run-time linker to autodiscover. Unfortunately it
  # doesn't work just yet, because of couple of bugs in glibc
  # sysdeps/s390/dl-procinfo.c affecting ldconfig and ld.so.1...
@@ -85,15 +85,15 @@ built on a i686/ev6/sparcv9 to not run on a i386/ev5/sparcv7 and so on.
  #### SPARC Linux setups
  # Ray Miller <ray.miller@computing-services.oxford.ac.uk> has patiently
  # assisted with debugging of following two configs.
--"linux-sparcv8","gcc:-mv8 -DB_ENDIAN -O3 -fomit-frame-pointer -Wall -DBN_DIV2W::-D_REENTRANT::-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
-+"linux-sparcv8","gcc:-mv8 -DB_ENDIAN -fomit-frame-pointer $ENV{OPTFLAGS} -Wall -DBN_DIV2W::-D_REENTRANT::-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"linux-sparcv8","gcc:-mcpu=v8 -DB_ENDIAN -O3 -fomit-frame-pointer -Wall -DBN_DIV2W::-D_REENTRANT::-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"linux-sparcv8","gcc:-mcpu=v8 -DB_ENDIAN $ENV{OPTFLAGS} -fomit-frame-pointer -Wall -DBN_DIV2W::-D_REENTRANT::-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
  # it's a real mess with -mcpu=ultrasparc option under Linux, but
  # -Wa,-Av8plus should do the trick no matter what.
 -"linux-sparcv9","gcc:-m32 -mcpu=ultrasparc -DB_ENDIAN -O3 -fomit-frame-pointer -Wall -Wa,-Av8plus -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:-m32:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
-+"linux-sparcv9","gcc:-m32 -mcpu=ultrasparc -DB_ENDIAN -fomit-frame-pointer $ENV{OPTFLAGS} -Wall -Wa,-Av8plus -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:-m32:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"linux-sparcv9","gcc:-m32 -mcpu=ultrasparc -DB_ENDIAN $ENV{OPTFLAGS} -fomit-frame-pointer -Wall -Wa,-Av8plus -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:-m32:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
  # GCC 3.1 is a requirement
 -"linux64-sparcv9","gcc:-m64 -mcpu=ultrasparc -DB_ENDIAN -O3 -fomit-frame-pointer -Wall::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:-m64:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::64",
-+"linux64-sparcv9","gcc:-m64 -mcpu=ultrasparc -DB_ENDIAN -fomit-frame-pointer $ENV{OPTFLAGS} -Wall::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:-m64:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::64",
++"linux64-sparcv9","gcc:-m64 -mcpu=ultrasparc -DB_ENDIAN $ENV{OPTFLAGS} -fomit-frame-pointer -Wall::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:-m64:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::64",
  #### Alpha Linux with GNU C and Compaq C setups
  # Special notes:
  # - linux-alpha+bwx-gcc is ment to be used from ./config only. If you
