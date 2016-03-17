@@ -8,7 +8,7 @@ if [ "$1" != "--force" -a -f $CERT ]; then
   exit 0
 fi
 
-if [ "$1" == "--force" ]; then
+if [ "$1" = "--force" ]; then
   shift
 fi     
 
