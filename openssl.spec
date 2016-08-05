@@ -349,7 +349,7 @@ PERL="%{__perl}" \
 %endif
 
 v=$(awk -F= '/^VERSION/{print $2}' Makefile)
-test "$v" = %{version}%{?with_snap:-dev}
+test "$v" = %{version}%{?subver:-%{subver}}%{?with_snap:-dev}
 
 %{__make} -j1 all rehash %{?with_tests:tests} \
 	CC="%{__cc}" \
