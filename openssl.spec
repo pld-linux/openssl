@@ -52,7 +52,7 @@ Patch8:		pic.patch
 Patch10:	%{name}_fix_for_x32.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
-BuildRequires:	perl-devel >= 1:5.6.1
+BuildRequires:	perl-devel >= 1:5.10.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
