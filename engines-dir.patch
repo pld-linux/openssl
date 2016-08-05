@@ -1,0 +1,13 @@
+use /lib not /usr/lib for engines path
+
+--- openssl-1.1.0-pre6/Configurations/unix-Makefile.tmpl~	2016-08-04 17:00:44.000000000 +0300
++++ openssl-1.1.0-pre6/Configurations/unix-Makefile.tmpl	2016-08-06 02:13:21.613568293 +0300
+@@ -151,7 +151,7 @@
+           our $libdir = $config{libdir} || "lib$multilib";
+           $libdir -}
+ ENGINESDIR={- use File::Spec::Functions;
+-              catdir($prefix,$libdir,"engines-$sover") -}
++              catdir("/",$libdir,"engines-$sover") -}
+ 
+ MANDIR=$(INSTALLTOP)/share/man
+ DOCDIR=$(INSTALLTOP)/share/doc/$(BASENAME)

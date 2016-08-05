@@ -50,6 +50,7 @@ Patch6:		%{name}-ldflags.patch
 Patch7:		%{name}-find.patch
 Patch8:		pic.patch
 Patch10:	%{name}_fix_for_x32.patch
+Patch11:	engines-dir.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.10.0
@@ -280,8 +281,7 @@ mv %{name}-OpenSSL_1_0_2-stable/* .
 %ifarch x32
 %patch10 -p1
 %endif
-
-sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
+%patch11 -p1
 
 %build
 touch Makefile.*
@@ -292,6 +292,7 @@ touch Makefile.*
 OPTFLAGS="%{rpmcflags} %{rpmcppflags} %{?with_purify:-DPURIFY}" \
 PERL="%{__perl}" \
 %{__perl} ./Configure \
+	--prefix=%{_prefix} \
 	--openssldir=%{_sysconfdir}/%{name} \
 	--libdir=%{_lib} \
 	shared \
