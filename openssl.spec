@@ -352,7 +352,7 @@ PERL="%{__perl}" \
 v=$(awk -F= '/^VERSION/{print $2}' Makefile)
 test "$v" = %{version}%{?subver:-%{subver}}%{?with_snap:-dev}
 
-%{__make} -j1 all rehash %{?with_tests:tests} \
+%{__make} -j1 all %{?with_tests:tests} \
 	CC="%{__cc}" \
 	ASFLAG='$(CFLAG) -Wa,--noexecstack' \
 	INSTALLTOP=%{_prefix}
