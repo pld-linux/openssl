@@ -299,7 +299,6 @@ PERL="%{__perl}" \
 	%{?with_sslv2:enable-ssl2}%{!?with_sslv2:no-ssl2} \
 	%{?with_sslv3:enable-ssl3}%{!?with_sslv3:no-ssl3} \
 	%{!?with_zlib:no-}zlib \
-	enable-camelia \
 	enable-cms \
 	enable-idea \
 	enable-md2 \
@@ -307,7 +306,6 @@ PERL="%{__perl}" \
 	enable-rc5 \
 	enable-rfc3779 \
 	enable-seed \
-	enable-tlsext \
 %ifarch %{x8664}
 	enable-ec_nistp_64_gcc_128 \
 %endif
