@@ -11,6 +11,8 @@
 			# use valgrind debugger against openssl-linked programs
 %bcond_with	snap	# use GitHub snapshot to build branch release
 
+%define		subver	pre6
+%define		rel		0.1
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -24,13 +26,14 @@ Name:		openssl
 # 1.0.2 will be LTS release
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.0.2h
-Release:	1
+Version:	1.1.0
+Release:	0.1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
-Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	9392e65072ce4b614c1392eefc1f23d0
+#Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+Source0:	https://www.openssl.org/source/%{name}-%{version}-%{subver}.tar.gz
+# Source0-md5:	5073f45b5922992234396c7d8247196f
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{name}-%{version}-dev.tar.gz
 %endif
@@ -263,15 +266,15 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %setup -qcT -a1
 mv %{name}-OpenSSL_1_0_2-stable/* .
 %else
-%setup -q
+%setup -q %{?subver:-n %{name}-%{version}-%{subver}}
 %endif
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+#%patch0 -p1 # alpha patch from year 2000 - drop it
+#%patch1 -p1 # flags list has been nuked (thank god!)
+#%patch2 -p1 # openssl include subdir. check this
+#%patch3 -p1 # patched Makefile.org no longer exists
+#%patch4 -p1 # patched Makefile.org no longer exists
+#%patch5 -p1 # check
+#%patch6 -p1 # patched Makefile.org no longer exists
 %patch7 -p1
 %patch8 -p1
 %ifarch x32
@@ -283,7 +286,8 @@ sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 %build
 touch Makefile.*
 
-%{__perl} util/perlpath.pl %{__perl}
+# util/perlpath.pl no longer exists
+#%{__perl} util/perlpath.pl %{__perl}
 
 OPTFLAGS="%{rpmcflags} %{rpmcppflags} %{?with_purify:-DPURIFY}" \
 PERL="%{__perl}" \
