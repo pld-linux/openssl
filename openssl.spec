@@ -375,24 +375,25 @@ done
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	$RPM_BUILD_ROOT{%{_mandir}/{pl/man1,man{1,3,5,7}},%{_datadir}/ssl} \
-	$RPM_BUILD_ROOT/%{_lib}/engines \
 	$RPM_BUILD_ROOT%{_pkgconfigdir}
 
 %{__make} -j1 install \
-	INSTALLTOP=%{_prefix} \
-	INSTALL_PREFIX=$RPM_BUILD_ROOT \
-	MANDIR=%{_mandir}
+	CC="%{__cc}" \
+	ASFLAG='$(CFLAG) -Wa,--noexecstack' \
+	DESTDIR=$RPM_BUILD_ROOT \
 
-mv -f $RPM_BUILD_ROOT%{_libdir}/engines/* $RPM_BUILD_ROOT/%{_lib}/engines
 mv -f $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcrypto.*.*) $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*.*) $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
 mv -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
-rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
+rm -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
+
+# html version of man pages - not packaged
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}/html/man[1357]
 
 # not installed as individual utilities (see openssl dgst instead)
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{dss1,md2,md4,md5,mdc2,ripemd160,sha,sha1,sha224,sha256,sha384,sha512}.1
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md4,md5,mdc2,ripemd160,sha,sha1,sha224,sha256,sha384,sha512}.1
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
@@ -429,9 +430,9 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
-%attr(755,root,root) /%{_lib}/libcrypto.so.*.*.*
-%attr(755,root,root) /%{_lib}/libssl.so.*.*.*
+%doc CHANGES LICENSE NEWS README doc/*.txt
+%attr(755,root,root) /%{_lib}/libcrypto.so.*.*
+%attr(755,root,root) /%{_lib}/libssl.so.*.*
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/certs
 %dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
@@ -439,8 +440,8 @@ fi
 
 %files engines
 %defattr(644,root,root,755)
-%dir /%{_lib}/engines
-%attr(755,root,root) /%{_lib}/engines/*.so
+%dir /%{_lib}/engines-1.1
+%attr(755,root,root) /%{_lib}/engines-1.1/*.so
 
 %files tools
 %defattr(644,root,root,755)
@@ -450,11 +451,11 @@ fi
 %attr(754,root,root) %{_bindir}/ssl-certificate
 
 %dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/CA.sh
-%attr(755,root,root) %{_libdir}/%{name}/c_hash
-%attr(755,root,root) %{_libdir}/%{name}/c_info
-%attr(755,root,root) %{_libdir}/%{name}/c_issuer
-%attr(755,root,root) %{_libdir}/%{name}/c_name
+#%attr(755,root,root) %{_libdir}/%{name}/CA.sh
+#%attr(755,root,root) %{_libdir}/%{name}/c_hash
+#%attr(755,root,root) %{_libdir}/%{name}/c_info
+#%attr(755,root,root) %{_libdir}/%{name}/c_issuer
+#%attr(755,root,root) %{_libdir}/%{name}/c_name
 
 %{_mandir}/man1/openssl.1*
 %{_mandir}/man1/openssl_asn1parse.1*
@@ -509,7 +510,7 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/tsget
 %{_mandir}/man1/openssl_CA.pl.1*
-%{_mandir}/man1/openssl_c_rehash.1*
+#%{_mandir}/man1/openssl_c_rehash.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -519,8 +520,13 @@ fi
 %{_pkgconfigdir}/libcrypto.pc
 %{_pkgconfigdir}/libssl.pc
 %{_pkgconfigdir}/openssl.pc
+%if 1
+%{_mandir}/man3/*.3*
+%{_mandir}/man7/*.7*
+%else
 %{_mandir}/man3/openssl*.3*
 %{_mandir}/man7/openssl_des_modes.7*
+%endif
 
 %files static
 %defattr(644,root,root,755)
