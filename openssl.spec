@@ -57,6 +57,7 @@ BuildRequires:	perl-devel >= 1:5.10.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
+BuildRequires:	zlib-devel
 Requires:	ca-certificates >= 20120623-1.1
 Requires:	rpm-whiteout >= 1.7
 Obsoletes:	SSLeay
