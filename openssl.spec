@@ -11,7 +11,6 @@
 			# use valgrind debugger against openssl-linked programs
 %bcond_with	snap	# use GitHub snapshot to build branch release
 
-%define		subver	pre6
 %define		rel		0.1
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
@@ -31,9 +30,8 @@ Release:	0.1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
-#Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-Source0:	https://www.openssl.org/source/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	5073f45b5922992234396c7d8247196f
+Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+# Source0-md5:	dbef70de4a1a4bdd78ab7c6547e5211d
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{name}-%{version}-dev.tar.gz
 %endif
