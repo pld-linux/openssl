@@ -30,7 +30,7 @@ Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
-Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	38a0bf2883ab4951acb15b1886b7f5aa
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_1_0-stable/%{name}-%{version}-dev.tar.gz
