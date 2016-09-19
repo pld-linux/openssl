@@ -1,6 +1,7 @@
 # TODO
 # - consider dropping last optflags.patch hunk and return to SOMAJOR (.so.1) sonames
 # - find a way to simplify (drop) openssl-optflags.patch, it's pain to update here in pld
+# - pass our cflags (currently built with -O3)
 #
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
@@ -22,10 +23,9 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-# 1.0.2 will be LTS release
-# Version 1.0.2 will be supported until 2019-12-31.
+# Version 1.1.0 will be supported until 2018-08-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.1.0
+Version:	1.1.0a
 Release:	0.1
 License:	Apache-like
 Group:		Libraries
@@ -33,7 +33,7 @@ Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	dbef70de4a1a4bdd78ab7c6547e5211d
 %else
-Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{name}-%{version}-dev.tar.gz
+Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_1_0-stable/%{name}-%{version}-dev.tar.gz
 %endif
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
@@ -264,7 +264,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %prep
 %if %{with snap}
 %setup -qcT -a1
-mv %{name}-OpenSSL_1_0_2-stable/* .
+mv %{name}-OpenSSL_1_1_0-stable/* .
 %else
 %setup -q %{?subver:-n %{name}-%{version}-%{subver}}
 %endif
