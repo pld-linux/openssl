@@ -1,15 +1,9 @@
-# TODO
-# - consider dropping last optflags.patch hunk and return to SOMAJOR (.so.1) sonames
-# - find a way to simplify (drop) openssl-optflags.patch, it's pain to update here in pld
-# - pass our cflags (currently built with -O3)
 #
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
 %bcond_without	zlib	# zlib: note - enables CVE-2012-4929 vulnerability
 %bcond_without	sslv2	# SSLv2: note - many flaws http://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_2.0
 %bcond_without	sslv3	# SSLv3: note - enables  CVE-2014-3566 vulnerability
-%bcond_with	purify	# Compile openssl with "-DPURIFY", useful when one wants to
-			# use valgrind debugger against openssl-linked programs
 %bcond_with	snap	# use GitHub snapshot to build branch release
 
 %define		rel		0.1
@@ -25,26 +19,23 @@ Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднан
 Name:		openssl
 # Version 1.1.0 will be supported until 2018-08-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.1.0a
+Version:	1.1.0g
 Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	38a0bf2883ab4951acb15b1886b7f5aa
+# Source0-md5:	ba5f1b8b835b88cadbce9b35ed9531a6
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_1_0-stable/%{name}-%{version}-dev.tar.gz
 %endif
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
-Patch0:		%{name}-alpha-ccc.patch
 Patch1:		%{name}-optflags.patch
-Patch2:		%{name}-include.patch
 Patch3:		%{name}-man-namespace.patch
 Patch4:		%{name}-asflag.patch
 Patch5:		%{name}-ca-certificates.patch
-Patch6:		%{name}-ldflags.patch
 Patch7:		%{name}-find.patch
 Patch8:		pic.patch
 Patch10:	%{name}_fix_for_x32.patch
@@ -264,17 +255,14 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %prep
 %if %{with snap}
 %setup -qcT -a1
-mv %{name}-OpenSSL_1_1_0-stable/* .
+%{__mv} %{name}-OpenSSL_1_1_0-stable/* .
 %else
 %setup -q %{?subver:-n %{name}-%{version}-%{subver}}
 %endif
-#%patch0 -p1 # alpha patch from year 2000 - drop it
-#%patch1 -p1 # flags list has been nuked (thank god!)
-#%patch2 -p1 # openssl include subdir. check this
-#%patch3 -p1 # patched Makefile.org no longer exists
-#%patch4 -p1 # patched Makefile.org no longer exists
-#%patch5 -p1 # check
-#%patch6 -p1 # patched Makefile.org no longer exists
+%patch1 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 %patch7 -p1
 %patch8 -p1
 %ifarch x32
@@ -285,10 +273,6 @@ mv %{name}-OpenSSL_1_1_0-stable/* .
 %build
 touch Makefile.*
 
-# util/perlpath.pl no longer exists
-#%{__perl} util/perlpath.pl %{__perl}
-
-OPTFLAGS="%{rpmcflags} %{rpmcppflags} %{?with_purify:-DPURIFY}" \
 PERL="%{__perl}" \
 %{__perl} ./Configure \
 	--prefix=%{_prefix} \
@@ -318,7 +302,7 @@ PERL="%{__perl}" \
 %endif
 %endif
 %ifarch alpha
-	linux-alpha+bwx-gcc
+	linux-alpha-gcc
 %endif
 %ifarch %{x8664}
 	linux-x86_64
@@ -344,8 +328,11 @@ PERL="%{__perl}" \
 %ifarch sparc64
 	linux64-sparcv9
 %endif
-%ifarch armv4 armv5 armv5t armv5te armv5tel
+%ifarch %{arm}
 	linux-armv4
+%endif
+%ifarch aarch64
+	linux-aarch64
 %endif
 
 v=$(awk -F= '/^VERSION/{print $2}' Makefile)
@@ -353,20 +340,19 @@ test "$v" = %{version}%{?subver:-%{subver}}%{?with_snap:-dev}
 
 %{__make} -j1 all %{?with_tests:tests} \
 	CC="%{__cc}" \
-	ASFLAG='$(CFLAG) -Wa,--noexecstack' \
+	ASFLAG="-Wa,--noexecstack" \
+	OPTFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	INSTALLTOP=%{_prefix}
 
-# Rename POD sources of man pages. "openssl_" prefix is added to each
+# Rename POD sources of man pages. "openssl-" prefix is added to each
 # manpage to avoid potential conflicts with other packages.
+# (libcrypto/libssl function names are not affected)
 
-for dir in doc/{apps,ssl,crypto}; do
-	cd $dir || exit 1;
-	%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
-
-	for pod in !(openssl*).pod; do
-		mv -f $pod openssl_$pod;
-	done
-	cd ../..
+%{__perl} -pi -e 's/(\W)((?<!openssl-)\w+)(\([157]\))/$1openssl-$2$3/g; s/openssl-openssl/openssl/g;' {apps,ssl,crypto}/*.pod;
+for podfile in doc/apps/!(CA.pl|openssl*).pod doc/crypto/{bio,crypto,ct,des_modes,evp,x509}.pod  doc/ssl/ssl.pod ; do
+	dir=$(dirname "$podfile")
+	base=$(basename "$podfile")
+	%{__mv} "$podfile" "$dir/openssl-$base"
 done
 
 %install
@@ -377,21 +363,21 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 
 %{__make} -j1 install \
 	CC="%{__cc}" \
-	ASFLAG='$(CFLAG) -Wa,--noexecstack' \
+	ASFLAG="-Wa,--noexecstack" \
 	DESTDIR=$RPM_BUILD_ROOT \
 
-mv -f $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcrypto.*.*) $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*.*) $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
-mv -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
-rm -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
+%{__mv} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
+%{__rm} -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 
 # html version of man pages - not packaged
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}/html/man[1357]
 
 # not installed as individual utilities (see openssl dgst instead)
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md4,md5,mdc2,ripemd160,sha,sha1,sha224,sha256,sha384,sha512}.1
+#%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md4,md5,mdc2,ripemd160,sha,sha1,sha224,sha256,sha384,sha512}.1
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
@@ -456,50 +442,65 @@ fi
 #%attr(755,root,root) %{_libdir}/%{name}/c_name
 
 %{_mandir}/man1/openssl.1*
-%{_mandir}/man1/openssl_asn1parse.1*
-%{_mandir}/man1/openssl_ca.1*
-%{_mandir}/man1/openssl_ciphers.1*
-%{_mandir}/man1/openssl_cms.1*
-%{_mandir}/man1/openssl_crl.1*
-%{_mandir}/man1/openssl_crl2pkcs7.1*
-%{_mandir}/man1/openssl_dgst.1*
-%{_mandir}/man1/openssl_dhparam.1*
-%{_mandir}/man1/openssl_dsa.1*
-%{_mandir}/man1/openssl_dsaparam.1*
-%{_mandir}/man1/openssl_ec.1*
-%{_mandir}/man1/openssl_ecparam.1*
-%{_mandir}/man1/openssl_enc.1*
-%{_mandir}/man1/openssl_errstr.1*
-%{_mandir}/man1/openssl_gendsa.1*
-%{_mandir}/man1/openssl_genpkey.1*
-%{_mandir}/man1/openssl_genrsa.1*
-%{_mandir}/man1/openssl_nseq.1*
-%{_mandir}/man1/openssl_ocsp.1*
-%{_mandir}/man1/openssl_passwd.1*
-%{_mandir}/man1/openssl_pkcs12.1*
-%{_mandir}/man1/openssl_pkcs7.1*
-%{_mandir}/man1/openssl_pkcs8.1*
-%{_mandir}/man1/openssl_pkey.1*
-%{_mandir}/man1/openssl_pkeyparam.1*
-%{_mandir}/man1/openssl_pkeyutl.1*
-%{_mandir}/man1/openssl_rand.1*
-%{_mandir}/man1/openssl_req.1*
-%{_mandir}/man1/openssl_rsa.1*
-%{_mandir}/man1/openssl_rsautl.1*
-%{_mandir}/man1/openssl_s_client.1*
-%{_mandir}/man1/openssl_s_server.1*
-%{_mandir}/man1/openssl_s_time.1*
-%{_mandir}/man1/openssl_sess_id.1*
-%{_mandir}/man1/openssl_smime.1*
-%{_mandir}/man1/openssl_speed.1*
-%{_mandir}/man1/openssl_spkac.1*
-%{_mandir}/man1/openssl_ts.1*
-%{_mandir}/man1/openssl_tsget.1*
-%{_mandir}/man1/openssl_verify.1*
-%{_mandir}/man1/openssl_version.1*
-%{_mandir}/man1/openssl_x509.1*
-%{_mandir}/man5/openssl_config.5*
-%{_mandir}/man5/openssl_x509v3_config.5*
+%{_mandir}/man1/openssl-asn1parse.1*
+%{_mandir}/man1/openssl-blake2b.1*
+%{_mandir}/man1/openssl-blake2s.1*
+%{_mandir}/man1/openssl-ca.1*
+%{_mandir}/man1/openssl-ciphers.1*
+%{_mandir}/man1/openssl-cms.1*
+%{_mandir}/man1/openssl-crl.1*
+%{_mandir}/man1/openssl-crl2pkcs7.1*
+%{_mandir}/man1/openssl-dgst.1*
+%{_mandir}/man1/openssl-dhparam.1*
+%{_mandir}/man1/openssl-dsa.1*
+%{_mandir}/man1/openssl-dsaparam.1*
+%{_mandir}/man1/openssl-ec.1*
+%{_mandir}/man1/openssl-ecparam.1*
+%{_mandir}/man1/openssl-enc.1*
+%{_mandir}/man1/openssl-engine.1*
+%{_mandir}/man1/openssl-errstr.1*
+%{_mandir}/man1/openssl-gendsa.1*
+%{_mandir}/man1/openssl-genpkey.1*
+%{_mandir}/man1/openssl-genrsa.1*
+%{_mandir}/man1/openssl-list.1*
+%{_mandir}/man1/openssl-md4.1*
+%{_mandir}/man1/openssl-md5.1*
+%{_mandir}/man1/openssl-mdc2.1*
+%{_mandir}/man1/openssl-nseq.1*
+%{_mandir}/man1/openssl-ocsp.1*
+%{_mandir}/man1/openssl-passwd.1*
+%{_mandir}/man1/openssl-pkcs12.1*
+%{_mandir}/man1/openssl-pkcs7.1*
+%{_mandir}/man1/openssl-pkcs8.1*
+%{_mandir}/man1/openssl-pkey.1*
+%{_mandir}/man1/openssl-pkeyparam.1*
+%{_mandir}/man1/openssl-pkeyutl.1*
+%{_mandir}/man1/openssl-rand.1*
+%{_mandir}/man1/openssl-rehash.1*
+%{_mandir}/man1/openssl-req.1*
+%{_mandir}/man1/openssl-ripemd160.1*
+%{_mandir}/man1/openssl-rsa.1*
+%{_mandir}/man1/openssl-rsautl.1*
+%{_mandir}/man1/openssl-s_client.1*
+%{_mandir}/man1/openssl-s_server.1*
+%{_mandir}/man1/openssl-s_time.1*
+%{_mandir}/man1/openssl-sess_id.1*
+%{_mandir}/man1/openssl-sha.1*
+%{_mandir}/man1/openssl-sha1.1*
+%{_mandir}/man1/openssl-sha224.1*
+%{_mandir}/man1/openssl-sha256.1*
+%{_mandir}/man1/openssl-sha384.1*
+%{_mandir}/man1/openssl-sha512.1*
+%{_mandir}/man1/openssl-smime.1*
+%{_mandir}/man1/openssl-speed.1*
+%{_mandir}/man1/openssl-spkac.1*
+%{_mandir}/man1/openssl-ts.1*
+%{_mandir}/man1/openssl-tsget.1*
+%{_mandir}/man1/openssl-verify.1*
+%{_mandir}/man1/openssl-version.1*
+%{_mandir}/man1/openssl-x509.1*
+%{_mandir}/man5/openssl-config.5*
+%{_mandir}/man5/openssl-x509v3_config.5*
 %lang(pl) %{_mandir}/pl/man1/openssl.1*
 
 %files tools-perl
@@ -507,8 +508,9 @@ fi
 %attr(755,root,root) %{_bindir}/c_rehash
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/tsget
-%{_mandir}/man1/openssl_CA.pl.1*
-#%{_mandir}/man1/openssl_c_rehash.1*
+%{_mandir}/man1/CA.pl.1*
+%{_mandir}/man1/c_rehash.1*
+%{_mandir}/man1/openssl-c_rehash.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -518,13 +520,124 @@ fi
 %{_pkgconfigdir}/libcrypto.pc
 %{_pkgconfigdir}/libssl.pc
 %{_pkgconfigdir}/openssl.pc
-%if 1
-%{_mandir}/man3/*.3*
-%{_mandir}/man7/*.7*
-%else
-%{_mandir}/man3/openssl*.3*
-%{_mandir}/man7/openssl_des_modes.7*
-%endif
+%{_mandir}/man3/ACCESS_DESCRIPTION_*.3*
+%{_mandir}/man3/ASId*.3*
+%{_mandir}/man3/ASRange_*.3*
+%{_mandir}/man3/ASN1_*.3*
+%{_mandir}/man3/ASYNC_*.3*
+%{_mandir}/man3/AUTHORITY_*.3*
+%{_mandir}/man3/BASIC_CONSTRAINTS_*.3*
+%{_mandir}/man3/BF_*.3*
+%{_mandir}/man3/BIO_*.3*
+%{_mandir}/man3/BN_*.3*
+%{_mandir}/man3/BUF_*.3*
+%{_mandir}/man3/CERTIFICATEPOLICIES_*.3*
+%{_mandir}/man3/CMS_*.3*
+%{_mandir}/man3/CONF_*.3*
+%{_mandir}/man3/CRL_DIST_POINTS_*.3*
+%{_mandir}/man3/CRYPTO_*.3*
+%{_mandir}/man3/CTLOG_*.3*
+%{_mandir}/man3/CT_POLICY_*.3*
+%{_mandir}/man3/DECLARE_*.3*
+%{_mandir}/man3/DEFINE_*.3*
+%{_mandir}/man3/DES_*.3*
+%{_mandir}/man3/DH_*.3*
+%{_mandir}/man3/DHparams_*.3*
+%{_mandir}/man3/DIRECTORYSTRING_*.3*
+%{_mandir}/man3/DISPLAYTEXT_*.3*
+%{_mandir}/man3/DIST_POINT_*.3*
+%{_mandir}/man3/DSA_*.3*
+%{_mandir}/man3/DSAparams_*.3*
+%{_mandir}/man3/DTLS_*.3*
+%{_mandir}/man3/DTLSv1_*.3*
+%{_mandir}/man3/ECDH_*.3*
+%{_mandir}/man3/ECDSA_*.3*
+%{_mandir}/man3/ECPARAMETERS_*.3*
+%{_mandir}/man3/ECPKPARAMETERS_*.3*
+%{_mandir}/man3/ECPKParameters_*.3*
+%{_mandir}/man3/EC_*.3*
+%{_mandir}/man3/EDIPARTYNAME_*.3*
+%{_mandir}/man3/ENGINE_*.3*
+%{_mandir}/man3/ERR_*.3*
+%{_mandir}/man3/ESS_*.3*
+%{_mandir}/man3/EVP_*.3*
+%{_mandir}/man3/EXTENDED_KEY_USAGE_*.3*
+%{_mandir}/man3/GENERAL_*.3*
+%{_mandir}/man3/GEN_SESSION_CB.3*
+%{_mandir}/man3/HMAC*.3*
+%{_mandir}/man3/IMPLEMENT_*.3*
+%{_mandir}/man3/IPAddress*.3*
+%{_mandir}/man3/ISSUING_DIST_POINT_*.3*
+%{_mandir}/man3/LHASH_*.3*
+%{_mandir}/man3/MD2*.3*
+%{_mandir}/man3/MD4*.3*
+%{_mandir}/man3/MD5*.3*
+%{_mandir}/man3/MDC2*.3*
+%{_mandir}/man3/NAME_CONSTRAINTS_*.3*
+%{_mandir}/man3/NETSCAPE_*.3*
+%{_mandir}/man3/NOTICEREF_*.3*
+%{_mandir}/man3/OBJ_*.3*
+%{_mandir}/man3/OCSP_*.3*
+%{_mandir}/man3/OPENSSL_*.3*
+%{_mandir}/man3/OTHERNAME_*.3*
+%{_mandir}/man3/OpenSSL_*.3*
+%{_mandir}/man3/PBE2PARAM_*.3*
+%{_mandir}/man3/PBEPARAM_*.3*
+%{_mandir}/man3/PBKDF2PARAM_*.3*
+%{_mandir}/man3/PEM_*.3*
+%{_mandir}/man3/PKCS12_*.3*
+%{_mandir}/man3/PKCS5_*.3*
+%{_mandir}/man3/PKCS7_*.3*
+%{_mandir}/man3/PKCS8_*.3*
+%{_mandir}/man3/PKEY_*.3*
+%{_mandir}/man3/POLICYINFO_*.3*
+%{_mandir}/man3/POLICYQUALINFO_*.3*
+%{_mandir}/man3/POLICY_*.3*
+%{_mandir}/man3/PROXY_*.3*
+%{_mandir}/man3/RAND_*.3*
+%{_mandir}/man3/RC4*.3*
+%{_mandir}/man3/RIPEMD160*.3*
+%{_mandir}/man3/RSAPrivateKey_*.3*
+%{_mandir}/man3/RSAPublicKey_*.3*
+%{_mandir}/man3/RSA_*.3*
+%{_mandir}/man3/SCT_*.3*
+%{_mandir}/man3/SHA1*.3*
+%{_mandir}/man3/SHA224*.3*
+%{_mandir}/man3/SHA256*.3*
+%{_mandir}/man3/SHA384*.3*
+%{_mandir}/man3/SHA512*.3*
+%{_mandir}/man3/SMIME_*.3*
+%{_mandir}/man3/SSL_*.3*
+%{_mandir}/man3/SSLv23_*.3*
+%{_mandir}/man3/SSLv3_*.3*
+%{_mandir}/man3/SXNET_*.3*
+%{_mandir}/man3/SXNETID_*.3*
+%{_mandir}/man3/TLS_*.3*
+%{_mandir}/man3/TLSv1_*.3*
+%{_mandir}/man3/TS_*.3*
+%{_mandir}/man3/UI*.3*
+%{_mandir}/man3/USERNOTICE_*.3*
+%{_mandir}/man3/X509_*.3*
+%{_mandir}/man3/X509V3_*.3*
+%{_mandir}/man3/X509v3_*.3*
+%{_mandir}/man3/bio_info_cb.3*
+%{_mandir}/man3/custom_ext_*.3*
+%{_mandir}/man3/d2i_*.3*
+%{_mandir}/man3/i2d_*.3*
+%{_mandir}/man3/i2o_*.3*
+%{_mandir}/man3/i2t_*.3*
+%{_mandir}/man3/lh_TYPE_*.3*
+%{_mandir}/man3/o2i_*.3*
+%{_mandir}/man3/pem_password_cb.3*
+%{_mandir}/man3/sk_TYPE_*.3*
+%{_mandir}/man3/ssl_ct_validation_cb.3*
+%{_mandir}/man7/openssl-bio.7*
+%{_mandir}/man7/openssl-crypto.7*
+%{_mandir}/man7/openssl-ct.7*
+%{_mandir}/man7/openssl-des_modes.7*
+%{_mandir}/man7/openssl-evp.7*
+%{_mandir}/man7/openssl-ssl.7*
+%{_mandir}/man7/openssl-x509.7*
 
 %files static
 %defattr(644,root,root,755)

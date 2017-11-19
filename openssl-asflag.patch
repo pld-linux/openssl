@@ -1,11 +1,28 @@
---- openssl-1.0.0/Makefile.org.orig	2010-04-10 11:17:55.964995600 +0200
-+++ openssl-1.0.0/Makefile.org	2010-04-10 11:19:41.144993924 +0200
-@@ -178,7 +178,7 @@
+--- openssl-1.1.0g/Configurations/unix-Makefile.tmpl.orig	2017-11-19 10:16:26.044446930 +0100
++++ openssl-1.1.0g/Configurations/unix-Makefile.tmpl	2017-11-19 17:44:59.020806300 +0100
+@@ -208,8 +208,7 @@
+ # dependent assembler flags. E.g. if you throw -mcpu=ultrasparc at SPARC
+ # gcc, then the driver will automatically translate it to -xarch=v8plus
+ # and pass it down to assembler.
+-AS=$(CC) -c
+-ASFLAG=$(CFLAGS)
++ASFLAG=
+ PERLASM_SCHEME= {- $target{perlasm_scheme} -}
  
- BUILDENV=	PLATFORM='$(PLATFORM)' PROCESSOR='$(PROCESSOR)' \
- 		CC='$(CC)' CFLAG='$(CFLAG)' 			\
--		AS='$(CC)' ASFLAG='$(CFLAG) -c'			\
-+		AS='$(AS)' ASFLAG='$(ASFLAG)'			\
- 		AR='$(AR)' NM='$(NM)' RANLIB='$(RANLIB)'	\
- 		CROSS_COMPILE='$(CROSS_COMPILE)'	\
- 		PERL='$(PERL)' ENGDIRS='$(ENGDIRS)'		\
+ # For x86 assembler: Set PROCESSOR to 386 if you want to support
+@@ -847,13 +846,14 @@
+       my $ecflags = { lib => '$(LIB_CFLAGS)',
+                       dso => '$(DSO_CFLAGS)',
+                       bin => '$(BIN_CFLAGS)' } -> {$args{intent}};
++      my $asflags = ($srcs =~ /\.[Ss]$/) ? '$(ASFLAG)' : '';
+       my $makedepprog = $config{makedepprog};
+       my $recipe = <<"EOF";
+ $obj$objext: $deps
+ EOF
+       if (!$disabled{makedepend} && $makedepprog !~ /\/makedepend/) {
+           $recipe .= <<"EOF";
+-	\$(CC) $incs \$(CFLAGS) $ecflags -MMD -MF $obj$depext.tmp -MT \$\@ -c -o \$\@ $srcs
++	\$(CC) $incs \$(CFLAGS) $ecflags $asflags -MMD -MF $obj$depext.tmp -MT \$\@ -c -o \$\@ $srcs
+ 	\@touch $obj$depext.tmp
+ 	\@if cmp $obj$depext.tmp $obj$depext > /dev/null 2> /dev/null; then \\
+ 		rm -f $obj$depext.tmp; \\

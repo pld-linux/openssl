@@ -1,12 +1,11 @@
-diff -ruN openssl-1.0.2.orig/crypto/cryptlib.h openssl-1.0.2/crypto/cryptlib.h
---- openssl-1.0.2.orig/crypto/cryptlib.h	2015-01-22 15:58:32.000000000 +0100
-+++ openssl-1.0.2/crypto/cryptlib.h	2015-01-27 15:48:31.239123780 +0100
-@@ -82,7 +82,7 @@
+--- openssl-1.1.0g/crypto/include/internal/cryptlib.h.orig	2017-11-02 15:29:03.000000000 +0100
++++ openssl-1.1.0g/crypto/include/internal/cryptlib.h	2017-11-18 21:05:07.408322386 +0100
+@@ -42,7 +42,7 @@
  # ifndef OPENSSL_SYS_VMS
  #  define X509_CERT_AREA          OPENSSLDIR
  #  define X509_CERT_DIR           OPENSSLDIR "/certs"
 -#  define X509_CERT_FILE          OPENSSLDIR "/cert.pem"
 +#  define X509_CERT_FILE          "/etc/certs/ca-certificates.crt"
  #  define X509_PRIVATE_DIR        OPENSSLDIR "/private"
+ #  define CTLOG_FILE              OPENSSLDIR "/ct_log_list.cnf"
  # else
- #  define X509_CERT_AREA          "SSLROOT:[000000]"

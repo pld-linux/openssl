@@ -1,25 +1,643 @@
---- openssl-1.0.0/Makefile.org.orig	2010-04-10 11:05:35.900993086 +0200
-+++ openssl-1.0.0/Makefile.org	2010-04-10 11:16:15.052993924 +0200
-@@ -610,7 +610,7 @@
- 			--release=$(VERSION) `basename $$i`") \
- 			>  $(INSTALL_PREFIX)$(MANDIR)/man$$sec/$$fn.$${sec}$(MANSUFFIX); \
- 		$(PERL) util/extract-names.pl < $$i | \
--			(grep -v $$filecase "^$$fn\$$"; true) | \
-+			(grep -v $$filecase "^$${fn#openssl_}\$$"; true) | \
- 			(grep -v "[	]"; true) | \
- 			(cd $(INSTALL_PREFIX)$(MANDIR)/man$$sec/; \
- 			 while read n; do \
-@@ -627,11 +627,11 @@
- 			--release=$(VERSION) `basename $$i`") \
- 			>  $(INSTALL_PREFIX)$(MANDIR)/man$$sec/$$fn.$${sec}$(MANSUFFIX); \
- 		$(PERL) util/extract-names.pl < $$i | \
--			(grep -v $$filecase "^$$fn\$$"; true) | \
-+			(grep -v -E $$filecase "^$${fn#openssl_}\$$"; true) | \
- 			(grep -v "[	]"; true) | \
- 			(cd $(INSTALL_PREFIX)$(MANDIR)/man$$sec/; \
- 			 while read n; do \
--				PLATFORM=$(PLATFORM) $$here/util/point.sh $$fn.$${sec}$(MANSUFFIX) "$$n".$${sec}$(MANSUFFIX); \
-+				PLATFORM=$(PLATFORM) $$here/util/point.sh $$fn.$${sec}$(MANSUFFIX) openssl_"$$n".$${sec}$(MANSUFFIX); \
- 			 done); \
- 	done
+--- openssl-1.1.0g/doc/apps.orig/asn1parse.pod	2017-11-18 21:11:40.631651229 +0100
++++ openssl-1.1.0g/doc/apps/asn1parse.pod	2017-11-18 22:11:19.351610367 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-asn1parse,
+-asn1parse - ASN.1 parsing tool
++openssl-asn1parse - ASN.1 parsing tool
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/ca.pod	2017-11-18 21:11:40.631651229 +0100
++++ openssl-1.1.0g/doc/apps/ca.pod	2017-11-18 22:11:35.488276847 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-ca,
+-ca - sample minimal CA application
++openssl-ca - sample minimal CA application
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/ciphers.pod	2017-11-18 21:11:40.634984563 +0100
++++ openssl-1.1.0g/doc/apps/ciphers.pod	2017-11-18 22:11:40.291610128 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-ciphers,
+-ciphers - SSL cipher display and cipher list tool
++openssl-ciphers - SSL cipher display and cipher list tool
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/cms.pod	2017-11-18 21:11:40.634984563 +0100
++++ openssl-1.1.0g/doc/apps/cms.pod	2017-11-18 22:11:44.688276745 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-cms,
+-cms - CMS utility
++openssl-cms - CMS utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/config.pod	2017-11-18 21:11:40.634984563 +0100
++++ openssl-1.1.0g/doc/apps/config.pod	2017-11-18 22:12:08.614943137 +0100
+@@ -4,7 +4,7 @@
+ 
+ =head1 NAME
+ 
+-config - OpenSSL CONF library configuration files
++openssl-config - OpenSSL CONF library configuration files
+ 
+ =head1 DESCRIPTION
+ 
+--- openssl-1.1.0g/doc/apps.orig/crl2pkcs7.pod	2017-11-18 21:11:40.634984563 +0100
++++ openssl-1.1.0g/doc/apps/crl2pkcs7.pod	2017-11-18 22:12:19.048276350 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-crl2pkcs7,
+-crl2pkcs7 - Create a PKCS#7 structure from a CRL and certificates
++openssl-crl2pkcs7 - Create a PKCS#7 structure from a CRL and certificates
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/crl.pod	2017-11-18 21:11:40.634984563 +0100
++++ openssl-1.1.0g/doc/apps/crl.pod	2017-11-18 22:12:14.178276408 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-crl,
+-crl - CRL utility
++openssl-crl - CRL utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/dgst.pod	2017-11-18 21:11:40.634984563 +0100
++++ openssl-1.1.0g/doc/apps/dgst.pod	2017-11-18 22:16:24.078273554 +0100
+@@ -2,8 +2,8 @@
+ 
+ =head1 NAME
+ 
+ openssl-dgst,
+-dgst, sha, sha1, mdc2, ripemd160, sha224, sha256, sha384, sha512, md4, md5, blake2b, blake2s - message digests
++openssl-sha, openssl-sha1, openssl-mdc2, openssl-ripemd160, openssl-sha224, openssl-sha256, openssl-sha384, openssl-sha512, openssl-md4, openssl-md5, openssl-blake2b, openssl-blake2s - message digests
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/dhparam.pod	2017-11-18 21:11:40.634984563 +0100
++++ openssl-1.1.0g/doc/apps/dhparam.pod	2017-11-18 22:16:30.061606818 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-dhparam,
+-dhparam - DH parameter manipulation and generation
++openssl-dhparam - DH parameter manipulation and generation
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/dsaparam.pod	2017-11-18 21:11:40.634984563 +0100
++++ openssl-1.1.0g/doc/apps/dsaparam.pod	2017-11-18 22:16:57.851606501 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-dsaparam,
+-dsaparam - DSA parameter manipulation and generation
++openssl-dsaparam - DSA parameter manipulation and generation
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/dsa.pod	2017-11-18 21:11:40.634984563 +0100
++++ openssl-1.1.0g/doc/apps/dsa.pod	2017-11-18 22:16:35.008273429 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-dsa,
+-dsa - DSA key processing
++openssl-dsa - DSA key processing
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/ecparam.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/ecparam.pod	2017-11-18 22:17:05.754939744 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-ecparam,
+-ecparam - EC parameter manipulation and generation
++openssl-ecparam - EC parameter manipulation and generation
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/ec.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/ec.pod	2017-11-18 22:17:01.598273125 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-ec,
+-ec - EC key processing
++openssl-ec - EC key processing
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/enc.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/enc.pod	2017-11-18 22:17:09.651606365 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-enc,
+-enc - symmetric cipher routines
++openssl-enc - symmetric cipher routines
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/engine.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/engine.pod	2017-11-18 22:17:13.671606321 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-engine,
+-engine - load and query engines
++openssl-engine - load and query engines
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/errstr.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/errstr.pod	2017-11-18 22:17:18.051606269 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-errstr,
+-errstr - lookup error codes
++openssl-errstr - lookup error codes
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/gendsa.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/gendsa.pod	2017-11-18 22:17:22.581606218 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-gendsa,
+-gendsa - generate a DSA private key from a set of parameters
++openssl-gendsa - generate a DSA private key from a set of parameters
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/genpkey.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/genpkey.pod	2017-11-18 22:17:27.084939502 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-genpkey,
+-genpkey - generate a private key
++openssl-genpkey - generate a private key
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/genrsa.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/genrsa.pod	2017-11-18 22:17:31.698272782 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-genrsa,
+-genrsa - generate an RSA private key
++openssl-genrsa - generate an RSA private key
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/list.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/list.pod	2017-11-18 22:17:36.478272728 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-list,
+-list - list algorithms and features
++openssl-list - list algorithms and features
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/nseq.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/nseq.pod	2017-11-18 22:17:41.141606007 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-nseq,
+-nseq - create or examine a Netscape certificate sequence
++openssl-nseq - create or examine a Netscape certificate sequence
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/ocsp.pod	2017-11-18 21:11:40.638317896 +0100
++++ openssl-1.1.0g/doc/apps/ocsp.pod	2017-11-18 22:17:44.971605965 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-ocsp,
+-ocsp - Online Certificate Status Protocol utility
++openssl-ocsp - Online Certificate Status Protocol utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/passwd.pod	2017-11-18 21:11:40.641651229 +0100
++++ openssl-1.1.0g/doc/apps/passwd.pod	2017-11-18 22:17:50.224939239 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-passwd,
+-passwd - compute password hashes
++openssl-passwd - compute password hashes
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/pkcs12.pod	2017-11-18 21:11:40.641651229 +0100
++++ openssl-1.1.0g/doc/apps/pkcs12.pod	2017-11-18 22:17:54.221605863 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-pkcs12,
+-pkcs12 - PKCS#12 file utility
++openssl-pkcs12 - PKCS#12 file utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/pkcs7.pod	2017-11-18 21:11:40.641651229 +0100
++++ openssl-1.1.0g/doc/apps/pkcs7.pod	2017-11-18 22:17:58.274939145 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-pkcs7,
+-pkcs7 - PKCS#7 utility
++openssl-pkcs7 - PKCS#7 utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/pkcs8.pod	2017-11-18 21:11:40.641651229 +0100
++++ openssl-1.1.0g/doc/apps/pkcs8.pod	2017-11-18 22:18:10.504939007 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-pkcs8,
+-pkcs8 - PKCS#8 format private key conversion tool
++openssl-pkcs8 - PKCS#8 format private key conversion tool
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/pkeyparam.pod	2017-11-18 21:11:40.641651229 +0100
++++ openssl-1.1.0g/doc/apps/pkeyparam.pod	2017-11-18 22:18:18.624938915 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-pkeyparam,
+-pkeyparam - public key algorithm parameter processing tool
++openssl-pkeyparam - public key algorithm parameter processing tool
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/pkey.pod	2017-11-18 21:11:40.641651229 +0100
++++ openssl-1.1.0g/doc/apps/pkey.pod	2017-11-18 22:18:14.328272296 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-pkey,
+-pkey - public or private key processing tool
++openssl-pkey - public or private key processing tool
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/pkeyutl.pod	2017-11-18 21:11:40.641651229 +0100
++++ openssl-1.1.0g/doc/apps/pkeyutl.pod	2017-11-18 22:20:24.651604144 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-pkeyutl,
+-pkeyutl - public key algorithm utility
++openssl-pkeyutl - public key algorithm utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/rand.pod	2017-11-18 21:11:40.641651229 +0100
++++ openssl-1.1.0g/doc/apps/rand.pod	2017-11-18 22:20:29.008270756 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-rand,
+-rand - generate pseudo-random bytes
++openssl-rand - generate pseudo-random bytes
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/rehash.pod	2017-11-18 21:11:40.644984563 +0100
++++ openssl-1.1.0g/doc/apps/rehash.pod	2017-11-18 22:20:40.954937287 +0100
+@@ -5,8 +5,8 @@
+ 
+ =head1 NAME
+ 
+ openssl-c_rehash, openssl-rehash,
+-c_rehash, rehash - Create symbolic links to files named by the hash values
++c_rehash - Create symbolic links to files named by the hash values
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/req.pod	2017-11-18 21:11:40.644984563 +0100
++++ openssl-1.1.0g/doc/apps/req.pod	2017-11-18 22:20:45.291603904 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-req,
+-req - PKCS#10 certificate request and certificate generating utility
++openssl-req - PKCS#10 certificate request and certificate generating utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/rsa.pod	2017-11-18 21:11:40.644984563 +0100
++++ openssl-1.1.0g/doc/apps/rsa.pod	2017-11-18 22:20:49.321603857 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-rsa,
+-rsa - RSA key processing tool
++openssl-rsa - RSA key processing tool
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/rsautl.pod	2017-11-18 21:11:40.644984563 +0100
++++ openssl-1.1.0g/doc/apps/rsautl.pod	2017-11-18 22:20:53.051603815 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-rsautl,
+-rsautl - RSA utility
++openssl-rsautl - RSA utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/s_client.pod	2017-11-18 21:11:40.644984563 +0100
++++ openssl-1.1.0g/doc/apps/s_client.pod	2017-11-18 22:20:57.391603766 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-s_client,
+-s_client - SSL/TLS client program
++openssl-s_client - SSL/TLS client program
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/sess_id.pod	2017-11-18 21:11:40.648317896 +0100
++++ openssl-1.1.0g/doc/apps/sess_id.pod	2017-11-18 22:21:09.698270292 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-sess_id,
+-sess_id - SSL/TLS session handling utility
++openssl-sess_id - SSL/TLS session handling utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/smime.pod	2017-11-18 21:11:40.648317896 +0100
++++ openssl-1.1.0g/doc/apps/smime.pod	2017-11-18 22:21:14.074936908 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-smime,
+-smime - S/MIME utility
++openssl-smime - S/MIME utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/speed.pod	2017-11-18 21:11:40.648317896 +0100
++++ openssl-1.1.0g/doc/apps/speed.pod	2017-11-18 22:21:18.004936863 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-speed,
+-speed - test library performance
++openssl-speed - test library performance
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/spkac.pod	2017-11-18 21:11:40.648317896 +0100
++++ openssl-1.1.0g/doc/apps/spkac.pod	2017-11-18 22:21:21.928270153 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-spkac,
+-spkac - SPKAC printing and generating utility
++openssl-spkac - SPKAC printing and generating utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/s_server.pod	2017-11-18 21:11:40.644984563 +0100
++++ openssl-1.1.0g/doc/apps/s_server.pod	2017-11-18 22:21:01.728270382 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-s_server,
+-s_server - SSL/TLS server program
++openssl-s_server - SSL/TLS server program
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/s_time.pod	2017-11-18 21:11:40.648317896 +0100
++++ openssl-1.1.0g/doc/apps/s_time.pod	2017-11-18 22:21:05.601603672 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-s_time,
+-s_time - SSL/TLS performance timing program
++openssl-s_time - SSL/TLS performance timing program
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/tsget.pod	2017-11-18 21:11:40.648317896 +0100
++++ openssl-1.1.0g/doc/apps/tsget.pod	2017-11-18 22:21:29.594936730 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-tsget,
+-tsget - Time Stamping HTTP/HTTPS client
++openssl-tsget - Time Stamping HTTP/HTTPS client
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/ts.pod	2017-11-18 21:11:40.648317896 +0100
++++ openssl-1.1.0g/doc/apps/ts.pod	2017-11-18 22:21:25.714936777 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-ts,
+-ts - Time Stamping Authority tool (client/server)
++openssl-ts - Time Stamping Authority tool (client/server)
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/verify.pod	2017-11-18 21:11:40.651651229 +0100
++++ openssl-1.1.0g/doc/apps/verify.pod	2017-11-18 22:21:34.651603340 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-verify,
+-verify - Utility to verify certificates
++openssl-verify - Utility to verify certificates
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/version.pod	2017-11-18 21:11:40.651651229 +0100
++++ openssl-1.1.0g/doc/apps/version.pod	2017-11-18 22:21:39.154936623 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-version,
+-version - print OpenSSL version information
++openssl-version - print OpenSSL version information
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps.orig/x509.pod	2017-11-18 21:11:40.651651229 +0100
++++ openssl-1.1.0g/doc/apps/x509.pod	2017-11-18 22:21:43.518269906 +0100
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-x509,
+-x509 - Certificate display and signing utility
++openssl-x509 - Certificate display and signing utility
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/apps/x509v3_config.pod.orig	2017-11-19 10:20:58.684443817 +0100
++++ openssl-1.1.0g/doc/apps/x509v3_config.pod	2017-11-19 10:44:33.141094334 +0100
+@@ -4,7 +4,7 @@
+ 
+ =head1 NAME
+ 
+-x509v3_config - X509 V3 certificate extension configuration format
++openssl-x509v3_config - X509 V3 certificate extension configuration format
+ 
+ =head1 DESCRIPTION
+ 
+--- openssl-1.1.0g/doc/crypto/bio.pod.orig	2017-11-02 15:29:04.000000000 +0100
++++ openssl-1.1.0g/doc/crypto/bio.pod	2017-11-19 19:02:56.120752895 +0100
+@@ -1,10 +1,10 @@
+ =pod
+ 
+-=for comment openssl_manual_section 7
++=for comment openssl_manual_section:7
+ 
+ =head1 NAME
+ 
+-bio - Basic I/O abstraction
++openssl-bio - Basic I/O abstraction
+ 
+ =for comment generic
+ 
+--- openssl-1.1.0g/doc/crypto/crypto.pod.orig	2017-11-02 15:29:04.000000000 +0100
++++ openssl-1.1.0g/doc/crypto/crypto.pod	2017-11-19 19:01:54.180753602 +0100
+@@ -4,7 +4,7 @@
+ 
+ =head1 NAME
+ 
+-crypto - OpenSSL cryptographic library
++openssl-crypto - OpenSSL cryptographic library
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/crypto/ct.pod.orig	2017-11-02 15:29:04.000000000 +0100
++++ openssl-1.1.0g/doc/crypto/ct.pod	2017-11-19 19:03:51.987418924 +0100
+@@ -4,7 +4,7 @@
+ 
+ =head1 NAME
+ 
+-ct - Certificate Transparency
++openssl-ct - Certificate Transparency
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/crypto/des_modes.pod.orig	2017-11-02 15:29:04.000000000 +0100
++++ openssl-1.1.0g/doc/crypto/des_modes.pod	2017-11-19 19:02:08.827420102 +0100
+@@ -4,7 +4,7 @@
+ 
+ =head1 NAME
+ 
+-des_modes - the variants of DES and other crypto algorithms of OpenSSL
++openssl-des_modes - the variants of DES and other crypto algorithms of OpenSSL
+ 
+ =head1 DESCRIPTION
+ 
+--- openssl-1.1.0g/doc/crypto/evp.pod.orig	2017-11-02 15:29:04.000000000 +0100
++++ openssl-1.1.0g/doc/crypto/evp.pod	2017-11-19 19:03:58.387418854 +0100
+@@ -4,7 +4,7 @@
+ 
+ =head1 NAME
+ 
+-evp - high-level cryptographic functions
++openssl-evp - high-level cryptographic functions
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/crypto/x509.pod.orig	2017-11-02 15:29:04.000000000 +0100
++++ openssl-1.1.0g/doc/crypto/x509.pod	2017-11-19 19:02:24.704086588 +0100
+@@ -4,7 +4,7 @@
+ 
+ =head1 NAME
+ 
+-x509 - X.509 certificate handling
++openssl-x509 - X.509 certificate handling
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.0g/doc/ssl/ssl.pod.orig	2017-11-02 15:29:05.000000000 +0100
++++ openssl-1.1.0g/doc/ssl/ssl.pod	2017-11-19 19:18:07.534075826 +0100
+@@ -4,7 +4,7 @@
+ 
+ =head1 NAME
+ 
+-ssl - OpenSSL SSL/TLS library
++openssl-ssl - OpenSSL SSL/TLS library
+ 
+ =head1 SYNOPSIS
  
