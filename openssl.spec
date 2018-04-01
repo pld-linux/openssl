@@ -19,13 +19,13 @@ Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднан
 Name:		openssl
 # Version 1.1.0 will be supported until 2018-08-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.1.0g
+Version:	1.1.0h
 Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	ba5f1b8b835b88cadbce9b35ed9531a6
+# Source0-md5:	5271477e4d93f4ea032b665ef095ff24
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_1_0-stable/%{name}-%{version}-dev.tar.gz
 %endif
@@ -34,7 +34,6 @@ Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
 Patch1:		%{name}-optflags.patch
 Patch3:		%{name}-man-namespace.patch
-Patch4:		%{name}-asflag.patch
 Patch5:		%{name}-ca-certificates.patch
 Patch7:		%{name}-find.patch
 Patch8:		pic.patch
@@ -261,7 +260,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %endif
 %patch1 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
@@ -278,6 +276,7 @@ PERL="%{__perl}" \
 	--prefix=%{_prefix} \
 	--openssldir=%{_sysconfdir}/%{name} \
 	--libdir=%{_lib} \
+	-Wa,--noexecstack \
 	shared \
 	threads \
 	%{?with_sslv2:enable-ssl2}%{!?with_sslv2:no-ssl2} \
@@ -340,7 +339,6 @@ test "$v" = %{version}%{?subver:-%{subver}}%{?with_snap:-dev}
 
 %{__make} -j1 all %{?with_tests:tests} \
 	CC="%{__cc}" \
-	ASFLAG="-Wa,--noexecstack" \
 	OPTFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	INSTALLTOP=%{_prefix}
 
@@ -363,8 +361,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 
 %{__make} -j1 install \
 	CC="%{__cc}" \
-	ASFLAG="-Wa,--noexecstack" \
-	DESTDIR=$RPM_BUILD_ROOT \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcrypto.*.*) $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
@@ -375,9 +372,6 @@ ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*.*) $RPM_BUILD_ROOT%{
 
 # html version of man pages - not packaged
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}/html/man[1357]
-
-# not installed as individual utilities (see openssl dgst instead)
-#%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md4,md5,mdc2,ripemd160,sha,sha1,sha224,sha256,sha384,sha512}.1
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
@@ -433,14 +427,6 @@ fi
 %attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(755,root,root) %{_bindir}/openssl
 %attr(754,root,root) %{_bindir}/ssl-certificate
-
-%dir %{_libdir}/%{name}
-#%attr(755,root,root) %{_libdir}/%{name}/CA.sh
-#%attr(755,root,root) %{_libdir}/%{name}/c_hash
-#%attr(755,root,root) %{_libdir}/%{name}/c_info
-#%attr(755,root,root) %{_libdir}/%{name}/c_issuer
-#%attr(755,root,root) %{_libdir}/%{name}/c_name
-
 %{_mandir}/man1/openssl.1*
 %{_mandir}/man1/openssl-asn1parse.1*
 %{_mandir}/man1/openssl-blake2b.1*
@@ -506,6 +492,7 @@ fi
 %files tools-perl
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/c_rehash
+%dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/tsget
 %{_mandir}/man1/CA.pl.1*
@@ -620,7 +607,6 @@ fi
 %{_mandir}/man3/X509_*.3*
 %{_mandir}/man3/X509V3_*.3*
 %{_mandir}/man3/X509v3_*.3*
-%{_mandir}/man3/bio_info_cb.3*
 %{_mandir}/man3/custom_ext_*.3*
 %{_mandir}/man3/d2i_*.3*
 %{_mandir}/man3/i2d_*.3*
