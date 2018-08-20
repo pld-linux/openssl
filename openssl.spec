@@ -6,7 +6,6 @@
 %bcond_without	sslv3	# SSLv3: note - enables  CVE-2014-3566 vulnerability
 %bcond_with	snap	# use GitHub snapshot to build branch release
 
-%define		rel		0.1
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -17,15 +16,15 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-# Version 1.1.0 will be supported until 2018-08-31.
+# Version 1.1.0 will be supported until 2019-??-?? (one year after release of 1.1.1).
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.1.0h
+Version:	1.1.0i
 Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	5271477e4d93f4ea032b665ef095ff24
+# Source0-md5:	9495126aafd2659d357ea66a969c3fe1
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_1_0-stable/%{name}-%{version}-dev.tar.gz
 %endif
