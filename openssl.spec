@@ -40,7 +40,6 @@ Patch5:		%{name}-ca-certificates.patch
 Patch7:		%{name}-find.patch
 Patch8:		pic.patch
 
-Patch10:	%{name}_fix_for_x32.patch
 Patch11:	engines-dir.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 1:5.10.0
@@ -271,9 +270,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch7 -p1
 %patch8 -p1
 
-%ifarch x32
-%patch10 -p1
-%endif
 %patch11 -p1
 
 %build
