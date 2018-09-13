@@ -1,5 +1,6 @@
---- openssl-1.1.0g/doc/apps.orig/asn1parse.pod	2017-11-18 21:11:40.631651229 +0100
-+++ openssl-1.1.0g/doc/apps/asn1parse.pod	2017-11-18 22:11:19.351610367 +0100
+diff -urN openssl-1.1.1/doc.org/man1/asn1parse.pod openssl-1.1.1/doc/man1/asn1parse.pod
+--- openssl-1.1.1/doc.org/man1/asn1parse.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/asn1parse.pod	2018-09-11 22:09:16.148714293 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -10,8 +11,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/ca.pod	2017-11-18 21:11:40.631651229 +0100
-+++ openssl-1.1.0g/doc/apps/ca.pod	2017-11-18 22:11:35.488276847 +0100
+diff -urN openssl-1.1.1/doc.org/man1/ca.pod openssl-1.1.1/doc/man1/ca.pod
+--- openssl-1.1.1/doc.org/man1/ca.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/ca.pod	2018-09-11 22:08:39.447633905 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -22,8 +24,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/ciphers.pod	2017-11-18 21:11:40.634984563 +0100
-+++ openssl-1.1.0g/doc/apps/ciphers.pod	2017-11-18 22:11:40.291610128 +0100
+diff -urN openssl-1.1.1/doc.org/man1/ciphers.pod openssl-1.1.1/doc/man1/ciphers.pod
+--- openssl-1.1.1/doc.org/man1/ciphers.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/ciphers.pod	2018-09-11 22:09:10.135203937 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -34,8 +37,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/cms.pod	2017-11-18 21:11:40.634984563 +0100
-+++ openssl-1.1.0g/doc/apps/cms.pod	2017-11-18 22:11:44.688276745 +0100
+diff -urN openssl-1.1.1/doc.org/man1/cms.pod openssl-1.1.1/doc/man1/cms.pod
+--- openssl-1.1.1/doc.org/man1/cms.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/cms.pod	2018-09-11 22:08:34.790830156 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -46,19 +50,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/config.pod	2017-11-18 21:11:40.634984563 +0100
-+++ openssl-1.1.0g/doc/apps/config.pod	2017-11-18 22:12:08.614943137 +0100
-@@ -4,7 +4,7 @@
- 
- =head1 NAME
- 
--config - OpenSSL CONF library configuration files
-+openssl-config - OpenSSL CONF library configuration files
- 
- =head1 DESCRIPTION
- 
---- openssl-1.1.0g/doc/apps.orig/crl2pkcs7.pod	2017-11-18 21:11:40.634984563 +0100
-+++ openssl-1.1.0g/doc/apps/crl2pkcs7.pod	2017-11-18 22:12:19.048276350 +0100
+diff -urN openssl-1.1.1/doc.org/man1/crl2pkcs7.pod openssl-1.1.1/doc/man1/crl2pkcs7.pod
+--- openssl-1.1.1/doc.org/man1/crl2pkcs7.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/crl2pkcs7.pod	2018-09-11 22:11:06.401959876 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -69,8 +63,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/crl.pod	2017-11-18 21:11:40.634984563 +0100
-+++ openssl-1.1.0g/doc/apps/crl.pod	2017-11-18 22:12:14.178276408 +0100
+diff -urN openssl-1.1.1/doc.org/man1/crl.pod openssl-1.1.1/doc/man1/crl.pod
+--- openssl-1.1.1/doc.org/man1/crl.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/crl.pod	2018-09-11 22:10:43.631289563 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -81,20 +76,22 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/dgst.pod	2017-11-18 21:11:40.634984563 +0100
-+++ openssl-1.1.0g/doc/apps/dgst.pod	2017-11-18 22:16:24.078273554 +0100
-@@ -2,8 +2,8 @@
+diff -urN openssl-1.1.1/doc.org/man1/dgst.pod openssl-1.1.1/doc/man1/dgst.pod
+--- openssl-1.1.1/doc.org/man1/dgst.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/dgst.pod	2018-09-11 22:12:41.804768298 +0200
+@@ -2,8 +2,7 @@
  
  =head1 NAME
  
- openssl-dgst,
--dgst, sha, sha1, mdc2, ripemd160, sha224, sha256, sha384, sha512, md4, md5, blake2b, blake2s - message digests
-+openssl-sha, openssl-sha1, openssl-mdc2, openssl-ripemd160, openssl-sha224, openssl-sha256, openssl-sha384, openssl-sha512, openssl-md4, openssl-md5, openssl-blake2b, openssl-blake2s - message digests
+-openssl-dgst,
+-dgst - perform digest operations
++openssl-dgst - perform digest operations
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/dhparam.pod	2017-11-18 21:11:40.634984563 +0100
-+++ openssl-1.1.0g/doc/apps/dhparam.pod	2017-11-18 22:16:30.061606818 +0100
+diff -urN openssl-1.1.1/doc.org/man1/dhparam.pod openssl-1.1.1/doc/man1/dhparam.pod
+--- openssl-1.1.1/doc.org/man1/dhparam.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/dhparam.pod	2018-09-11 22:08:08.440054452 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -105,8 +102,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/dsaparam.pod	2017-11-18 21:11:40.634984563 +0100
-+++ openssl-1.1.0g/doc/apps/dsaparam.pod	2017-11-18 22:16:57.851606501 +0100
+diff -urN openssl-1.1.1/doc.org/man1/dsaparam.pod openssl-1.1.1/doc/man1/dsaparam.pod
+--- openssl-1.1.1/doc.org/man1/dsaparam.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/dsaparam.pod	2018-09-11 22:09:26.799027812 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -117,8 +115,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/dsa.pod	2017-11-18 21:11:40.634984563 +0100
-+++ openssl-1.1.0g/doc/apps/dsa.pod	2017-11-18 22:16:35.008273429 +0100
+diff -urN openssl-1.1.1/doc.org/man1/dsa.pod openssl-1.1.1/doc/man1/dsa.pod
+--- openssl-1.1.1/doc.org/man1/dsa.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/dsa.pod	2018-09-11 22:09:37.069330144 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -129,8 +128,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/ecparam.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/ecparam.pod	2017-11-18 22:17:05.754939744 +0100
+diff -urN openssl-1.1.1/doc.org/man1/ecparam.pod openssl-1.1.1/doc/man1/ecparam.pod
+--- openssl-1.1.1/doc.org/man1/ecparam.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/ecparam.pod	2018-09-11 22:09:50.416389716 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -141,8 +141,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/ec.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/ec.pod	2017-11-18 22:17:01.598273125 +0100
+diff -urN openssl-1.1.1/doc.org/man1/ec.pod openssl-1.1.1/doc/man1/ec.pod
+--- openssl-1.1.1/doc.org/man1/ec.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/ec.pod	2018-09-11 22:10:38.384468443 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -153,8 +154,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/enc.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/enc.pod	2017-11-18 22:17:09.651606365 +0100
+diff -urN openssl-1.1.1/doc.org/man1/enc.pod openssl-1.1.1/doc/man1/enc.pod
+--- openssl-1.1.1/doc.org/man1/enc.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/enc.pod	2018-09-11 22:07:38.422504142 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -165,8 +167,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/engine.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/engine.pod	2017-11-18 22:17:13.671606321 +0100
+diff -urN openssl-1.1.1/doc.org/man1/engine.pod openssl-1.1.1/doc/man1/engine.pod
+--- openssl-1.1.1/doc.org/man1/engine.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/engine.pod	2018-09-11 22:11:28.725950372 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -177,8 +180,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/errstr.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/errstr.pod	2017-11-18 22:17:18.051606269 +0100
+diff -urN openssl-1.1.1/doc.org/man1/errstr.pod openssl-1.1.1/doc/man1/errstr.pod
+--- openssl-1.1.1/doc.org/man1/errstr.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/errstr.pod	2018-09-11 22:07:46.686080735 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -189,8 +193,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/gendsa.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/gendsa.pod	2017-11-18 22:17:22.581606218 +0100
+diff -urN openssl-1.1.1/doc.org/man1/gendsa.pod openssl-1.1.1/doc/man1/gendsa.pod
+--- openssl-1.1.1/doc.org/man1/gendsa.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/gendsa.pod	2018-09-11 22:12:17.117374895 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -201,8 +206,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/genpkey.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/genpkey.pod	2017-11-18 22:17:27.084939502 +0100
+diff -urN openssl-1.1.1/doc.org/man1/genpkey.pod openssl-1.1.1/doc/man1/genpkey.pod
+--- openssl-1.1.1/doc.org/man1/genpkey.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/genpkey.pod	2018-09-11 22:10:07.880237141 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -213,8 +219,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/genrsa.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/genrsa.pod	2017-11-18 22:17:31.698272782 +0100
+diff -urN openssl-1.1.1/doc.org/man1/genrsa.pod openssl-1.1.1/doc/man1/genrsa.pod
+--- openssl-1.1.1/doc.org/man1/genrsa.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/genrsa.pod	2018-09-11 22:11:11.535444327 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -225,8 +232,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/list.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/list.pod	2017-11-18 22:17:36.478272728 +0100
+diff -urN openssl-1.1.1/doc.org/man1/list.pod openssl-1.1.1/doc/man1/list.pod
+--- openssl-1.1.1/doc.org/man1/list.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/list.pod	2018-09-11 22:08:58.891539618 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -237,8 +245,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/nseq.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/nseq.pod	2017-11-18 22:17:41.141606007 +0100
+diff -urN openssl-1.1.1/doc.org/man1/nseq.pod openssl-1.1.1/doc/man1/nseq.pod
+--- openssl-1.1.1/doc.org/man1/nseq.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/nseq.pod	2018-09-11 22:10:48.351428513 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -249,8 +258,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/ocsp.pod	2017-11-18 21:11:40.638317896 +0100
-+++ openssl-1.1.0g/doc/apps/ocsp.pod	2017-11-18 22:17:44.971605965 +0100
+diff -urN openssl-1.1.1/doc.org/man1/ocsp.pod openssl-1.1.1/doc/man1/ocsp.pod
+--- openssl-1.1.1/doc.org/man1/ocsp.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/ocsp.pod	2018-09-11 22:08:49.024582492 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -261,8 +271,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/passwd.pod	2017-11-18 21:11:40.641651229 +0100
-+++ openssl-1.1.0g/doc/apps/passwd.pod	2017-11-18 22:17:50.224939239 +0100
+diff -urN openssl-1.1.1/doc.org/man1/passwd.pod openssl-1.1.1/doc/man1/passwd.pod
+--- openssl-1.1.1/doc.org/man1/passwd.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/passwd.pod	2018-09-11 22:12:23.680901443 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -273,8 +284,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/pkcs12.pod	2017-11-18 21:11:40.641651229 +0100
-+++ openssl-1.1.0g/doc/apps/pkcs12.pod	2017-11-18 22:17:54.221605863 +0100
+diff -urN openssl-1.1.1/doc.org/man1/pkcs12.pod openssl-1.1.1/doc/man1/pkcs12.pod
+--- openssl-1.1.1/doc.org/man1/pkcs12.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/pkcs12.pod	2018-09-11 22:12:08.627124963 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -285,8 +297,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/pkcs7.pod	2017-11-18 21:11:40.641651229 +0100
-+++ openssl-1.1.0g/doc/apps/pkcs7.pod	2017-11-18 22:17:58.274939145 +0100
+diff -urN openssl-1.1.1/doc.org/man1/pkcs7.pod openssl-1.1.1/doc/man1/pkcs7.pod
+--- openssl-1.1.1/doc.org/man1/pkcs7.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/pkcs7.pod	2018-09-11 22:08:44.624452964 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -297,8 +310,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/pkcs8.pod	2017-11-18 21:11:40.641651229 +0100
-+++ openssl-1.1.0g/doc/apps/pkcs8.pod	2017-11-18 22:18:10.504939007 +0100
+diff -urN openssl-1.1.1/doc.org/man1/pkcs8.pod openssl-1.1.1/doc/man1/pkcs8.pod
+--- openssl-1.1.1/doc.org/man1/pkcs8.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/pkcs8.pod	2018-09-11 22:10:34.057674407 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -309,8 +323,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/pkeyparam.pod	2017-11-18 21:11:40.641651229 +0100
-+++ openssl-1.1.0g/doc/apps/pkeyparam.pod	2017-11-18 22:18:18.624938915 +0100
+diff -urN openssl-1.1.1/doc.org/man1/pkeyparam.pod openssl-1.1.1/doc/man1/pkeyparam.pod
+--- openssl-1.1.1/doc.org/man1/pkeyparam.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/pkeyparam.pod	2018-09-11 22:09:32.382525509 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -321,8 +336,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/pkey.pod	2017-11-18 21:11:40.641651229 +0100
-+++ openssl-1.1.0g/doc/apps/pkey.pod	2017-11-18 22:18:14.328272296 +0100
+diff -urN openssl-1.1.1/doc.org/man1/pkey.pod openssl-1.1.1/doc/man1/pkey.pod
+--- openssl-1.1.1/doc.org/man1/pkey.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/pkey.pod	2018-09-11 22:09:57.529932454 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -333,8 +349,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/pkeyutl.pod	2017-11-18 21:11:40.641651229 +0100
-+++ openssl-1.1.0g/doc/apps/pkeyutl.pod	2017-11-18 22:20:24.651604144 +0100
+diff -urN openssl-1.1.1/doc.org/man1/pkeyutl.pod openssl-1.1.1/doc/man1/pkeyutl.pod
+--- openssl-1.1.1/doc.org/man1/pkeyutl.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/pkeyutl.pod	2018-09-11 22:11:00.448451286 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -345,8 +362,22 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/rand.pod	2017-11-18 21:11:40.641651229 +0100
-+++ openssl-1.1.0g/doc/apps/rand.pod	2017-11-18 22:20:29.008270756 +0100
+diff -urN openssl-1.1.1/doc.org/man1/prime.pod openssl-1.1.1/doc/man1/prime.pod
+--- openssl-1.1.1/doc.org/man1/prime.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/prime.pod	2018-09-11 22:10:55.561640764 +0200
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-prime,
+-prime - compute prime numbers
++openssl-prime - compute prime numbers
+ 
+ =head1 SYNOPSIS
+ 
+diff -urN openssl-1.1.1/doc.org/man1/rand.pod openssl-1.1.1/doc/man1/rand.pod
+--- openssl-1.1.1/doc.org/man1/rand.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/rand.pod	2018-09-11 22:11:39.589603508 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -357,20 +388,22 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/rehash.pod	2017-11-18 21:11:40.644984563 +0100
-+++ openssl-1.1.0g/doc/apps/rehash.pod	2017-11-18 22:20:40.954937287 +0100
-@@ -5,8 +5,8 @@
+diff -urN openssl-1.1.1/doc.org/man1/rehash.pod openssl-1.1.1/doc/man1/rehash.pod
+--- openssl-1.1.1/doc.org/man1/rehash.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/rehash.pod	2018-09-11 22:08:28.943991372 +0200
+@@ -5,8 +5,7 @@
  
  =head1 NAME
  
- openssl-c_rehash, openssl-rehash,
+-openssl-c_rehash, openssl-rehash,
 -c_rehash, rehash - Create symbolic links to files named by the hash values
-+c_rehash - Create symbolic links to files named by the hash values
++c_rehash, openssl-rehash - Create symbolic links to files named by the hash values
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/req.pod	2017-11-18 21:11:40.644984563 +0100
-+++ openssl-1.1.0g/doc/apps/req.pod	2017-11-18 22:20:45.291603904 +0100
+diff -urN openssl-1.1.1/doc.org/man1/req.pod openssl-1.1.1/doc/man1/req.pod
+--- openssl-1.1.1/doc.org/man1/req.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/req.pod	2018-09-11 22:08:54.174734102 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -381,8 +414,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/rsa.pod	2017-11-18 21:11:40.644984563 +0100
-+++ openssl-1.1.0g/doc/apps/rsa.pod	2017-11-18 22:20:49.321603857 +0100
+diff -urN openssl-1.1.1/doc.org/man1/rsa.pod openssl-1.1.1/doc/man1/rsa.pod
+--- openssl-1.1.1/doc.org/man1/rsa.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/rsa.pod	2018-09-11 22:12:34.427884475 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -393,8 +427,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/rsautl.pod	2017-11-18 21:11:40.644984563 +0100
-+++ openssl-1.1.0g/doc/apps/rsautl.pod	2017-11-18 22:20:53.051603815 +0100
+diff -urN openssl-1.1.1/doc.org/man1/rsautl.pod openssl-1.1.1/doc/man1/rsautl.pod
+--- openssl-1.1.1/doc.org/man1/rsautl.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/rsautl.pod	2018-09-11 22:11:19.782353762 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -405,8 +440,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/s_client.pod	2017-11-18 21:11:40.644984563 +0100
-+++ openssl-1.1.0g/doc/apps/s_client.pod	2017-11-18 22:20:57.391603766 +0100
+diff -urN openssl-1.1.1/doc.org/man1/s_client.pod openssl-1.1.1/doc/man1/s_client.pod
+--- openssl-1.1.1/doc.org/man1/s_client.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/s_client.pod	2018-09-11 22:12:02.190268812 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -417,8 +453,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/sess_id.pod	2017-11-18 21:11:40.648317896 +0100
-+++ openssl-1.1.0g/doc/apps/sess_id.pod	2017-11-18 22:21:09.698270292 +0100
+diff -urN openssl-1.1.1/doc.org/man1/sess_id.pod openssl-1.1.1/doc/man1/sess_id.pod
+--- openssl-1.1.1/doc.org/man1/sess_id.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/sess_id.pod	2018-09-11 22:11:56.426765815 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -429,8 +466,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/smime.pod	2017-11-18 21:11:40.648317896 +0100
-+++ openssl-1.1.0g/doc/apps/smime.pod	2017-11-18 22:21:14.074936908 +0100
+diff -urN openssl-1.1.1/doc.org/man1/smime.pod openssl-1.1.1/doc/man1/smime.pod
+--- openssl-1.1.1/doc.org/man1/smime.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/smime.pod	2018-09-11 22:10:19.807254909 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -441,8 +479,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/speed.pod	2017-11-18 21:11:40.648317896 +0100
-+++ openssl-1.1.0g/doc/apps/speed.pod	2017-11-18 22:21:18.004936863 +0100
+diff -urN openssl-1.1.1/doc.org/man1/speed.pod openssl-1.1.1/doc/man1/speed.pod
+--- openssl-1.1.1/doc.org/man1/speed.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/speed.pod	2018-09-11 22:09:21.542206398 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -453,8 +492,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/spkac.pod	2017-11-18 21:11:40.648317896 +0100
-+++ openssl-1.1.0g/doc/apps/spkac.pod	2017-11-18 22:21:21.928270153 +0100
+diff -urN openssl-1.1.1/doc.org/man1/spkac.pod openssl-1.1.1/doc/man1/spkac.pod
+--- openssl-1.1.1/doc.org/man1/spkac.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/spkac.pod	2018-09-11 22:10:29.570875660 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -465,8 +505,22 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/s_server.pod	2017-11-18 21:11:40.644984563 +0100
-+++ openssl-1.1.0g/doc/apps/s_server.pod	2017-11-18 22:21:01.728270382 +0100
+diff -urN openssl-1.1.1/doc.org/man1/srp.pod openssl-1.1.1/doc/man1/srp.pod
+--- openssl-1.1.1/doc.org/man1/srp.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/srp.pod	2018-09-11 22:10:02.696751220 +0200
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-srp,
+-srp - maintain SRP password file
++openssl-srp - maintain SRP password file
+ 
+ =head1 SYNOPSIS
+ 
+diff -urN openssl-1.1.1/doc.org/man1/s_server.pod openssl-1.1.1/doc/man1/s_server.pod
+--- openssl-1.1.1/doc.org/man1/s_server.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/s_server.pod	2018-09-11 22:09:04.541705946 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -477,8 +531,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/s_time.pod	2017-11-18 21:11:40.648317896 +0100
-+++ openssl-1.1.0g/doc/apps/s_time.pod	2017-11-18 22:21:05.601603672 +0100
+diff -urN openssl-1.1.1/doc.org/man1/s_time.pod openssl-1.1.1/doc/man1/s_time.pod
+--- openssl-1.1.1/doc.org/man1/s_time.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/s_time.pod	2018-09-11 22:09:44.646219856 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -489,8 +544,22 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/tsget.pod	2017-11-18 21:11:40.648317896 +0100
-+++ openssl-1.1.0g/doc/apps/tsget.pod	2017-11-18 22:21:29.594936730 +0100
+diff -urN openssl-1.1.1/doc.org/man1/storeutl.pod openssl-1.1.1/doc/man1/storeutl.pod
+--- openssl-1.1.1/doc.org/man1/storeutl.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/storeutl.pod	2018-09-11 22:07:55.473006066 +0200
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-openssl-storeutl,
+-storeutl - STORE utility
++openssl-storeutl - STORE utility
+ 
+ =head1 SYNOPSIS
+ 
+diff -urN openssl-1.1.1/doc.org/man1/tsget.pod openssl-1.1.1/doc/man1/tsget.pod
+--- openssl-1.1.1/doc.org/man1/tsget.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/tsget.pod	2018-09-11 22:10:15.233786945 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -501,8 +570,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/ts.pod	2017-11-18 21:11:40.648317896 +0100
-+++ openssl-1.1.0g/doc/apps/ts.pod	2017-11-18 22:21:25.714936777 +0100
+diff -urN openssl-1.1.1/doc.org/man1/ts.pod openssl-1.1.1/doc/man1/ts.pod
+--- openssl-1.1.1/doc.org/man1/ts.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/ts.pod	2018-09-11 22:10:24.110714927 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -513,8 +583,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/verify.pod	2017-11-18 21:11:40.651651229 +0100
-+++ openssl-1.1.0g/doc/apps/verify.pod	2017-11-18 22:21:34.651603340 +0100
+diff -urN openssl-1.1.1/doc.org/man1/verify.pod openssl-1.1.1/doc/man1/verify.pod
+--- openssl-1.1.1/doc.org/man1/verify.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/verify.pod	2018-09-11 22:11:51.053274300 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -525,8 +596,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/version.pod	2017-11-18 21:11:40.651651229 +0100
-+++ openssl-1.1.0g/doc/apps/version.pod	2017-11-18 22:21:39.154936623 +0100
+diff -urN openssl-1.1.1/doc.org/man1/version.pod openssl-1.1.1/doc/man1/version.pod
+--- openssl-1.1.1/doc.org/man1/version.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/version.pod	2018-09-11 22:11:45.803119749 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -537,8 +609,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps.orig/x509.pod	2017-11-18 21:11:40.651651229 +0100
-+++ openssl-1.1.0g/doc/apps/x509.pod	2017-11-18 22:21:43.518269906 +0100
+diff -urN openssl-1.1.1/doc.org/man1/x509.pod openssl-1.1.1/doc/man1/x509.pod
+--- openssl-1.1.1/doc.org/man1/x509.pod	2018-09-11 14:48:22.000000000 +0200
++++ openssl-1.1.1/doc/man1/x509.pod	2018-09-11 22:08:15.893607199 +0200
 @@ -2,8 +2,7 @@
  
  =head1 NAME
@@ -549,9 +622,20 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/apps/x509v3_config.pod.orig	2017-11-19 10:20:58.684443817 +0100
-+++ openssl-1.1.0g/doc/apps/x509v3_config.pod	2017-11-19 10:44:33.141094334 +0100
-@@ -4,7 +4,7 @@
+--- openssl-1.1.1/doc/man5/config.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man5/config.pod	2018-09-13 18:55:53.379314240 +0200
+@@ -2,7 +2,7 @@
+ 
+ =head1 NAME
+ 
+-config - OpenSSL CONF library configuration files
++openssl-config - OpenSSL CONF library configuration files
+ 
+ =head1 DESCRIPTION
+ 
+--- openssl-1.1.1/doc/man5/x509v3_config.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man5/x509v3_config.pod	2018-09-13 18:56:06.236359843 +0200
+@@ -2,7 +2,7 @@
  
  =head1 NAME
  
@@ -560,24 +644,20 @@
  
  =head1 DESCRIPTION
  
---- openssl-1.1.0g/doc/crypto/bio.pod.orig	2017-11-02 15:29:04.000000000 +0100
-+++ openssl-1.1.0g/doc/crypto/bio.pod	2017-11-19 19:02:56.120752895 +0100
-@@ -1,10 +1,10 @@
- =pod
- 
--=for comment openssl_manual_section 7
-+=for comment openssl_manual_section:7
+--- openssl-1.1.1/doc/man7/bio.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/bio.pod	2018-09-13 19:13:57.454822064 +0200
+@@ -2,7 +2,7 @@
  
  =head1 NAME
  
 -bio - Basic I/O abstraction
 +openssl-bio - Basic I/O abstraction
  
- =for comment generic
+ =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/crypto/crypto.pod.orig	2017-11-02 15:29:04.000000000 +0100
-+++ openssl-1.1.0g/doc/crypto/crypto.pod	2017-11-19 19:01:54.180753602 +0100
-@@ -4,7 +4,7 @@
+--- openssl-1.1.1/doc/man7/crypto.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/crypto.pod	2018-09-13 19:14:03.525002575 +0200
+@@ -2,7 +2,7 @@
  
  =head1 NAME
  
@@ -586,9 +666,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/crypto/ct.pod.orig	2017-11-02 15:29:04.000000000 +0100
-+++ openssl-1.1.0g/doc/crypto/ct.pod	2017-11-19 19:03:51.987418924 +0100
-@@ -4,7 +4,7 @@
+--- openssl-1.1.1/doc/man7/ct.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/ct.pod	2018-09-13 19:14:07.405117959 +0200
+@@ -2,7 +2,7 @@
  
  =head1 NAME
  
@@ -597,9 +677,9 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/crypto/des_modes.pod.orig	2017-11-02 15:29:04.000000000 +0100
-+++ openssl-1.1.0g/doc/crypto/des_modes.pod	2017-11-19 19:02:08.827420102 +0100
-@@ -4,7 +4,7 @@
+--- openssl-1.1.1/doc/man7/des_modes.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/des_modes.pod	2018-09-13 19:14:10.988557855 +0200
+@@ -2,7 +2,7 @@
  
  =head1 NAME
  
@@ -608,9 +688,9 @@
  
  =head1 DESCRIPTION
  
---- openssl-1.1.0g/doc/crypto/evp.pod.orig	2017-11-02 15:29:04.000000000 +0100
-+++ openssl-1.1.0g/doc/crypto/evp.pod	2017-11-19 19:03:58.387418854 +0100
-@@ -4,7 +4,7 @@
+--- openssl-1.1.1/doc/man7/evp.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/evp.pod	2018-09-13 19:14:15.148681567 +0200
+@@ -2,7 +2,7 @@
  
  =head1 NAME
  
@@ -619,9 +699,20 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/crypto/x509.pod.orig	2017-11-02 15:29:04.000000000 +0100
-+++ openssl-1.1.0g/doc/crypto/x509.pod	2017-11-19 19:02:24.704086588 +0100
-@@ -4,7 +4,7 @@
+--- openssl-1.1.1/doc/man7/ssl.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/ssl.pod	2018-09-13 19:14:35.495953306 +0200
+@@ -2,7 +2,7 @@
+ 
+ =head1 NAME
+ 
+-ssl - OpenSSL SSL/TLS library
++openssl-ssl - OpenSSL SSL/TLS library
+ 
+ =head1 SYNOPSIS
+ 
+--- openssl-1.1.1/doc/man7/x509.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/x509.pod	2018-09-13 19:14:40.996116867 +0200
+@@ -2,7 +2,7 @@
  
  =head1 NAME
  
@@ -630,14 +721,96 @@
  
  =head1 SYNOPSIS
  
---- openssl-1.1.0g/doc/ssl/ssl.pod.orig	2017-11-02 15:29:05.000000000 +0100
-+++ openssl-1.1.0g/doc/ssl/ssl.pod	2017-11-19 19:18:07.534075826 +0100
+--- openssl-1.1.1/doc/man7/Ed25519.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/Ed25519.pod	2018-09-13 19:27:15.788862330 +0200
+@@ -2,9 +2,7 @@
+ 
+ =head1 NAME
+ 
+-Ed25519,
+-Ed448
+-- EVP_PKEY Ed25519 and Ed448 support
++openssl-Ed25519, openssl-Ed448 - EVP_PKEY Ed25519 and Ed448 support
+ 
+ =head1 DESCRIPTION
+ 
+--- openssl-1.1.1/doc/man7/passphrase-encoding.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/passphrase-encoding.pod	2018-09-13 19:27:38.656220157 +0200
 @@ -4,7 +4,7 @@
  
  =head1 NAME
  
--ssl - OpenSSL SSL/TLS library
-+openssl-ssl - OpenSSL SSL/TLS library
+-passphrase-encoding
++openssl-passphrase-encoding
+ - How diverse parts of OpenSSL treat pass phrases character encoding
+ 
+ =head1 DESCRIPTION
+--- openssl-1.1.1/doc/man7/RAND_DRBG.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/RAND_DRBG.pod	2018-09-13 19:27:45.693099512 +0200
+@@ -2,7 +2,7 @@
+ 
+ =head1 NAME
+ 
+-RAND_DRBG - the deterministic random bit generator
++openssl-RAND_DRBG - the deterministic random bit generator
  
  =head1 SYNOPSIS
+ 
+--- openssl-1.1.1/doc/man7/RAND.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/RAND.pod	2018-09-13 19:27:53.023321066 +0200
+@@ -2,8 +2,7 @@
+ 
+ =head1 NAME
+ 
+-RAND
+-- the OpenSSL random generator
++openssl-RAND - the OpenSSL random generator
+ 
+ =head1 DESCRIPTION
+ 
+--- openssl-1.1.1/doc/man7/RSA-PSS.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/RSA-PSS.pod	2018-09-13 19:27:58.186810465 +0200
+@@ -2,7 +2,7 @@
+ 
+ =head1 NAME
+ 
+-RSA-PSS - EVP_PKEY RSA-PSS algorithm support
++openssl - RSA-PSS - EVP_PKEY RSA-PSS algorithm support
+ 
+ =head1 DESCRIPTION
+ 
+--- openssl-1.1.1/doc/man7/scrypt.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/scrypt.pod	2018-09-13 19:28:04.880346108 +0200
+@@ -2,7 +2,7 @@
+ 
+ =head1 NAME
+ 
+-scrypt - EVP_PKEY scrypt KDF support
++openssl-scrypt - EVP_PKEY scrypt KDF support
+ 
+ =head1 DESCRIPTION
+ 
+--- openssl-1.1.1/doc/man7/SM2.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/SM2.pod	2018-09-13 19:28:09.697158362 +0200
+@@ -2,7 +2,7 @@
+ 
+ =head1 NAME
+ 
+-SM2 - Chinese SM2 signature and encryption algorithm support
++openssl-SM2 - Chinese SM2 signature and encryption algorithm support
+ 
+ =head1 DESCRIPTION
+ 
+--- openssl-1.1.1/doc/man7/X25519.pod~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/doc/man7/X25519.pod	2018-09-13 19:28:23.594245064 +0200
+@@ -2,9 +2,7 @@
+ 
+ =head1 NAME
+ 
+-X25519,
+-X448
+-- EVP_PKEY X25519 and X448 support
++openssl-X25519, openssl-X448 - EVP_PKEY X25519 and X448 support
+ 
+ =head1 DESCRIPTION
  

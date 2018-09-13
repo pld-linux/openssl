@@ -2,8 +2,8 @@
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
 %bcond_without	zlib	# zlib: note - enables CVE-2012-4929 vulnerability
-%bcond_without	sslv2	# SSLv2: note - many flaws http://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_2.0
-%bcond_without	sslv3	# SSLv3: note - enables  CVE-2014-3566 vulnerability
+%bcond_with	sslv2	# SSLv2: note - many flaws http://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_2.0
+%bcond_with	sslv3	# SSLv3: note - enables  CVE-2014-3566 vulnerability
 %bcond_with	snap	# use GitHub snapshot to build branch release
 
 %include	/usr/lib/rpm/macros.perl
@@ -18,13 +18,13 @@ Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднан
 Name:		openssl
 # Version 1.1.0 will be supported until 2019-??-?? (one year after release of 1.1.1).
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.1.0i
+Version:	1.1.1
 Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	9495126aafd2659d357ea66a969c3fe1
+# Source0-md5:	7079eb017429e0ffb9efb42bf80ccb21
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_1_0-stable/%{name}-%{version}-dev.tar.gz
 %endif
@@ -32,10 +32,14 @@ Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
 Patch1:		%{name}-optflags.patch
+
 Patch3:		%{name}-man-namespace.patch
+
 Patch5:		%{name}-ca-certificates.patch
+
 Patch7:		%{name}-find.patch
 Patch8:		pic.patch
+
 Patch10:	%{name}_fix_for_x32.patch
 Patch11:	engines-dir.patch
 URL:		http://www.openssl.org/
@@ -257,11 +261,16 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %else
 %setup -q %{?subver:-n %{name}-%{version}-%{subver}}
 %endif
+
 %patch1 -p1
+
 %patch3 -p1
+
 %patch5 -p1
+
 %patch7 -p1
 %patch8 -p1
+
 %ifarch x32
 %patch10 -p1
 %endif
@@ -342,11 +351,10 @@ test "$v" = %{version}%{?subver:-%{subver}}%{?with_snap:-dev}
 	INSTALLTOP=%{_prefix}
 
 # Rename POD sources of man pages. "openssl-" prefix is added to each
-# manpage to avoid potential conflicts with other packages.
-# (libcrypto/libssl function names are not affected)
+# manpage to avoid potential conflicts with other packages. 
+# openssl-man-namespace.patch mostly marks these pages with "openssl-" prefix.
 
-%{__perl} -pi -e 's/(\W)((?<!openssl-)\w+)(\([157]\))/$1openssl-$2$3/g; s/openssl-openssl/openssl/g;' {apps,ssl,crypto}/*.pod;
-for podfile in doc/apps/!(CA.pl|openssl*).pod doc/crypto/{bio,crypto,ct,des_modes,evp,x509}.pod  doc/ssl/ssl.pod ; do
+for podfile in $(grep -rl '^openssl-' doc/man*); do
 	dir=$(dirname "$podfile")
 	base=$(basename "$podfile")
 	%{__mv} "$podfile" "$dir/openssl-$base"
@@ -422,14 +430,13 @@ fi
 
 %files tools
 %defattr(644,root,root,755)
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/ct_log_list.cnf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
 %attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(755,root,root) %{_bindir}/openssl
 %attr(754,root,root) %{_bindir}/ssl-certificate
 %{_mandir}/man1/openssl.1*
 %{_mandir}/man1/openssl-asn1parse.1*
-%{_mandir}/man1/openssl-blake2b.1*
-%{_mandir}/man1/openssl-blake2s.1*
 %{_mandir}/man1/openssl-ca.1*
 %{_mandir}/man1/openssl-ciphers.1*
 %{_mandir}/man1/openssl-cms.1*
@@ -448,9 +455,6 @@ fi
 %{_mandir}/man1/openssl-genpkey.1*
 %{_mandir}/man1/openssl-genrsa.1*
 %{_mandir}/man1/openssl-list.1*
-%{_mandir}/man1/openssl-md4.1*
-%{_mandir}/man1/openssl-md5.1*
-%{_mandir}/man1/openssl-mdc2.1*
 %{_mandir}/man1/openssl-nseq.1*
 %{_mandir}/man1/openssl-ocsp.1*
 %{_mandir}/man1/openssl-passwd.1*
@@ -460,25 +464,21 @@ fi
 %{_mandir}/man1/openssl-pkey.1*
 %{_mandir}/man1/openssl-pkeyparam.1*
 %{_mandir}/man1/openssl-pkeyutl.1*
+%{_mandir}/man1/openssl-prime.1*
 %{_mandir}/man1/openssl-rand.1*
 %{_mandir}/man1/openssl-rehash.1*
 %{_mandir}/man1/openssl-req.1*
-%{_mandir}/man1/openssl-ripemd160.1*
 %{_mandir}/man1/openssl-rsa.1*
 %{_mandir}/man1/openssl-rsautl.1*
 %{_mandir}/man1/openssl-s_client.1*
-%{_mandir}/man1/openssl-s_server.1*
-%{_mandir}/man1/openssl-s_time.1*
 %{_mandir}/man1/openssl-sess_id.1*
-%{_mandir}/man1/openssl-sha.1*
-%{_mandir}/man1/openssl-sha1.1*
-%{_mandir}/man1/openssl-sha224.1*
-%{_mandir}/man1/openssl-sha256.1*
-%{_mandir}/man1/openssl-sha384.1*
-%{_mandir}/man1/openssl-sha512.1*
 %{_mandir}/man1/openssl-smime.1*
 %{_mandir}/man1/openssl-speed.1*
 %{_mandir}/man1/openssl-spkac.1*
+%{_mandir}/man1/openssl-srp.1*
+%{_mandir}/man1/openssl-s_server.1*
+%{_mandir}/man1/openssl-s_time.1*
+%{_mandir}/man1/openssl-storeutl.1*
 %{_mandir}/man1/openssl-ts.1*
 %{_mandir}/man1/openssl-tsget.1*
 %{_mandir}/man1/openssl-verify.1*
@@ -494,9 +494,9 @@ fi
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/tsget
+%attr(755,root,root) %{_libdir}/%{name}/tsget.pl
 %{_mandir}/man1/CA.pl.1*
 %{_mandir}/man1/c_rehash.1*
-%{_mandir}/man1/openssl-c_rehash.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -507,6 +507,7 @@ fi
 %{_pkgconfigdir}/libssl.pc
 %{_pkgconfigdir}/openssl.pc
 %{_mandir}/man3/ACCESS_DESCRIPTION_*.3*
+%{_mandir}/man3/ADMISSION*.3*
 %{_mandir}/man3/ASId*.3*
 %{_mandir}/man3/ASRange_*.3*
 %{_mandir}/man3/ASN1_*.3*
@@ -554,17 +555,19 @@ fi
 %{_mandir}/man3/IMPLEMENT_*.3*
 %{_mandir}/man3/IPAddress*.3*
 %{_mandir}/man3/ISSUING_DIST_POINT_*.3*
-%{_mandir}/man3/LHASH_*.3*
+%{_mandir}/man3/LHASH*.3*
 %{_mandir}/man3/MD2*.3*
 %{_mandir}/man3/MD4*.3*
 %{_mandir}/man3/MD5*.3*
 %{_mandir}/man3/MDC2*.3*
 %{_mandir}/man3/NAME_CONSTRAINTS_*.3*
+%{_mandir}/man3/NAMING_AUTHORITY*.3*
 %{_mandir}/man3/NETSCAPE_*.3*
 %{_mandir}/man3/NOTICEREF_*.3*
 %{_mandir}/man3/OBJ_*.3*
 %{_mandir}/man3/OCSP_*.3*
 %{_mandir}/man3/OPENSSL_*.3*
+%{_mandir}/man3/OSSL*.3*
 %{_mandir}/man3/OTHERNAME_*.3*
 %{_mandir}/man3/OpenSSL_*.3*
 %{_mandir}/man3/PBE2PARAM_*.3*
@@ -579,6 +582,7 @@ fi
 %{_mandir}/man3/POLICYINFO_*.3*
 %{_mandir}/man3/POLICYQUALINFO_*.3*
 %{_mandir}/man3/POLICY_*.3*
+%{_mandir}/man3/PROFESSION_INFO*.3*
 %{_mandir}/man3/PROXY_*.3*
 %{_mandir}/man3/RAND_*.3*
 %{_mandir}/man3/RC4*.3*
@@ -586,6 +590,7 @@ fi
 %{_mandir}/man3/RSAPrivateKey_*.3*
 %{_mandir}/man3/RSAPublicKey_*.3*
 %{_mandir}/man3/RSA_*.3*
+%{_mandir}/man3/SCRYPT_PARAMS*.3*
 %{_mandir}/man3/SCT_*.3*
 %{_mandir}/man3/SHA1*.3*
 %{_mandir}/man3/SHA224*.3*
@@ -616,13 +621,26 @@ fi
 %{_mandir}/man3/pem_password_cb.3*
 %{_mandir}/man3/sk_TYPE_*.3*
 %{_mandir}/man3/ssl_ct_validation_cb.3*
+%{_mandir}/man7/openssl.7*
 %{_mandir}/man7/openssl-bio.7*
 %{_mandir}/man7/openssl-crypto.7*
 %{_mandir}/man7/openssl-ct.7*
 %{_mandir}/man7/openssl-des_modes.7*
+%{_mandir}/man7/openssl-Ed25519.7*
+%{_mandir}/man7/openssl-Ed448.7*
 %{_mandir}/man7/openssl-evp.7*
+%{_mandir}/man7/openssl-passphrase-encoding.7*
+%{_mandir}/man7/openssl-RAND.7*
+%{_mandir}/man7/openssl-RAND_DRBG.7*
+%{_mandir}/man7/openssl-scrypt.7*
+%{_mandir}/man7/openssl-SM2.7*
 %{_mandir}/man7/openssl-ssl.7*
+%{_mandir}/man7/openssl-X25519.7*
+%{_mandir}/man7/openssl-X448.7*
 %{_mandir}/man7/openssl-x509.7*
+%{_mandir}/man7/ossl_store.7*
+%{_mandir}/man7/ossl_store-file.7*
+%{_mandir}/man7/RSA-PSS.7.gz
 
 %files static
 %defattr(644,root,root,755)

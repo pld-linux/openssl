@@ -1,6 +1,6 @@
---- openssl-1.1.0g/crypto/include/internal/cryptlib.h.orig	2017-11-02 15:29:03.000000000 +0100
-+++ openssl-1.1.0g/crypto/include/internal/cryptlib.h	2017-11-18 21:05:07.408322386 +0100
-@@ -42,7 +42,7 @@
+--- openssl-1.1.1/include/internal/cryptlib.h~	2018-09-11 14:48:23.000000000 +0200
++++ openssl-1.1.1/include/internal/cryptlib.h	2018-09-11 22:14:32.008012409 +0200
+@@ -56,7 +56,7 @@ DEFINE_LHASH_OF(MEM);
  # ifndef OPENSSL_SYS_VMS
  #  define X509_CERT_AREA          OPENSSLDIR
  #  define X509_CERT_DIR           OPENSSLDIR "/certs"
