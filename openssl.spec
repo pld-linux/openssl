@@ -292,6 +292,7 @@ PERL="%{__perl}" \
 	enable-mdc2 \
 	enable-rc5 \
 	enable-rfc3779 \
+	enable-sctp \
 	enable-seed \
 %ifarch %{x8664}
 	enable-ec_nistp_64_gcc_128 \
