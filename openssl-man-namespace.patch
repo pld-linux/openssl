@@ -397,7 +397,7 @@ diff -urN openssl-1.1.1/doc.org/man1/rehash.pod openssl-1.1.1/doc/man1/rehash.po
  
 -openssl-c_rehash, openssl-rehash,
 -c_rehash, rehash - Create symbolic links to files named by the hash values
-+c_rehash, openssl-rehash - Create symbolic links to files named by the hash values
++openssl-rehash, c_rehash - Create symbolic links to files named by the hash values
  
  =head1 SYNOPSIS
  
