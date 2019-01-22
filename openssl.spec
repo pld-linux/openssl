@@ -10,7 +10,9 @@
 %bcond_with	purify	# Compile openssl with "-DPURIFY", useful when one wants to
 			# use valgrind debugger against openssl-linked programs
 %bcond_with	snap	# use GitHub snapshot to build branch release
+%bcond_with	default_openssl	# use this OpenSSLas default system OpenSSL
 
+%define		pname openssl
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -20,34 +22,38 @@ Summary(pl.UTF-8):	Biblioteki OpenSSL (SSL v2/v3)
 Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocolos criptográficos
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
+%if %{with default_openssl}
 Name:		openssl
+%else
+Name:		compat-openssl
+%endif
 # 1.0.2 will be LTS release
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.0.2p
+Version:	1.0.2q
 Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
-Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	ac5eb30bf5798aa14b1ae6d0e7da58df
+Source0:	https://www.openssl.org/source/%{pname}-%{version}.tar.gz
+# Source0-md5:	7563e1ce046cb21948eeb6ba1a0eb71c
 %else
-Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{name}-%{version}-dev.tar.gz
+Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{pname}-%{version}-dev.tar.gz
 # Source1-md5:	6b846f8a4f55f5ddfa1e0d335241840a
 %endif
-Source2:	%{name}.1.pl
-Source3:	%{name}-ssl-certificate.sh
-Source4:	%{name}-c_rehash.sh
-Patch0:		%{name}-alpha-ccc.patch
-Patch1:		%{name}-optflags.patch
-Patch2:		%{name}-include.patch
-Patch3:		%{name}-man-namespace.patch
-Patch4:		%{name}-asflag.patch
-Patch5:		%{name}-ca-certificates.patch
-Patch6:		%{name}-ldflags.patch
-Patch7:		%{name}-find.patch
+Source2:	%{pname}.1.pl
+Source3:	%{pname}-ssl-certificate.sh
+Source4:	%{pname}-c_rehash.sh
+Patch0:		%{pname}-alpha-ccc.patch
+Patch1:		%{pname}-optflags.patch
+Patch2:		%{pname}-include.patch
+Patch3:		%{pname}-man-namespace.patch
+Patch4:		%{pname}-asflag.patch
+Patch5:		%{pname}-ca-certificates.patch
+Patch6:		%{pname}-ldflags.patch
+Patch7:		%{pname}-find.patch
 Patch8:		pic.patch
-Patch10:	%{name}_fix_for_x32.patch
+Patch10:	%{pname}_fix_for_x32.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -264,9 +270,9 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %prep
 %if %{with snap}
 %setup -qcT -a1
-mv %{name}-OpenSSL_1_0_2-stable/* .
+mv %{pname}-OpenSSL_1_0_2-stable/* .
 %else
-%setup -q
+%setup -q -n %{pname}-%{version}
 %endif
 %patch0 -p1
 %patch1 -p1
@@ -291,7 +297,7 @@ touch Makefile.*
 OPTFLAGS="%{rpmcflags} %{rpmcppflags} %{?with_purify:-DPURIFY}" \
 PERL="%{__perl}" \
 %{__perl} ./Configure \
-	--openssldir=%{_sysconfdir}/%{name} \
+	--openssldir=%{_sysconfdir}/%{pname} \
 	--libdir=%{_lib} \
 	shared \
 	threads \
@@ -372,7 +378,7 @@ done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{pname},%{_libdir}/%{pname}} \
 	$RPM_BUILD_ROOT{%{_mandir}/{pl/man1,man{1,3,5,7}},%{_datadir}/ssl} \
 	$RPM_BUILD_ROOT/%{_lib}/engines \
 	$RPM_BUILD_ROOT%{_pkgconfigdir}
@@ -387,8 +393,8 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcrypto.*.*) $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*.*) $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
-%{__mv} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
-%{__rm} -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
+%{__mv} $RPM_BUILD_ROOT%{_sysconfdir}/%{pname}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{pname}
+%{__rm} -r $RPM_BUILD_ROOT%{_sysconfdir}/%{pname}/misc
 
 # not installed as individual utilities (see openssl dgst instead)
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{dss1,md2,md4,md5,mdc2,ripemd160,sha,sha1,sha224,sha256,sha384,sha512}.1
@@ -403,24 +409,24 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%triggerpostun -- %{name}-tools < 1.0.0-5
+%triggerpostun -- %{pname}-tools < 1.0.0-5
 # the hashing format has changed in 1.0.0
 [ ! -x %{_sbindir}/update-ca-certificates ] || %{_sbindir}/update-ca-certificates --fresh || :
 
-%triggerpostun -- %{name} < 0.9.8i-2
+%triggerpostun -- %{pname} < 0.9.8i-2
 # don't do anything on --downgrade
 if [ $1 -le 1 ]; then
 	exit 0
 fi
 if [ -d /var/lib/openssl/certs ] ; then
-	mv /var/lib/openssl/certs/* %{_sysconfdir}/%{name}/certs 2>/dev/null || :
+	mv /var/lib/openssl/certs/* %{_sysconfdir}/%{pname}/certs 2>/dev/null || :
 fi
 if [ -d /var/lib/openssl/private ] ; then
-	mv /var/lib/openssl/private/* %{_sysconfdir}/%{name}/private 2>/dev/null || :
+	mv /var/lib/openssl/private/* %{_sysconfdir}/%{pname}/private 2>/dev/null || :
 fi
 if [ -d /var/lib/openssl ] ; then
 	for f in /var/lib/openssl/* ; do
-		[ -f "$f" ] && mv "$f" %{_sysconfdir}/%{name} 2>/dev/null || :
+		[ -f "$f" ] && mv "$f" %{_sysconfdir}/%{pname} 2>/dev/null || :
 	done
 	rmdir /var/lib/openssl/* 2>/dev/null || :
 	rmdir /var/lib/openssl 2>/dev/null || :
@@ -431,9 +437,9 @@ fi
 %doc CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
 %attr(755,root,root) /%{_lib}/libcrypto.so.*.*.*
 %attr(755,root,root) /%{_lib}/libssl.so.*.*.*
-%dir %{_sysconfdir}/%{name}
-%dir %{_sysconfdir}/%{name}/certs
-%dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
+%dir %{_sysconfdir}/%{pname}
+%dir %{_sysconfdir}/%{pname}/certs
+%dir %attr(700,root,root) %{_sysconfdir}/%{pname}/private
 %dir %{_datadir}/ssl
 
 %files engines
@@ -443,17 +449,17 @@ fi
 
 %files tools
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{pname}/openssl.cnf
 %attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(755,root,root) %{_bindir}/openssl
 %attr(754,root,root) %{_bindir}/ssl-certificate
 
-%dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/CA.sh
-%attr(755,root,root) %{_libdir}/%{name}/c_hash
-%attr(755,root,root) %{_libdir}/%{name}/c_info
-%attr(755,root,root) %{_libdir}/%{name}/c_issuer
-%attr(755,root,root) %{_libdir}/%{name}/c_name
+%dir %{_libdir}/%{pname}
+%attr(755,root,root) %{_libdir}/%{pname}/CA.sh
+%attr(755,root,root) %{_libdir}/%{pname}/c_hash
+%attr(755,root,root) %{_libdir}/%{pname}/c_info
+%attr(755,root,root) %{_libdir}/%{pname}/c_issuer
+%attr(755,root,root) %{_libdir}/%{pname}/c_name
 
 %{_mandir}/man1/openssl.1*
 %{_mandir}/man1/openssl-asn1parse.1*
@@ -505,8 +511,8 @@ fi
 %files tools-perl
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/c_rehash
-%attr(755,root,root) %{_libdir}/%{name}/CA.pl
-%attr(755,root,root) %{_libdir}/%{name}/tsget
+%attr(755,root,root) %{_libdir}/%{pname}/CA.pl
+%attr(755,root,root) %{_libdir}/%{pname}/tsget
 %{_mandir}/man1/openssl-CA.pl.1*
 %{_mandir}/man1/openssl-c_rehash.1*
 
@@ -514,7 +520,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcrypto.so
 %attr(755,root,root) %{_libdir}/libssl.so
-%{_includedir}/%{name}
+%{_includedir}/%{pname}
 %{_pkgconfigdir}/libcrypto.pc
 %{_pkgconfigdir}/libssl.pc
 %{_pkgconfigdir}/openssl.pc
