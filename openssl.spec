@@ -30,13 +30,13 @@ Name:		compat-openssl
 # 1.0.2 will be LTS release
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.0.2q
+Version:	1.0.2r
 Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	https://www.openssl.org/source/%{pname}-%{version}.tar.gz
-# Source0-md5:	7563e1ce046cb21948eeb6ba1a0eb71c
+# Source0-md5:	0d2baaf04c56d542f6cc757b9c2a2aac
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{pname}-%{version}-dev.tar.gz
 # Source1-md5:	6b846f8a4f55f5ddfa1e0d335241840a
