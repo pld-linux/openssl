@@ -17,21 +17,22 @@ Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднан
 Name:		openssl
 # Version 1.1.1 is LTS, supported until 2023-09-11.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.1.1c
+Version:	1.1.1d
 Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	15e21da6efe8aa0e0768ffd8cd37a5f6
+# Source0-md5:	3be209000dbc7e1b95bcdf47980a3baa
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
 Patch1:		%{name}-optflags.patch
-
+# https://github.com/openssl/openssl/commit/4245d63be73402df5917bbd099178ba56c136e13.patch
+Patch2:		%{name}-zlib-fix.patch
 Patch3:		%{name}-man-namespace.patch
 
 Patch5:		%{name}-ca-certificates.patch
-
+Patch6:		%{name}-no-win32.patch
 Patch7:		%{name}-find.patch
 Patch8:		pic.patch
 
@@ -258,11 +259,11 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %endif
 
 %patch1 -p1
-
+%patch2 -p1
 %patch3 -p1
 
 %patch5 -p1
-
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 

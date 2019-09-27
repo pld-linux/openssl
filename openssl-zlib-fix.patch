@@ -1,0 +1,57 @@
+From 4245d63be73402df5917bbd099178ba56c136e13 Mon Sep 17 00:00:00 2001
+From: Tomas Mraz <tmraz@fedoraproject.org>
+Date: Thu, 12 Sep 2019 12:27:36 +0200
+Subject: [PATCH] BIO_f_zlib: Properly handle BIO_CTRL_PENDING and
+ BIO_CTRL_WPENDING calls.
+
+There can be data to write in output buffer and data to read that were
+not yet read in the input stream.
+
+Fixes #9866
+---
+ crypto/comp/c_zlib.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/crypto/comp/c_zlib.c b/crypto/comp/c_zlib.c
+index 78219f202d8..3d2c142f004 100644
+--- a/crypto/comp/c_zlib.c
++++ b/crypto/comp/c_zlib.c
+@@ -546,6 +546,7 @@ static long bio_zlib_ctrl(BIO *b, int cmd, long num, void *ptr)
+     int ret, *ip;
+     int ibs, obs;
+     BIO *next = BIO_next(b);
++    z_stream *zin;
+ 
+     if (next == NULL)
+         return 0;
+@@ -598,6 +599,30 @@ static long bio_zlib_ctrl(BIO *b, int cmd, long num, void *ptr)
+         BIO_copy_next_retry(b);
+         break;
+ 
++    case BIO_CTRL_WPENDING:
++        if (ctx->obuf == NULL)
++            return 0;
++
++        if (ctx->odone) {
++            ret = ctx->ocount;
++        }
++        else {
++            ret = ctx->ocount;
++            if (ret == 0)
++                /* Unknown amount pending but we are not finished */
++                ret = 1;
++        }
++        if (ret == 0)
++            ret = BIO_ctrl(next, cmd, num, ptr);
++        break;
++
++    case BIO_CTRL_PENDING:
++        zin = &ctx->zin;
++        ret = zin->avail_in;
++        if (ret == 0)
++            ret = BIO_ctrl(next, cmd, num, ptr);
++        break;
++
+     default:
+         ret = BIO_ctrl(next, cmd, num, ptr);
+         break;
