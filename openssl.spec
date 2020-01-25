@@ -5,7 +5,6 @@
 %bcond_with	sslv2	# SSLv2: note - many flaws http://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_2.0
 %bcond_with	sslv3	# SSLv3: note - enables CVE-2014-3566 vulnerability
 
-%include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(es.UTF-8):	Biblioteca C que suministra algoritmos y protocolos criptográficos
