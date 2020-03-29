@@ -16,20 +16,20 @@ Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднан
 Name:		openssl
 # Version 1.1.1 is LTS, supported until 2023-09-11.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.1.1d
+Version:	1.1.1e
 Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	3be209000dbc7e1b95bcdf47980a3baa
+# Source0-md5:	baeff2a64d2f3d7e0a69b677c9977b57
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
 Patch1:		%{name}-optflags.patch
 # https://github.com/openssl/openssl/commit/4245d63be73402df5917bbd099178ba56c136e13.patch
-Patch2:		%{name}-zlib-fix.patch
-Patch3:		%{name}-man-namespace.patch
 
+Patch3:		%{name}-man-namespace.patch
+Patch4:		bug-11378.patch
 Patch5:		%{name}-ca-certificates.patch
 Patch6:		%{name}-no-win32.patch
 Patch7:		%{name}-find.patch
@@ -256,11 +256,10 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %else
 %setup -q %{?subver:-n %{name}-%{version}-%{subver}}
 %endif
-
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
+%patch3 -p1
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -636,6 +635,7 @@ fi
 %{_mandir}/man7/openssl-x509.7*
 %{_mandir}/man7/ossl_store.7*
 %{_mandir}/man7/ossl_store-file.7*
+%{_mandir}/man7/proxy-certificates.7*
 %{_mandir}/man7/RSA-PSS.7.gz
 
 %files static
