@@ -26,7 +26,6 @@ Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
 Patch1:		%{name}-optflags.patch
-# https://github.com/openssl/openssl/commit/4245d63be73402df5917bbd099178ba56c136e13.patch
 
 Patch3:		%{name}-man-namespace.patch
 Patch4:		bug-11378.patch
