@@ -4,6 +4,7 @@
 %bcond_without	zlib	# zlib: note - enables CVE-2012-4929 vulnerability
 %bcond_with	sslv2	# SSLv2: note - many flaws http://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_2.0
 %bcond_with	sslv3	# SSLv3: note - enables CVE-2014-3566 vulnerability
+%bcond_with	snap	# use GitHub snapshot to build branch release
 
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -20,8 +21,12 @@ Version:	1.1.1h
 Release:	1
 License:	Apache-like
 Group:		Libraries
+%if %{without snap}
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	53840c70434793127a3574433494e8d3
+%else
+Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_1_1-stable/%{name}-%{version}-dev.tar.gz
+%endif
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -250,7 +255,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %prep
 %if %{with snap}
 %setup -qcT -a1
-%{__mv} %{name}-OpenSSL_1_1_0-stable/* .
+%{__mv} %{name}-OpenSSL_1_1_1-stable/* .
 %else
 %setup -q %{?subver:-n %{name}-%{version}-%{subver}}
 %endif
