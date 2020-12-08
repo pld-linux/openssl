@@ -17,7 +17,7 @@ Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднан
 Name:		openssl
 # Version 1.1.1 is LTS, supported until 2023-09-11.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.1.1h
+Version:	1.1.1i
 Release:	1
 License:	Apache-like
 Group:		Libraries
