@@ -1,11 +1,13 @@
---- openssl-1.1.1/Configurations/unix-Makefile.tmpl~	2018-09-13 13:40:10.000000000 +0200
-+++ openssl-1.1.1/Configurations/unix-Makefile.tmpl	2018-09-13 13:40:42.065819616 +0200
-@@ -170,7 +170,7 @@ LIBDIR={- our $libdir = $config{libdir};
+--- openssl-3.0.0/Configurations/unix-Makefile.tmpl~	2021-09-18 10:59:16.000000000 +0200
++++ openssl-3.0.0/Configurations/unix-Makefile.tmpl	2021-09-18 11:01:29.191573488 +0200
+@@ -303,8 +303,8 @@
  # $(libdir) is chosen to be compatible with the GNU coding standards
  libdir={- file_name_is_absolute($libdir)
            ? $libdir : '$(INSTALLTOP)/$(LIBDIR)' -}
 -ENGINESDIR=$(libdir)/engines-{- $sover_dirname -}
+-MODULESDIR=$(libdir)/ossl-modules
 +ENGINESDIR=/$(LIBDIR)/engines-{- $sover_dirname -}
++MODULESDIR=/$(LIBDIR)/ossl-modules
  
  # Convenience variable for those who want to set the rpath in shared
  # libraries and applications
