@@ -14,7 +14,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	3.0.0
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
@@ -36,11 +36,13 @@ BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 Requires:	ca-certificates >= 20141019-3
+Requires:	%{name}-tools = %{version}-%{release}
 Requires:	rpm-whiteout >= 1.7
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
+Obsoletes:	openssl-engines < 3.0.0-2
 %if "%{pld_release}" == "ac"
 Conflicts:	neon < 0.26.3-3
 Conflicts:	ntpd < 4.2.4p8-10
@@ -103,48 +105,6 @@ RC4, RSA и SSL.
 Програма openssl для роботи з сертифікатами та бібліотеки спільного
 користування, що реалізують велику кількість криптографічних
 алгоритмів, включаючи DES, RC4, RSA та SSL.
-
-%package engines
-Summary:	OpenSSL optional crypto engines
-Summary(pl.UTF-8):	Opcjonalne silniki kryptograficzne dla OpenSSL-a
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description engines
-With OpenSSL 0.9.6, a new component was added to support alternative
-cryptography implementations, most commonly for interfacing with
-external crypto devices (eg. accelerator cards). This component is
-called ENGINE.
-
-There are currently built-in ENGINE implementations for the following
-crypto devices:
-
-- CryptoSwift
-- Compaq Atalla
-- nCipher CHIL
-- Nuron
-- Broadcom uBSec
-
-In addition, dynamic binding to external ENGINE implementations is now
-provided by a special ENGINE called "dynamic".
-
-%description engines -l pl.UTF-8
-Począwszy od OpenSSL-a 0.9.6 został dodany nowy komponent, mający
-wspierać alternatywne implementacje kryptografii, przeważnie
-współpracujące z zewnętrznymi urządzeniami kryptograficznymi (np.
-kartami akceleratorów). Komponent ten jest nazywany SILNIKIEM (ang.
-ENGINE).
-
-Obecnie istnieją wbudowane implementacje silników dla następujących
-urządzeń kryptograficznych:
-- CryptoSwift
-- Compaq Atalla
-- nCipher CHIL
-- Nuron
-- Broadcom uBSec
-
-Ponadto zapewnione jest dynamiczne wiązanie dla zewnętrznych
-implementacji silników poprzez specjalny silnik o nazwie "dynamic".
 
 %package tools
 Summary:	OpenSSL command line tool and utilities
@@ -272,6 +232,9 @@ PERL="%{__perl}" \
 	enable-rfc3779 \
 	enable-sctp \
 	enable-seed \
+	enable-camellia \
+	enable-ktls \
+	enable-fips \
 %ifarch %{x8664}
 	enable-ec_nistp_64_gcc_128 \
 %endif
@@ -383,21 +346,20 @@ fi
 %doc CHANGES.md NEWS.md README.md doc/*.txt
 %attr(755,root,root) /%{_lib}/libcrypto.so.*
 %attr(755,root,root) /%{_lib}/libssl.so.*
+%dir /%{_lib}/engines-3
+%attr(755,root,root) /%{_lib}/engines-3/*.so
 %dir /%{_lib}/ossl-modules
+%attr(755,root,root) /%{_lib}/ossl-modules/fips.so
 %attr(755,root,root) /%{_lib}/ossl-modules/legacy.so
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/certs
 %dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
 %dir %{_datadir}/ssl
 
-%files engines
-%defattr(644,root,root,755)
-%dir /%{_lib}/engines-3
-%attr(755,root,root) /%{_lib}/engines-3/*.so
-
 %files tools
 %defattr(644,root,root,755)
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/ct_log_list.cnf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/fipsmodule.cnf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
 %attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(755,root,root) %{_bindir}/openssl
