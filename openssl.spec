@@ -28,6 +28,9 @@ Patch2:		%{name}-find.patch
 Patch3:		pic.patch
 Patch4:		engines-dir.patch
 URL:		http://www.openssl.org/
+%ifarch %{arm} ppc mips sparc sparcv9
+BuildRequires:	libatomic-devel
+%endif
 BuildRequires:	libsctp-devel
 BuildRequires:	perl-devel >= 1:5.10.0
 BuildRequires:	pkgconfig
