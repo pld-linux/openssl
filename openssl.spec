@@ -32,6 +32,7 @@ URL:		http://www.openssl.org/
 BuildRequires:	libatomic-devel
 %endif
 BuildRequires:	libsctp-devel
+BuildRequires:	linux-libc-headers >= 7:4.13
 BuildRequires:	perl-devel >= 1:5.10.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov >= 4.1-13
