@@ -287,7 +287,7 @@ PERL="%{__perl}" \
 v=$(awk -F= '/^VERSION=/{print $2}' Makefile)
 test "$v" = %{version}
 
-%{__make} -j1 all %{?with_tests:tests} \
+%{__make} all %{?with_tests:tests} \
 	CC="%{__cc}" \
 	OPTFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	INSTALLTOP=%{_prefix}
@@ -298,7 +298,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	$RPM_BUILD_ROOT{%{_mandir}/{pl/man1,man{1,3,5,7}},%{_datadir}/ssl} \
 	$RPM_BUILD_ROOT%{_pkgconfigdir}
 
-%{__make} -j1 install \
+%{__make} install \
 	CC="%{__cc}" \
 	DESTDIR=$RPM_BUILD_ROOT
 
