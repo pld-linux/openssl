@@ -287,10 +287,17 @@ PERL="%{__perl}" \
 v=$(awk -F= '/^VERSION=/{print $2}' Makefile)
 test "$v" = %{version}
 
-%{__make} all %{?with_tests:tests} \
+%{__make} all \
 	CC="%{__cc}" \
 	OPTFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	INSTALLTOP=%{_prefix}
+
+%if %{with tests}
+%{__make} -j1 tests \
+	CC="%{__cc}" \
+	OPTFLAGS="%{rpmcflags} %{rpmcppflags}" \
+	INSTALLTOP=%{_prefix}
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
