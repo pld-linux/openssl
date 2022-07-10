@@ -1,6 +1,6 @@
---- openssl-3.0.0/Configurations/unix-Makefile.tmpl~	2021-09-18 10:59:16.000000000 +0200
-+++ openssl-3.0.0/Configurations/unix-Makefile.tmpl	2021-09-18 11:01:29.191573488 +0200
-@@ -303,8 +303,8 @@
+--- openssl-3.0.5/Configurations/unix-Makefile.tmpl.orig	2022-07-10 17:18:36.338376691 +0200
++++ openssl-3.0.5/Configurations/unix-Makefile.tmpl	2022-07-10 17:29:34.034813643 +0200
+@@ -304,8 +304,8 @@ LIBDIR={- our $libdir = $config{libdir};
  # $(libdir) is chosen to be compatible with the GNU coding standards
  libdir={- file_name_is_absolute($libdir)
            ? $libdir : '$(INSTALLTOP)/$(LIBDIR)' -}
@@ -11,3 +11,14 @@
  
  # Convenience variable for those who want to set the rpath in shared
  # libraries and applications
+@@ -1399,8 +1399,8 @@ libcrypto.pc:
+ 	        echo 'libdir=$(libdir)'; \
+ 	    fi; \
+ 	    echo 'includedir=$${prefix}/include'; \
+-	    echo 'enginesdir=$${libdir}/engines-{- $sover_dirname -}'; \
+-	    echo 'modulesdir=$${libdir}/ossl-modules'; \
++	    echo 'enginesdir=/$(LIBDIR)/engines-{- $sover_dirname -}'; \
++	    echo 'modulesdir=/$(LIBDIR)/ossl-modules'; \
+ 	    echo ''; \
+ 	    echo 'Name: OpenSSL-libcrypto'; \
+ 	    echo 'Description: OpenSSL cryptography library'; \
