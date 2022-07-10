@@ -42,10 +42,10 @@ BuildRequires:	zlib-devel
 Requires:	ca-certificates >= 20141019-3
 Requires:	%{name}-tools = %{version}-%{release}
 Requires:	rpm-whiteout >= 1.7
-Obsoletes:	SSLeay
-Obsoletes:	SSLeay-devel
-Obsoletes:	SSLeay-perl
-Obsoletes:	libopenssl0
+Obsoletes:	SSLeay < 0.9.3
+Obsoletes:	SSLeay-devel < 0.9.3
+Obsoletes:	SSLeay-perl < 0.9.3
+Obsoletes:	libopenssl0 < 1
 Obsoletes:	openssl-engines < 3.0.0-2
 %if "%{pld_release}" == "ac"
 Conflicts:	neon < 0.26.3-3
@@ -146,7 +146,7 @@ Summary(ru.UTF-8):	Библиотеки, хедеры и утилиты для S
 Summary(uk.UTF-8):	Бібліотеки, хедери та утиліти для Secure Sockets Layer
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	libopenssl0-devel
+Obsoletes:	libopenssl0-devel < 1
 
 %description devel
 Development part of OpenSSL library.
