@@ -18,7 +18,7 @@ Name:		openssl
 # Version 1.1.1 is LTS, supported until 2023-09-11.
 # https://www.openssl.org/about/releasestrat.html
 Version:	1.1.1q
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
@@ -415,6 +415,7 @@ fi
 %doc CHANGES LICENSE NEWS README doc/*.txt
 %attr(755,root,root) /%{_lib}/libcrypto.so.*.*
 %attr(755,root,root) /%{_lib}/libssl.so.*.*
+%dir /%{_lib}/engines-1.1
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/certs
 %dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
@@ -422,7 +423,6 @@ fi
 
 %files engines
 %defattr(644,root,root,755)
-%dir /%{_lib}/engines-1.1
 %attr(755,root,root) /%{_lib}/engines-1.1/*.so
 
 %files tools

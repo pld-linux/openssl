@@ -9,3 +9,12 @@
  
  # Convenience variable for those who want to set the rpath in shared
  # libraries and applications
+@@ -888,7 +888,7 @@ libcrypto.pc:
+ 	        echo 'libdir=$(libdir)'; \
+ 	    fi; \
+ 	    echo 'includedir=$${prefix}/include'; \
+-	    echo 'enginesdir=$${libdir}/engines-{- $sover_dirname -}'; \
++	    echo 'enginesdir=/$(LIBDIR)/engines-{- $sover_dirname -}'; \
+ 	    echo ''; \
+ 	    echo 'Name: OpenSSL-libcrypto'; \
+ 	    echo 'Description: OpenSSL cryptography library'; \
