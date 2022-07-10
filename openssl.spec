@@ -36,7 +36,7 @@ BuildRequires:	linux-libc-headers >= 7:4.13
 BuildRequires:	perl-devel >= 1:5.10.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov >= 4.1-13
-BuildRequires:	rpmbuild(macros) >= 1.213
+BuildRequires:	rpmbuild(macros) >= 1.745
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 Requires:	ca-certificates >= 20141019-3
