@@ -368,63 +368,66 @@ fi
 %dir %{_sysconfdir}/%{name}/certs
 %dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
 %dir %{_datadir}/ssl
+%{_mandir}/man5/config.5ossl*
 
 %files tools
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(755,root,root) %{_bindir}/openssl
 %attr(754,root,root) %{_bindir}/ssl-certificate
-%{_mandir}/man1/asn1parse.1*
-%{_mandir}/man1/ca.1*
-%{_mandir}/man1/ciphers.1*
-%{_mandir}/man1/cms.1*
-%{_mandir}/man1/crl.1*
-%{_mandir}/man1/crl2pkcs7.1*
-%{_mandir}/man1/dgst.1*
-%{_mandir}/man1/dhparam.1*
-%{_mandir}/man1/dsa.1*
-%{_mandir}/man1/dsaparam.1*
-%{_mandir}/man1/ec.1*
-%{_mandir}/man1/ecparam.1*
-%{_mandir}/man1/enc.1*
-%{_mandir}/man1/engine.1*
-%{_mandir}/man1/errstr.1*
-%{_mandir}/man1/gendsa.1*
-%{_mandir}/man1/genpkey.1*
-%{_mandir}/man1/genrsa.1*
-%{_mandir}/man1/kdf.1*
-%{_mandir}/man1/mac.1*
-%{_mandir}/man1/nseq.1*
-%{_mandir}/man1/ocsp.1*
+%{_mandir}/man1/asn1parse.1ossl*
+%{_mandir}/man1/ca.1ossl*
+%{_mandir}/man1/ciphers.1ossl*
+%{_mandir}/man1/cms.1ossl*
+%{_mandir}/man1/crl.1ossl*
+%{_mandir}/man1/crl2pkcs7.1ossl*
+%{_mandir}/man1/dgst.1ossl*
+%{_mandir}/man1/dhparam.1ossl*
+%{_mandir}/man1/dsa.1ossl*
+%{_mandir}/man1/dsaparam.1ossl*
+%{_mandir}/man1/ec.1ossl*
+%{_mandir}/man1/ecparam.1ossl*
+%{_mandir}/man1/enc.1ossl*
+%{_mandir}/man1/engine.1ossl*
+%{_mandir}/man1/errstr.1ossl*
+%{_mandir}/man1/gendsa.1ossl*
+%{_mandir}/man1/genpkey.1ossl*
+%{_mandir}/man1/genrsa.1ossl*
+%{_mandir}/man1/info.1ossl*
+%{_mandir}/man1/kdf.1ossl*
+%{_mandir}/man1/mac.1ossl*
+%{_mandir}/man1/nseq.1ossl*
+%{_mandir}/man1/ocsp.1ossl*
 %{_mandir}/man1/openssl.1*
 %{_mandir}/man1/openssl-*.1*
-%{_mandir}/man1/passwd.1*
-%{_mandir}/man1/pkcs12.1*
-%{_mandir}/man1/pkcs7.1*
-%{_mandir}/man1/pkcs8.1*
-%{_mandir}/man1/pkey.1*
-%{_mandir}/man1/pkeyparam.1*
-%{_mandir}/man1/pkeyutl.1*
-%{_mandir}/man1/prime.1*
-%{_mandir}/man1/rand.1*
-%{_mandir}/man1/rehash.1*
-%{_mandir}/man1/req.1*
-%{_mandir}/man1/rsa.1*
-%{_mandir}/man1/rsautl.1*
-%{_mandir}/man1/s_client.1*
-%{_mandir}/man1/sess_id.1*
-%{_mandir}/man1/smime.1*
-%{_mandir}/man1/speed.1*
-%{_mandir}/man1/spkac.1*
-%{_mandir}/man1/srp.1*
-%{_mandir}/man1/s_server.1*
-%{_mandir}/man1/s_time.1*
-%{_mandir}/man1/storeutl.1*
-%{_mandir}/man1/ts.1*
-%{_mandir}/man1/verify.1*
-%{_mandir}/man1/version.1*
-%{_mandir}/man1/x509.1*
-%{_mandir}/man5/*.5*
+%{_mandir}/man1/passwd.1ossl*
+%{_mandir}/man1/pkcs12.1ossl*
+%{_mandir}/man1/pkcs7.1ossl*
+%{_mandir}/man1/pkcs8.1ossl*
+%{_mandir}/man1/pkey.1ossl*
+%{_mandir}/man1/pkeyparam.1ossl*
+%{_mandir}/man1/pkeyutl.1ossl*
+%{_mandir}/man1/prime.1ossl*
+%{_mandir}/man1/rand.1ossl*
+%{_mandir}/man1/rehash.1ossl*
+%{_mandir}/man1/req.1ossl*
+%{_mandir}/man1/rsa.1ossl*
+%{_mandir}/man1/rsautl.1ossl*
+%{_mandir}/man1/s_client.1ossl*
+%{_mandir}/man1/sess_id.1ossl*
+%{_mandir}/man1/smime.1ossl*
+%{_mandir}/man1/speed.1ossl*
+%{_mandir}/man1/spkac.1ossl*
+%{_mandir}/man1/srp.1ossl*
+%{_mandir}/man1/s_server.1ossl*
+%{_mandir}/man1/s_time.1ossl*
+%{_mandir}/man1/storeutl.1ossl*
+%{_mandir}/man1/ts.1ossl*
+%{_mandir}/man1/verify.1ossl*
+%{_mandir}/man1/version.1ossl*
+%{_mandir}/man1/x509.1ossl*
+%{_mandir}/man5/fips_config.5ossl*
+%{_mandir}/man5/x509v3_config.5ossl*
 %lang(pl) %{_mandir}/pl/man1/openssl.1*
 
 %files tools-perl
@@ -434,9 +437,9 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/tsget
 %attr(755,root,root) %{_libdir}/%{name}/tsget.pl
-%{_mandir}/man1/CA.pl.1*
-%{_mandir}/man1/c_rehash.1*
-%{_mandir}/man1/tsget.1*
+%{_mandir}/man1/CA.pl.1ossl*
+%{_mandir}/man1/c_rehash.1ossl*
+%{_mandir}/man1/tsget.1ossl*
 
 %files devel
 %defattr(644,root,root,755)
@@ -446,8 +449,8 @@ fi
 %{_pkgconfigdir}/libcrypto.pc
 %{_pkgconfigdir}/libssl.pc
 %{_pkgconfigdir}/openssl.pc
-%{_mandir}/man3/*.3*
-%{_mandir}/man7/*.7*
+%{_mandir}/man3/*.3ossl*
+%{_mandir}/man7/*.7ossl*
 
 %files static
 %defattr(644,root,root,755)
