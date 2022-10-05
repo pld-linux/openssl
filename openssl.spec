@@ -14,7 +14,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	3.0.5
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
@@ -40,7 +40,6 @@ BuildRequires:	rpmbuild(macros) >= 1.745
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 Requires:	ca-certificates >= 20141019-3
-Requires:	%{name}-tools = %{version}-%{release}
 Requires:	rpm-whiteout >= 1.7
 Obsoletes:	SSLeay < 0.9.3
 Obsoletes:	SSLeay-devel < 0.9.3
@@ -363,15 +362,15 @@ fi
 %attr(755,root,root) /%{_lib}/ossl-modules/fips.so
 %attr(755,root,root) /%{_lib}/ossl-modules/legacy.so
 %dir %{_sysconfdir}/%{name}
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/ct_log_list.cnf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/fipsmodule.cnf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
 %dir %{_sysconfdir}/%{name}/certs
 %dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
 %dir %{_datadir}/ssl
 
 %files tools
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/ct_log_list.cnf
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/fipsmodule.cnf
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
 %attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(755,root,root) %{_bindir}/openssl
 %attr(754,root,root) %{_bindir}/ssl-certificate
