@@ -13,12 +13,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	3.0.5
-Release:	3
+Version:	3.0.6
+Release:	1
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	163bb3e58c143793d1dc6a6ec7d185d5
+# Source0-md5:	1ea2006ec913ef3de6894c1154d17d3e
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -378,6 +378,7 @@ fi
 %{_mandir}/man1/asn1parse.1ossl*
 %{_mandir}/man1/ca.1ossl*
 %{_mandir}/man1/ciphers.1ossl*
+%{_mandir}/man1/cmp.1ossl*
 %{_mandir}/man1/cms.1ossl*
 %{_mandir}/man1/crl.1ossl*
 %{_mandir}/man1/crl2pkcs7.1ossl*
