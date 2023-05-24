@@ -144,7 +144,7 @@ Summary(pt_BR.UTF-8):	Bibliotecas e arquivos de inclusão para desenvolvimento O
 Summary(ru.UTF-8):	Библиотеки, хедеры и утилиты для Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки, хедери та утиліти для Secure Sockets Layer
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 Obsoletes:	libopenssl0-devel < 1
 
 %description devel
