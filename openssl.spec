@@ -113,7 +113,7 @@ RC4, RSA и SSL.
 Summary:	OpenSSL command line tool and utilities
 Summary(pl.UTF-8):	Zestaw narzędzi i skryptów
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 Requires:	which
 
 %description tools
