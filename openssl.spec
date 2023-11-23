@@ -13,12 +13,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	3.1.4
+Version:	3.2.0
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	653ad58812c751b887e8ec37e02bba70
+# Source0-md5:	7903549a14abebc5c323ce4e85f2cbb2
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -31,6 +31,7 @@ URL:		http://www.openssl.org/
 %ifarch %{arm} ppc mips sparc sparcv9
 BuildRequires:	libatomic-devel
 %endif
+BuildRequires:	libbrotli-devel
 BuildRequires:	libsctp-devel
 BuildRequires:	linux-libc-headers >= 7:4.13
 BuildRequires:	perl-devel >= 1:5.10.0
@@ -39,6 +40,7 @@ BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.745
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
+BuildRequires:	zstd-devel
 Requires:	ca-certificates >= 20141019-3
 Requires:	rpm-whiteout >= 1.7
 Obsoletes:	SSLeay < 0.9.3
@@ -227,6 +229,7 @@ PERL="%{__perl}" \
 	threads \
 	%{?with_sslv3:enable-ssl3}%{!?with_sslv3:no-ssl3} \
 	%{!?with_zlib:no-}zlib \
+	enable-brotli \
 	enable-cms \
 	enable-idea \
 	enable-md2 \
@@ -238,6 +241,7 @@ PERL="%{__perl}" \
 	enable-camellia \
 	enable-ktls \
 	enable-fips \
+	enable-zstd \
 %ifarch %{x8664}
 	enable-ec_nistp_64_gcc_128 \
 %endif
