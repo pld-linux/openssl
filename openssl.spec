@@ -27,6 +27,7 @@ Patch1:		%{name}-ca-certificates.patch
 Patch2:		%{name}-find.patch
 Patch3:		pic.patch
 Patch4:		engines-dir.patch
+Patch5:		duplicate-symbols-test.patch
 URL:		http://www.openssl.org/
 %ifarch %{arm} ppc mips sparc sparcv9
 BuildRequires:	libatomic-devel
@@ -212,6 +213,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # fails with enable-sctp as of 1.1.1
 %{__rm} test/recipes/80-test_ssl_new.t
