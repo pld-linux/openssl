@@ -13,12 +13,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	3.2.0
+Version:	3.2.1
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	7903549a14abebc5c323ce4e85f2cbb2
+# Source0-md5:	c239213887804ba00654884918b37441
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -27,7 +27,6 @@ Patch1:		%{name}-ca-certificates.patch
 Patch2:		%{name}-find.patch
 Patch3:		pic.patch
 Patch4:		engines-dir.patch
-Patch5:		duplicate-symbols-test.patch
 URL:		http://www.openssl.org/
 %ifarch %{arm} ppc mips sparc sparcv9
 BuildRequires:	libatomic-devel
@@ -213,7 +212,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 # fails with enable-sctp as of 1.1.1
 %{__rm} test/recipes/80-test_ssl_new.t
