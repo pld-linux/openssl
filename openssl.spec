@@ -17,7 +17,7 @@ Version:	3.3.0
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
-Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
+Source0:	https://github.com/openssl/openssl/releases/download/openssl-%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	c8b063afbea85d867e161ecb8816cfa9
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
