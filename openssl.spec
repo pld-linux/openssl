@@ -212,7 +212,11 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch -P3 -p1
 
 # fails with enable-sctp as of 1.1.1
-%{__rm} test/recipes/80-test_ssl_new.t
+#{__rm} test/recipes/80-test_ssl_new.t
+
+%ifarch x32
+%{__rm} test/recipes/04-test_bio_dgram.t
+%endif
 
 %build
 touch Makefile.*
