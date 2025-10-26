@@ -1,0 +1,11 @@
+--- openssl-3.6.0/crypto/sha/asm/sha512-x86_64.pl.orig	2025-10-01 14:11:48.000000000 +0200
++++ openssl-3.6.0/crypto/sha/asm/sha512-x86_64.pl	2025-10-26 01:55:51.891406883 +0200
+@@ -113,6 +113,8 @@
+ #	below certain limit makes no difference/sense; to conserve
+ #	space SHA256 XOP code path is therefore omitted;
+ 
++use bigint;
++
+ # $output is the last argument if it looks like a file (it has an extension)
+ # $flavour is the first argument if it doesn't look like a file
+ $output = $#ARGV >= 0 && $ARGV[$#ARGV] =~ m|\.\w+$| ? pop : undef;
