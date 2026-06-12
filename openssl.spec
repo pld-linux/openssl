@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
 %bcond_without	zlib	# zlib: note - enables CVE-2012-4929 vulnerability
-%bcond_with	sslv3	# SSLv3: note - enables CVE-2014-3566 vulnerability
 
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -13,20 +12,20 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	3.6.3
-Release:	1
+Version:	4.0.1
+# so name change, so 0.1 for now
+Release:	0.1
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://github.com/openssl/openssl/releases/download/openssl-%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	f388d6144fe20b9b2c6bf208280d6ec3
+# Source0-md5:	07e316afe26b61e72206b81706b497bb
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
 Patch0:		%{name}-optflags.patch
 Patch1:		%{name}-ca-certificates.patch
-Patch2:		%{name}-find.patch
-Patch3:		engines-dir.patch
-Patch4:		x32-sha-avx-ssse3-detect.patch
+Patch2:		modules-dir.patch
+Patch3:		x32-sha-avx-ssse3-detect.patch
 URL:		http://www.openssl.org/
 %ifarch %{arm} ppc mips sparc sparcv9
 BuildRequires:	libatomic-devel
@@ -211,7 +210,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch -P1 -p1
 %patch -P2 -p1
 %patch -P3 -p1
-%patch -P4 -p1
 
 # fails with enable-sctp as of 1.1.1
 %{__rm} test/recipes/80-test_ssl_new.t
@@ -231,7 +229,6 @@ PERL="%{__perl}" \
 	-Wa,--noexecstack \
 	shared \
 	threads \
-	%{?with_sslv3:enable-ssl3}%{!?with_sslv3:no-ssl3} \
 	%{!?with_zlib:no-}zlib \
 	enable-brotli \
 	enable-cms \
@@ -323,6 +320,9 @@ ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*) $RPM_BUILD_ROOT%{_l
 %{__mv} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
 %{__rm} -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 
+# pristine .dist copies of the default configs - redundant with %config(noreplace)
+%{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/*.cnf.dist
+
 # html version of man pages - not packaged
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}/html/man[1357]
 
@@ -364,8 +364,6 @@ fi
 %doc CHANGES.md NEWS.md README.md doc/*.txt
 %attr(755,root,root) /%{_lib}/libcrypto.so.*
 %attr(755,root,root) /%{_lib}/libssl.so.*
-%dir /%{_lib}/engines-3
-%attr(755,root,root) /%{_lib}/engines-3/*.so
 %dir /%{_lib}/ossl-modules
 %attr(755,root,root) /%{_lib}/ossl-modules/fips.so
 %attr(755,root,root) /%{_lib}/ossl-modules/legacy.so
@@ -397,7 +395,6 @@ fi
 %{_mandir}/man1/ec.1ossl*
 %{_mandir}/man1/ecparam.1ossl*
 %{_mandir}/man1/enc.1ossl*
-%{_mandir}/man1/engine.1ossl*
 %{_mandir}/man1/errstr.1ossl*
 %{_mandir}/man1/gendsa.1ossl*
 %{_mandir}/man1/genpkey.1ossl*
@@ -417,6 +414,7 @@ fi
 %{_mandir}/man1/pkeyparam.1ossl*
 %{_mandir}/man1/pkeyutl.1ossl*
 %{_mandir}/man1/prime.1ossl*
+%{_mandir}/man1/c_rehash.1ossl*
 %{_mandir}/man1/rand.1ossl*
 %{_mandir}/man1/rehash.1ossl*
 %{_mandir}/man1/req.1ossl*
@@ -441,13 +439,11 @@ fi
 
 %files tools-perl
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/c_rehash
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/tsget
 %attr(755,root,root) %{_libdir}/%{name}/tsget.pl
 %{_mandir}/man1/CA.pl.1ossl*
-%{_mandir}/man1/c_rehash.1ossl*
 %{_mandir}/man1/tsget.1ossl*
 
 %files devel

@@ -1,0 +1,11 @@
+--- openssl-4.0.1/Configurations/unix-Makefile.tmpl.orig	2026-06-09 13:36:00.000000000 +0200
++++ openssl-4.0.1/Configurations/unix-Makefile.tmpl	2026-06-12 09:00:00.000000000 +0200
+@@ -325,7 +325,7 @@ LIBDIR={- our $libdir = $config{libdir};
+ # $(libdir) is chosen to be compatible with the GNU coding standards
+ libdir={- file_name_is_absolute($libdir)
+           ? $libdir : '$(INSTALLTOP)/$(LIBDIR)' -}
+-MODULESDIR=$(libdir)/ossl-modules
++MODULESDIR=/$(LIBDIR)/ossl-modules
+
+ # Convenience variable for those who want to set the rpath in shared
+ # libraries and applications
