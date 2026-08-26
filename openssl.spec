@@ -323,6 +323,8 @@ ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*) $RPM_BUILD_ROOT%{_l
 %{__mv} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
 %{__rm} -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 
+%{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/*.cnf.dist
+
 # html version of man pages - not packaged
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}/html/man[1357]
 
