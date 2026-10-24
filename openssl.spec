@@ -14,7 +14,7 @@ Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднан
 Name:		openssl
 Version:	4.0.2
 # so name change, so 0.1 for now
-Release:	0.1
+Release:	0.2
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://github.com/openssl/openssl/releases/download/openssl-%{version}/%{name}-%{version}.tar.gz
@@ -127,7 +127,7 @@ Zestaw narzędzi i skryptów wywoływanych z linii poleceń.
 Summary:	OpenSSL utilities written in Perl
 Summary(pl.UTF-8):	Narzędzia OpenSSL napisane w perlu
 Group:		Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description tools-perl
 OpenSSL Toolkit tools written in Perl.
@@ -181,7 +181,7 @@ Summary(pt_BR.UTF-8):	Bibliotecas estáticas para desenvolvimento com openssl
 Summary(ru.UTF-8):	Статические библиотеки разработчика для OpenSSL
 Summary(uk.UTF-8):	Статичні бібліотеки програміста для OpenSSL
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 
 %description static
 Static OpenSSL Toolkit libraries.
