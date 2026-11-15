@@ -323,6 +323,11 @@ ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*) $RPM_BUILD_ROOT%{_l
 # pristine .dist copies of the default configs - redundant with %config(noreplace)
 %{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/*.cnf.dist
 
+# fipsmodule.cnf carries the MAC of this arch's fips.so, so multilib packages
+# conflict on it; README-FIPS.md wants it generated on each machine instead
+# with openssl fipsinstall, see openssl-fipsinstall(1)
+%{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/fipsmodule.cnf
+
 # html version of man pages - not packaged
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}/html/man[1357]
 
@@ -369,7 +374,6 @@ fi
 %attr(755,root,root) /%{_lib}/ossl-modules/legacy.so
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/ct_log_list.cnf
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/fipsmodule.cnf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
 %dir %{_sysconfdir}/%{name}/certs
 %dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
