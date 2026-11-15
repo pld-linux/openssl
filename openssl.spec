@@ -14,7 +14,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	3.6.5
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://github.com/openssl/openssl/releases/download/openssl-%{version}/%{name}-%{version}.tar.gz
@@ -27,6 +27,11 @@ Patch1:		%{name}-ca-certificates.patch
 Patch2:		%{name}-find.patch
 Patch3:		engines-dir.patch
 Patch4:		x32-sha-avx-ssse3-detect.patch
+Patch5:		%{name}-CVE-2026-107496.patch
+Patch6:		%{name}-CVE-2026-95692.patch
+Patch7:		%{name}-CVE-2026-95691.patch
+Patch8:		%{name}-CVE-2026-88823.patch
+Patch9:		%{name}-CVE-2026-88822.patch
 URL:		https://www.openssl.org/
 %ifarch %{arm} ppc mips sparc sparcv9
 BuildRequires:	libatomic-devel
@@ -212,6 +217,11 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch -P2 -p1
 %patch -P3 -p1
 %patch -P4 -p1
+%patch -P5 -p1
+%patch -P6 -p1
+%patch -P7 -p1
+%patch -P8 -p1
+%patch -P9 -p1
 
 # fails with enable-sctp as of 1.1.1
 %{__rm} test/recipes/80-test_ssl_new.t
@@ -324,6 +334,10 @@ ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*) $RPM_BUILD_ROOT%{_l
 %{__rm} -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 
 %{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/*.cnf.dist
+# fipsmodule.cnf carries the MAC of this arch's fips.so, so multilib packages
+# conflict on it; README-FIPS.md wants it generated on each machine instead
+# with openssl fipsinstall, see openssl-fipsinstall(1)
+%{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/fipsmodule.cnf
 
 # html version of man pages - not packaged
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}/html/man[1357]
@@ -373,7 +387,6 @@ fi
 %attr(755,root,root) /%{_lib}/ossl-modules/legacy.so
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/ct_log_list.cnf
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/fipsmodule.cnf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
 %dir %{_sysconfdir}/%{name}/certs
 %dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
