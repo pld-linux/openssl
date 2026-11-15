@@ -12,13 +12,13 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	4.0.2
+Version:	4.1.0
 # so name change, so 0.1 for now
-Release:	0.2
+Release:	0.1
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://github.com/openssl/openssl/releases/download/openssl-%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	9d256ddfa581e1982c005ab03890754d
+# Source0-md5:	3dd690cc5ed65605cf4d125c1176439c
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -26,6 +26,11 @@ Patch0:		%{name}-optflags.patch
 Patch1:		%{name}-ca-certificates.patch
 Patch2:		modules-dir.patch
 Patch3:		x32-sha-avx-ssse3-detect.patch
+Patch4:		%{name}-CVE-2026-88823.patch
+Patch5:		%{name}-CVE-2026-88822.patch
+Patch6:		%{name}-CVE-2026-107496.patch
+Patch7:		%{name}-CVE-2026-95692.patch
+Patch8:		%{name}-CVE-2026-95691.patch
 URL:		https://www.openssl.org/
 %ifarch %{arm} ppc mips sparc sparcv9
 BuildRequires:	libatomic-devel
@@ -210,6 +215,11 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch -P1 -p1
 %patch -P2 -p1
 %patch -P3 -p1
+%patch -P4 -p1
+%patch -P5 -p1
+%patch -P6 -p1
+%patch -P7 -p1
+%patch -P8 -p1
 
 # fails with enable-sctp as of 1.1.1
 %{__rm} test/recipes/80-test_ssl_new.t
