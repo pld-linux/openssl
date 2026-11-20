@@ -1,0 +1,62 @@
+afalgtest: skip when the kernel refuses cbc(aes) over AF_ALG; Linux >= 7.3 with
+crypto.af_alg_restrict=1 (default) makes bind() fail with ENOENT for unprivileged users
+
+--- openssl-3.6.5.orig/test/afalgtest.c
++++ openssl-3.6.5/test/afalgtest.c
+@@ -19,6 +19,15 @@
+ #include <openssl/rand.h>
+ #include "testutil.h"
+ 
++#if defined(__linux__)
++#include <sys/socket.h>
++#include <unistd.h>
++#ifdef AF_ALG
++#include <linux/if_alg.h>
++#define AFALG_PROBE_KERNEL
++#endif
++#endif
++
+ /* Use a buffer size which is not aligned to block size */
+ #define BUFFER_SIZE 17
+ 
+@@ -121,6 +130,31 @@ static int test_pr16743(void)
+     return ret;
+ }
+ 
++/*
++ * The engine loads once socket(AF_ALG) works, but the kernel may still refuse
++ * cbc(aes): Linux >= 7.3 with crypto.af_alg_restrict=1 (the default) allows it
++ * only with CAP_NET_ADMIN or CAP_SYS_ADMIN, and bind() fails with ENOENT.
++ */
++static int afalg_kernel_has_cbc_aes(void)
++{
++#ifdef AFALG_PROBE_KERNEL
++    struct sockaddr_alg sa;
++    int fd, ok;
++
++    if ((fd = socket(AF_ALG, SOCK_SEQPACKET, 0)) < 0)
++        return 0;
++    memset(&sa, 0, sizeof(sa));
++    sa.salg_family = AF_ALG;
++    strcpy((char *)sa.salg_type, "skcipher");
++    strcpy((char *)sa.salg_name, "cbc(aes)");
++    ok = bind(fd, (struct sockaddr *)&sa, sizeof(sa)) == 0;
++    close(fd);
++    return ok;
++#else
++    return 1;
++#endif
++}
++
+ int global_init(void)
+ {
+     ENGINE_load_builtin_engines();
+@@ -137,6 +171,8 @@ int setup_tests(void)
+     if ((e = ENGINE_by_id("afalg")) == NULL) {
+         /* Probably a platform env issue, not a test failure. */
+         TEST_info("Can't load AFALG engine");
++    } else if (!afalg_kernel_has_cbc_aes()) {
++        TEST_info("Kernel does not offer cbc(aes) over AF_ALG to this process");
+     } else {
+         ADD_ALL_TESTS(test_afalg_aes_cbc, 3);
+         ADD_TEST(test_pr16743);

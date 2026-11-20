@@ -14,7 +14,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	3.6.5
-Release:	3
+Release:	4
 License:	Apache v2.0
 Group:		Libraries
 Source0:	https://github.com/openssl/openssl/releases/download/openssl-%{version}/%{name}-%{version}.tar.gz
@@ -32,6 +32,10 @@ Patch6:		%{name}-CVE-2026-95692.patch
 Patch7:		%{name}-CVE-2026-95691.patch
 Patch8:		%{name}-CVE-2026-88823.patch
 Patch9:		%{name}-CVE-2026-88822.patch
+Patch10:	%{name}-CVE-2026-107493.patch
+Patch11:	%{name}-CVE-2026-124709.patch
+Patch12:	%{name}-CVE-2026-35190.patch
+Patch13:	%{name}-afalg-test-restrict.patch
 URL:		https://www.openssl.org/
 %ifarch %{arm} ppc mips sparc sparcv9
 BuildRequires:	libatomic-devel
@@ -222,6 +226,10 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch -P7 -p1
 %patch -P8 -p1
 %patch -P9 -p1
+%patch -P10 -p1
+%patch -P11 -p1
+%patch -P12 -p1
+%patch -P13 -p1
 
 # fails with enable-sctp as of 1.1.1
 %{__rm} test/recipes/80-test_ssl_new.t
